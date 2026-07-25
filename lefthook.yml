@@ -1,0 +1,16 @@
+pre-commit:
+  commands:
+    ruff-check:
+      run: uv run ruff check {staged_files}
+      stage_fixed: true
+    ruff-format:
+      run: uv run ruff format --check {staged_files}
+    ty-check:
+      run: uv run ty check
+
+pre-push:
+  commands:
+    ruff-check:
+      run: uv run ruff check .
+    ty-check:
+      run: uv run ty check

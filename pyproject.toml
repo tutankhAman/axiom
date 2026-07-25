@@ -1,0 +1,26 @@
+[project]
+name = "axiom"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+requires-python = ">=3.11"
+dependencies = []
+
+[tool.ruff]
+line-length = 100
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "N", "UP", "B", "A", "SIM"]
+
+[tool.ruff.format]
+quote-style = "double"
+
+[tool.ty.environment]
+python-version = "3.11"
+
+[dependency-groups]
+dev = [
+    "lefthook>=2.1.10",
+    "ruff>=0.16.0",
+    "ty>=0.0.63",
+]
