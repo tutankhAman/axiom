@@ -51,7 +51,7 @@ def test_sensor_manager_fetch_state():
     sim_state = manager.fetch_state("dummy_state", ["Core_ZN"])
 
     assert isinstance(sim_state, SimulationState)
-    assert sim_state.sim_time_hours == 36.0  # 1 day * 24 + 12
+    assert sim_state.sim_time_hours == 12.0  # (1 - 1) days * 24 + 12
     assert sim_state.outdoor_temp == 15.5
     assert sim_state.hvac_power_w == 1200.0
     assert "Core_ZN" in sim_state.zones
