@@ -1,6 +1,7 @@
 """Main entrypoint for Phase 1 read-only simulation loop."""
 
 import logging
+import os
 import sys
 
 from sim.driver import EnergyPlusDriver
@@ -20,10 +21,11 @@ def main() -> int:
     logger = logging.getLogger("main")
     logger.info("Starting Phase 1 Read-Only Simulation Loop...")
 
+    base_dir = os.path.dirname(os.path.abspath(__file__))
     driver = EnergyPlusDriver(
-        idf_path="models/baseline.idf",
-        epw_path="models/weather.epw",
-        output_dir="output/phase1_run",
+        idf_path=os.path.join(base_dir, "models", "baseline.idf"),
+        epw_path=os.path.join(base_dir, "models", "weather.epw"),
+        output_dir=os.path.join(base_dir, "output", "phase1_run"),
     )
 
     exit_code = driver.run()
