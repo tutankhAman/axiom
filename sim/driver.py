@@ -1,0 +1,101 @@
+"""EnergyPlus simulation driver encapsulating runtime callbacks and lifecycle management."""
+
+import logging
+import os
+from collections.abc import Callable
+from typing import Any
+
+from pyenergyplus.api import EnergyPlusAPI
+
+from sim.sensors import SensorManager, SimulationState
+
+logger = logging.getLogger(__name__)
+
+
+class EnergyPlusDriver:
+    """Manages EnergyPlus simulation execution, sensor state collection, and callbacks."""
+
+    def __init__(
+        self,
+        idf_path: str,
+        epw_path: str,
+        output_dir: str = "output",
+        zone_names: list[str] | None = None,
+        on_timestep: Callable[[SimulationState], None] | None = None,
+    ) -> None:
+        self.idf_path = os.path.abspath(idf_path)
+        self.epw_path = os.path.abspath(epw_path)
+        self.output_dir = os.path.abspath(output_dir)
+        self.zone_names = zone_names or [
+            "Core_ZN",
+            "Perimeter_ZN_1",
+            "Perimeter_ZN_2",
+            "Perimeter_ZN_3",
+            "Perimeter_ZN_4",
+        ]
+        self.on_timestep = on_timestep
+
+        self.api = EnergyPlusAPI()
+        self.sensor_manager = SensorManager(self.api)
+        self.history: list[SimulationState] = []
+        self.run_completed = False
+        self.exit_code = -1
+
+    def _timestep_callback(self, state: Any) -> None:
+        """Callback triggered at the end of each zone timestep after reporting."""
+        # Only collect metrics after warm-up phase completes
+        if self.api.exchange.warmup_flag(state) != 0:
+            return
+
+        try:
+            sim_state = self.sensor_manager.fetch_state(state, self.zone_names)
+            self.history.append(sim_state)
+
+            if self.on_timestep:
+                self.on_timestep(sim_state)
+            else:
+                # Default logging for Phase 1 read-only loop
+                zones_summary = ", ".join(
+                    f"{z}: {data.mean_air_temp}°C (PMV: {data.pmv})"
+                    for z, data in sim_state.zones.items()
+                )
+                logger.info(
+                    "[Time: %.2fh] Outdoor: %.1f°C | HVAC: %.1fW | Zones: %s",
+                    sim_state.sim_time_hours,
+                    sim_state.outdoor_temp,
+                    sim_state.hvac_power_w,
+                    zones_summary,
+                )
+        except Exception as e:
+            logger.error("Error in simulation timestep callback: %s", e, exc_info=True)
+
+    def run(self) -> int:
+        """Execute EnergyPlus simulation synchronously."""
+        logger.info("Starting EnergyPlus run: IDF=%s, EPW=%s", self.idf_path, self.epw_path)
+        os.makedirs(self.output_dir, exist_ok=True)
+
+        state = self.api.state_manager.new_state()
+
+        # Register callback for zone reporting timestep
+        self.api.runtime.callback_end_zone_timestep_after_zone_reporting(
+            state,
+            self._timestep_callback,  # ty: ignore[invalid-argument-type]
+        )
+
+        # Build EnergyPlus command line arguments
+        cmd_args: list[str | bytes] = [
+            "-d",
+            self.output_dir,
+            "-w",
+            self.epw_path,
+            self.idf_path,
+        ]
+
+        try:
+            self.exit_code = self.api.runtime.run_energyplus(state, cmd_args)
+            self.run_completed = True
+            logger.info("EnergyPlus simulation finished with exit code: %d", self.exit_code)
+            return self.exit_code
+        finally:
+            self.api.state_manager.delete_state(state)
+            logger.debug("Cleaned up EnergyPlus simulation state.")
