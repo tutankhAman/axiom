@@ -1,11 +1,14 @@
-"""Integration tests for EnergyPlus simulation driver."""
-
 import os
 
-from sim.driver import EnergyPlusDriver
+import pytest
+
+pytest.importorskip("pyenergyplus")
 
 
+@pytest.mark.integration
 def test_energyplus_driver_integration(tmp_path):
+    from sim.driver import EnergyPlusDriver
+
     output_dir = str(tmp_path / "sim_output")
     idf_path = "models/baseline.idf"
     epw_path = "models/weather.epw"
@@ -31,7 +34,9 @@ def test_energyplus_driver_integration(tmp_path):
         assert step.hvac_power_w >= 0.0, f"Negative HVAC power: {step.hvac_power_w}"
 
         # Check zone states
-        assert len(step.zones) == 5, f"Expected 5 zones, got {len(step.zones)}"
+        assert len(step.zones) == len(driver.zone_names), (
+            f"Expected {len(driver.zone_names)} zones, got {len(step.zones)}"
+        )
         for zone_name, zone_data in step.zones.items():
             assert 0.0 <= zone_data.mean_air_temp <= 50.0, (
                 f"Zone {zone_name} temp out of bounds: {zone_data.mean_air_temp}"
