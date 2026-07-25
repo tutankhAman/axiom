@@ -18,6 +18,11 @@ Thumbs.db
 
 # Tool caches
 .ruff_cache/
+.pytest_cache/
+
+# EnergyPlus Output
+output/
 
 # MiMoCode
 .mimocode/
+
