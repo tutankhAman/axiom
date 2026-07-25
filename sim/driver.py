@@ -40,9 +40,13 @@ class EnergyPlusDriver:
         self.history: list[SimulationState] = []
         self.run_completed = False
         self.exit_code = -1
+        self.callback_error: Exception | None = None
 
     def _timestep_callback(self, state: Any) -> None:
         """Callback triggered at the end of each zone timestep after reporting."""
+        if self.callback_error is not None:
+            return
+
         # Only collect metrics after warm-up phase completes
         if self.api.exchange.warmup_flag(state) != 0:
             return
@@ -67,12 +71,18 @@ class EnergyPlusDriver:
                     zones_summary,
                 )
         except Exception as e:
-            logger.error("Error in simulation timestep callback: %s", e, exc_info=True)
+            if self.callback_error is None:
+                self.callback_error = e
+                logger.error("Error in simulation timestep callback: %s", e, exc_info=True)
 
     def run(self) -> int:
         """Execute EnergyPlus simulation synchronously."""
         logger.info("Starting EnergyPlus run: IDF=%s, EPW=%s", self.idf_path, self.epw_path)
         os.makedirs(self.output_dir, exist_ok=True)
+
+        self.history = []
+        self.run_completed = False
+        self.callback_error = None
 
         state = self.api.state_manager.new_state()
 
@@ -93,6 +103,8 @@ class EnergyPlusDriver:
 
         try:
             self.exit_code = self.api.runtime.run_energyplus(state, cmd_args)
+            if self.callback_error is not None:
+                raise self.callback_error
             self.run_completed = True
             logger.info("EnergyPlus simulation finished with exit code: %d", self.exit_code)
             return self.exit_code
