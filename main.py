@@ -55,16 +55,17 @@ def main() -> int:
     setup_logging()
     logger.info("Starting Phase 2 Baseline Simulation Run...")
 
+    base_dir = os.path.dirname(os.path.abspath(__file__))
     driver = EnergyPlusDriver(
-        idf_path="models/baseline.idf",
-        epw_path="models/weather.epw",
-        output_dir="output/phase2_baseline_run",
+        idf_path=os.path.join(base_dir, "models", "baseline.idf"),
+        epw_path=os.path.join(base_dir, "models", "weather.epw"),
+        output_dir=os.path.join(base_dir, "output", "phase2_baseline_run"),
     )
 
     exit_code = driver.run()
 
     if exit_code == 0:
-        csv_path = "output/baseline_results.csv"
+        csv_path = os.path.join(base_dir, "output", "baseline_results.csv")
         save_history_to_csv(driver.history, csv_path)
         logger.info(
             "Phase 2 baseline run completed successfully! Saved baseline results to %s",

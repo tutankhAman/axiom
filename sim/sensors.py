@@ -55,36 +55,42 @@ class SensorManager:
         logger.info("Initializing EnergyPlus sensor handles for zones: %s", zone_names)
 
         # 1. Global Handles
-        self._outdoor_temp_handle = self.api.exchange.get_variable_handle(
-            state, "Site Outdoor Air Drybulb Temperature", "Environment"
-        )
-        self._hvac_power_handle = self.api.exchange.get_variable_handle(
-            state, "Facility Total HVAC Electricity Demand Rate", "Whole Building"
-        )
-
-        if self._outdoor_temp_handle == -1:
-            # Try key '*' if 'Environment' is missing
+        if not self.handles_initialized:
             self._outdoor_temp_handle = self.api.exchange.get_variable_handle(
-                state, "Site Outdoor Air Drybulb Temperature", "*"
+                state, "Site Outdoor Air Drybulb Temperature", "Environment"
             )
-
-        if self._hvac_power_handle == -1:
             self._hvac_power_handle = self.api.exchange.get_variable_handle(
-                state, "Facility Total HVAC Electricity Demand Rate", "*"
+                state, "Facility Total HVAC Electricity Demand Rate", "Whole Building"
             )
 
-        if self._outdoor_temp_handle == -1:
-            raise InvalidSensorHandleError(
-                "Could not locate variable handle for 'Site Outdoor Air Drybulb Temperature'"
-            )
+            if self._outdoor_temp_handle == -1:
+                # Try key '*' if 'Environment' is missing
+                self._outdoor_temp_handle = self.api.exchange.get_variable_handle(
+                    state, "Site Outdoor Air Drybulb Temperature", "*"
+                )
 
-        # Note: HVAC demand rate handle may be -1 if HVAC system isn't running
-        # or key differs; handle gracefully
-        if self._hvac_power_handle == -1:
-            logger.warning("HVAC Electricity Demand handle is -1; fallback to 0.0 W will be used.")
+            if self._hvac_power_handle == -1:
+                self._hvac_power_handle = self.api.exchange.get_variable_handle(
+                    state, "Facility Total HVAC Electricity Demand Rate", "*"
+                )
+
+            if self._outdoor_temp_handle == -1:
+                raise InvalidSensorHandleError(
+                    "Could not locate variable handle for 'Site Outdoor Air Drybulb Temperature'"
+                )
+
+            # Note: HVAC demand rate handle may be -1 if HVAC system isn't running
+            # or key differs; handle gracefully
+            if self._hvac_power_handle == -1:
+                logger.warning(
+                    "HVAC Electricity Demand handle is -1; fallback to 0.0 W will be used."
+                )
 
         # 2. Per-Zone Handles
         for zone in zone_names:
+            if zone in self._zone_handles:
+                continue
+
             temp_handle = self.api.exchange.get_variable_handle(
                 state, "Zone Mean Air Temperature", zone
             )
@@ -118,13 +124,15 @@ class SensorManager:
 
     def fetch_state(self, state: Any, zone_names: list[str]) -> SimulationState:
         """Fetch current sensor readings from EnergyPlus shared memory state."""
-        if not self.handles_initialized:
+        if not self.handles_initialized or any(
+            zone not in self._zone_handles for zone in zone_names
+        ):
             self.initialize_handles(state, zone_names)
 
-        # Time tracking
-        current_time = self.api.exchange.day_of_year(state) * 24.0 + self.api.exchange.current_time(
-            state
-        )
+        # Time tracking (compensate 1-based day_of_year to 0-based elapsed days)
+        current_time = (
+            self.api.exchange.day_of_year(state) - 1
+        ) * 24.0 + self.api.exchange.current_time(state)
 
         # Global metrics
         outdoor_temp = self.api.exchange.get_variable_value(state, self._outdoor_temp_handle)

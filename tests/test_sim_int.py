@@ -3,12 +3,16 @@
 import os
 from typing import Any
 
-from sim.actuators import ActuatorManager, ZoneSetpoints
-from sim.driver import EnergyPlusDriver
+import pytest
+
+pytest.importorskip("pyenergyplus")
 
 
+@pytest.mark.integration
 def test_energyplus_driver_baseline_integration(tmp_path):
     """Verify baseline un-actuated simulation run completes cleanly."""
+    from sim.driver import EnergyPlusDriver
+
     output_dir = str(tmp_path / "baseline_output")
     idf_path = "models/baseline.idf"
     epw_path = "models/weather.epw"
@@ -28,7 +32,7 @@ def test_energyplus_driver_baseline_integration(tmp_path):
     for step in driver.history:
         assert -60.0 <= step.outdoor_temp <= 60.0
         assert step.hvac_power_w >= 0.0
-        assert len(step.zones) == 5
+        assert len(step.zones) == len(driver.zone_names)
         for zone_data in step.zones.values():
             assert 0.0 <= zone_data.mean_air_temp <= 50.0
             assert -5.0 <= zone_data.pmv <= 5.0
@@ -38,8 +42,12 @@ def test_energyplus_driver_baseline_integration(tmp_path):
     assert os.path.exists(err_file)
 
 
+@pytest.mark.integration
 def test_energyplus_actuator_override_integration(tmp_path):
     """Verify actuator overrides alter zone thermal response compared to baseline."""
+    from sim.actuators import ActuatorManager, ZoneSetpoints
+    from sim.driver import EnergyPlusDriver
+
     baseline_dir = str(tmp_path / "baseline_run")
     actuated_dir = str(tmp_path / "actuated_run")
     idf_path = "models/baseline.idf"

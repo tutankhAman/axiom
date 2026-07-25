@@ -51,10 +51,35 @@ def test_sensor_manager_fetch_state():
     sim_state = manager.fetch_state("dummy_state", ["Core_ZN"])
 
     assert isinstance(sim_state, SimulationState)
-    assert sim_state.sim_time_hours == 36.0  # 1 day * 24 + 12
+    assert sim_state.sim_time_hours == 12.0  # (1 - 1) days * 24 + 12
     assert sim_state.outdoor_temp == 15.5
     assert sim_state.hvac_power_w == 1200.0
     assert "Core_ZN" in sim_state.zones
     assert sim_state.zones["Core_ZN"].mean_air_temp == 22.0
     assert sim_state.zones["Core_ZN"].pmv == -0.1
     assert sim_state.zones["Core_ZN"].ppd == 6.0
+
+
+def test_sensor_manager_degraded_hvac_handle():
+    mock_api = MagicMock()
+    mock_api.exchange.get_variable_handle.side_effect = lambda state, name, key: (
+        -1 if "HVAC Electricity Demand Rate" in name else 42
+    )
+    mock_api.exchange.day_of_year.return_value = 1
+    mock_api.exchange.current_time.return_value = 1.0
+    mock_api.exchange.get_variable_value.side_effect = [20.0, 22.0, 0.0, 5.0]
+
+    manager = SensorManager(mock_api)
+    sim_state = manager.fetch_state("dummy_state", ["Core_ZN"])
+    assert sim_state.hvac_power_w == 0.0
+
+
+def test_sensor_manager_missing_zone_temp_raises_error():
+    mock_api = MagicMock()
+    mock_api.exchange.get_variable_handle.side_effect = lambda state, name, key: (
+        -1 if name == "Zone Mean Air Temperature" else 42
+    )
+
+    manager = SensorManager(mock_api)
+    with pytest.raises(InvalidSensorHandleError, match="Zone Mean Air Temperature"):
+        manager.initialize_handles("dummy_state", ["Core_ZN"])
