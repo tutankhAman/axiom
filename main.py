@@ -4,7 +4,6 @@ import argparse
 import csv
 import logging
 import os
-import re
 import sys
 from typing import Any
 
@@ -44,19 +43,29 @@ def update_idf_duration(idf_path: str, days: int = 4) -> None:
         end_month += 1
 
     with open(idf_path, encoding="utf-8") as f:
-        content = f.read()
+        lines = f.readlines()
 
-    pattern = (
-        r"(RunPeriod,\s*\n\s*RUNPERIOD 1,\s*\n\s*)(\d+)"
-        r"(,\s*!- Begin Month\s*\n\s*)(\d+)"
-        r"(,\s*!- Begin Day of Month\s*\n\s*,\s*!- Begin Year\s*\n\s*)(\d+)"
-        r"(,\s*!- End Month\s*\n\s*)(\d+)"
-    )
-    replacement = rf"\g<1>{begin_month}\g<3>{begin_day}\g<5>{end_month}\g<7>{end_day}"
+    in_run_period = False
+    for i, line in enumerate(lines):
+        stripped = line.strip()
+        if stripped.startswith("RunPeriod,"):
+            in_run_period = True
+            continue
+        if not in_run_period:
+            continue
 
-    new_content = re.sub(pattern, replacement, content)
+        indent = line[: len(line) - len(line.lstrip())]
+
+        if "!- Begin Day of Month" in line:
+            lines[i] = f"{indent}{begin_day},                       !- Begin Day of Month\n"
+        elif "!- End Month" in stripped:
+            lines[i] = f"{indent}{end_month},                        !- End Month\n"
+        elif "!- End Day of Month" in stripped:
+            lines[i] = f"{indent}{end_day},                       !- End Day of Month\n"
+            break
+
     with open(idf_path, "w", encoding="utf-8") as f:
-        f.write(new_content)
+        f.writelines(lines)
 
 
 def save_history_to_csv(history: list[SimulationState], csv_path: str) -> None:
