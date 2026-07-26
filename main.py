@@ -361,11 +361,13 @@ def run_phase5(
     return exit_code, final_triggers
 
 
-def run_baseline(base_dir: str) -> int:
+def run_baseline(base_dir: str, days: int = 4) -> int:
     """Run Phase 2 untouched baseline simulation."""
-    logger.info("Starting Phase 2 Baseline Simulation Run...")
+    logger.info("Starting Phase 2 Baseline Simulation Run for %d days...", days)
+    idf_path = os.path.join(base_dir, "models", "baseline.idf")
+    update_idf_duration(idf_path, days=days)
     driver = EnergyPlusDriver(
-        idf_path=os.path.join(base_dir, "models", "baseline.idf"),
+        idf_path=idf_path,
         epw_path=os.path.join(base_dir, "models", "weather.epw"),
         output_dir=os.path.join(base_dir, "output", "phase2_baseline_run"),
     )
@@ -418,7 +420,7 @@ def main() -> int:
         exit_code, _ = run_phase3(base_dir)
         return exit_code
     else:
-        return run_baseline(base_dir)
+        return run_baseline(base_dir, days=args.days)
 
 
 if __name__ == "__main__":
