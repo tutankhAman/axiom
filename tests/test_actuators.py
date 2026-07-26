@@ -66,3 +66,18 @@ def test_actuator_manager_set_zone_setpoints():
 
     mock_api.exchange.set_actuator_value.assert_any_call("dummy_state", 10, 20.0)
     mock_api.exchange.set_actuator_value.assert_any_call("dummy_state", 20, 25.0)
+
+
+def test_actuator_manager_incremental_init_handles():
+    mock_api = MagicMock()
+    mock_api.exchange.get_actuator_handle.side_effect = lambda s, c, ctrl, name: (
+        101 if name == "SCH1" else (102 if name == "SCH2" else -1)
+    )
+
+    manager = ActuatorManager(mock_api)
+    manager.init_handles("dummy_state", ["SCH1"])
+    assert manager.handles == {"SCH1": 101}
+
+    # Second call adds SCH2 incrementally
+    manager.init_handles("dummy_state", ["SCH1", "SCH2"])
+    assert manager.handles == {"SCH1": 101, "SCH2": 102}
