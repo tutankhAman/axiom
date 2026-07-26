@@ -30,6 +30,8 @@ class SimulationState:
     sim_time_hours: float
     outdoor_temp: float
     hvac_power_w: float
+    is_occupied: bool = True
+    cumulative_hvac_kwh: float = 0.0
     zones: dict[str, ZoneState] = field(default_factory=dict)
 
 
@@ -43,6 +45,11 @@ class SensorManager:
         # Global sensor handles
         self._outdoor_temp_handle: int = -1
         self._hvac_power_handle: int = -1
+        self._occupancy_handle: int = -1
+        
+        # State tracking
+        self._cumulative_hvac_kwh: float = 0.0
+        self._last_time_hours: float = 0.0
 
         # Per-zone sensor handles: zone_name -> Dict[var_name, handle_int]
         self._zone_handles: dict[str, dict[str, int]] = {}
@@ -85,6 +92,8 @@ class SensorManager:
                 logger.warning(
                     "HVAC Electricity Demand handle is -1; fallback to 0.0 W will be used."
                 )
+
+            # Removed occupancy handle fetch since we'll compute it by hour
 
         # 2. Per-Zone Handles
         for zone in zone_names:
@@ -141,6 +150,16 @@ class SensorManager:
             if self._hvac_power_handle != -1
             else 0.0
         )
+        # Energy tracking
+        current_time_hours = float(current_time)
+        hour = int(current_time_hours % 24)
+        is_occupied = 7 <= hour < 19
+
+        if self._last_time_hours > 0:
+            dt = current_time_hours - self._last_time_hours
+            if dt > 0:
+                self._cumulative_hvac_kwh += (hvac_power * dt) / 1000.0
+        self._last_time_hours = current_time_hours
 
         # Zone metrics
         zones_data: dict[str, ZoneState] = {}
@@ -162,8 +181,10 @@ class SensorManager:
             )
 
         return SimulationState(
-            sim_time_hours=round(float(current_time), 2),
+            sim_time_hours=round(current_time_hours, 2),
             outdoor_temp=round(float(outdoor_temp), 2),
             hvac_power_w=round(float(hvac_power), 2),
+            is_occupied=is_occupied,
+            cumulative_hvac_kwh=round(self._cumulative_hvac_kwh, 3),
             zones=zones_data,
         )

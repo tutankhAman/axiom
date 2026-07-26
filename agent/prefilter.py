@@ -14,6 +14,7 @@ class PreFilterDecision:
 
     should_trigger: bool
     reason: str
+    setback_command: dict[str, float] | None = None
 
 
 class PreFilter:
@@ -39,6 +40,20 @@ class PreFilter:
 
     def evaluate(self, state: SimulationState) -> PreFilterDecision:
         """Evaluate simulation state against deterministic trigger rules."""
+        
+        # Handle time reset between Sizing Period and actual RunPeriod
+        if self.last_trigger_time is not None and state.sim_time_hours < self.last_trigger_time:
+            logger.info("Simulation time reset detected. Clearing trigger history.")
+            self.last_trigger_time = None
+
+        # Determine if we are in deterministic night setback (unoccupied)
+        if not state.is_occupied:
+            # Deterministic night setback: bypass LLM entirely
+            return PreFilterDecision(
+                should_trigger=False,
+                reason="Unoccupied hour: deterministic night setback active",
+                setback_command={"heat": 15.56, "cool": 30.0}
+            )
         # Enforce minimum cooldown between any triggers
         if self.last_trigger_time is not None and (
             state.sim_time_hours - self.last_trigger_time

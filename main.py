@@ -165,7 +165,17 @@ def run_phase5(
         nonlocal trigger_count
         bridge.update_state(sim_state)
         decision = prefilter.evaluate(sim_state)
-        if decision.should_trigger:
+        
+        if decision.setback_command:
+            # Deterministic bypass: apply setback directly
+            current_cmds = bridge.get_actuation_commands()
+            current_cmds["HTGSETP_SCH_NO_OPTIMUM"] = decision.setback_command["heat"]
+            current_cmds["CLGSETP_SCH_NO_OPTIMUM"] = decision.setback_command["cool"]
+            current_cmds["HTGSETP_SCH_NO_OPTIMUM_w_SB"] = decision.setback_command["heat"]
+            current_cmds["CLGSETP_SCH_NO_OPTIMUM_w_SB"] = decision.setback_command["cool"]
+            bridge.set_actuation_commands(current_cmds)
+            
+        elif decision.should_trigger:
             trigger_count += 1
             if sync and orchestrator:
                 logger.info(

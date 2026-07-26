@@ -41,7 +41,10 @@ def get_zone_state(context: MCPContext, zone_id: str) -> dict[str, Any]:
 def get_facility_meters(context: MCPContext) -> dict[str, Any]:
     """Get the current HVAC electricity demand for the facility."""
     state = context.bridge.get_latest_state()
-    return {"hvac_power_w": state.hvac_power_w if state else 0.0}
+    return {
+        "hvac_power_w": state.hvac_power_w if state else 0.0,
+        "cumulative_hvac_kwh": state.cumulative_hvac_kwh if state else 0.0
+    }
 
 
 def get_grid_context(context: MCPContext) -> dict[str, Any]:
@@ -54,8 +57,15 @@ def get_grid_context(context: MCPContext) -> dict[str, Any]:
     hour = int(state.sim_time_hours % 24)
     price = 0.25 if 14 <= hour <= 19 else 0.10  # Peak pricing 2pm-7pm
 
+    from agent.epw_reader import EPWReader
+    import os
+    epw_path = os.path.join(os.path.dirname(os.path.dirname(__file__)), "models", "weather.epw")
+    reader = EPWReader(epw_path)
+    forecast_12h = reader.get_forecast(state.sim_time_hours, 12)
+
     return {
         "outdoor_temp_c": state.outdoor_temp,
+        "forecast_12h_c": forecast_12h,
         "electricity_price_usd_kwh": price,
         "is_peak_pricing": price == 0.25,
     }
@@ -142,7 +152,7 @@ TOOLS_SCHEMA = [
         "type": "function",
         "function": {
             "name": "get_grid_context",
-            "description": "Get outdoor temperature and current time-of-use electricity price.",
+            "description": "Get outdoor temperature, 12-hour weather forecast, and current time-of-use electricity price.",
             "parameters": {"type": "object", "properties": {}},
         },
     },
