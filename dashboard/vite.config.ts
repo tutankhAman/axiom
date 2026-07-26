@@ -8,7 +8,11 @@ export default defineConfig({
   server: {
     host: true,
     watch: {
-      ignored: ["**/public/live_data.json", "**/dist/live_data.json"],
+      ignored: [
+        "**/public/live_data.json",
+        "**/dist/live_data.json",
+        "**/src/dashboard_data.json",
+      ],
     },
   },
   resolve: {
