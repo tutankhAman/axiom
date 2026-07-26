@@ -146,7 +146,10 @@ TOOLS_SCHEMA = [
         "type": "function",
         "function": {
             "name": "set_zone_setpoint",
-            "description": "Set the target heating and cooling setpoints for a specific zone.",
+            "description": (
+                "Set heating and cooling setpoints. Note: setpoints currently apply globally to "
+                "all zones in baseline schedules and successive calls overwrite shared values."
+            ),
             "parameters": {
                 "type": "object",
                 "properties": {
