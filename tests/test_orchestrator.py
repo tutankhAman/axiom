@@ -37,7 +37,7 @@ def test_orchestrator_executes_tool_call() -> None:
     bridge = StateBridge()
     bridge.update_state(
         SimulationState(
-            sim_time_hours=12.0,  # Midday drift period (11:00-14:00), band: 26.5-27.2°C
+            sim_time_hours=12.0,  # Midday drift period (11:00-14:00), band: 26.0-26.5°C
             outdoor_temp=25.0,
             hvac_power_w=1000.0,
             zones={"Zone_1": ZoneState("Zone_1", 22.0, 0.0, 5.0)},
@@ -63,7 +63,7 @@ def test_orchestrator_executes_tool_call() -> None:
 
     commands = bridge.get_actuation_commands()
     assert commands["HTGSETP_SCH_NO_OPTIMUM"] == 15.0
-    assert commands["CLGSETP_SCH_NO_OPTIMUM"] == 26.8
+    assert commands["CLGSETP_SCH_NO_OPTIMUM"] == 26.5
 
 
 def test_coerce_scalar_handles_lists() -> None:

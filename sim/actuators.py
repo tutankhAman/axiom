@@ -1,7 +1,6 @@
 """Actuator management for EnergyPlus simulation schedule overrides."""
 
 import logging
-from dataclasses import dataclass
 from typing import Any, ClassVar
 
 from pyenergyplus.api import EnergyPlusAPI
@@ -11,14 +10,6 @@ logger = logging.getLogger(__name__)
 
 class InvalidActuatorHandleError(Exception):
     """Raised when EnergyPlus fails to return a valid actuator handle."""
-
-
-@dataclass(frozen=True)
-class ZoneSetpoints:
-    """Heating and cooling setpoint temperatures in Celsius."""
-
-    heating_c: float
-    cooling_c: float
 
 
 class ActuatorManager:
@@ -73,14 +64,3 @@ class ActuatorManager:
 
         handle = self.handles[schedule_name]
         self.api.exchange.set_actuator_value(state, handle, value)
-
-    def set_zone_setpoints(
-        self,
-        state: Any,
-        htg_schedule: str,
-        clg_schedule: str,
-        setpoints: ZoneSetpoints,
-    ) -> None:
-        """Write heating and cooling setpoint temperatures for a zone's schedules."""
-        self.set_schedule_value(state, htg_schedule, setpoints.heating_c)
-        self.set_schedule_value(state, clg_schedule, setpoints.cooling_c)

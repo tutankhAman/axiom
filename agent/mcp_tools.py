@@ -8,9 +8,6 @@ from bridge.state_bridge import StateBridge
 
 logger = logging.getLogger(__name__)
 
-# Constants for strict math validation
-HEAT_MIN, HEAT_MAX = 15.0, 18.0  # Summer heating inactive
-COOL_MIN, COOL_MAX = 21.0, 30.0  # Summer cooling allowed range
 MIN_DEADBAND = 2.0
 
 
@@ -111,7 +108,6 @@ def set_zone_setpoint(
     heating_c: float | None = 20.0,
     cooling_c: float | None = 27.0,
     reason: str = "Automated setpoint adjustment",
-    zone_id: str = "ALL_ZONES",
 ) -> str:
     """Set heating and cooling setpoints for building HVAC schedules.
 

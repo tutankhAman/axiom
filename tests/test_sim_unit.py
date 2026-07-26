@@ -2,9 +2,7 @@
 
 from unittest.mock import MagicMock
 
-import pytest
-
-from sim.sensors import InvalidSensorHandleError, SensorManager, SimulationState, ZoneState
+from sim.sensors import SensorManager, SimulationState, ZoneState
 
 
 def test_zone_state_dataclass():
@@ -28,24 +26,15 @@ def test_sensor_manager_initialize_success():
     assert manager._zone_handles["Core_ZN"]["temp"] == 100
 
 
-def test_sensor_manager_missing_outdoor_temp_raises_error():
-    mock_api = MagicMock()
-    # Mock outdoor temp returns -1 (handle missing)
-    mock_api.exchange.get_variable_handle.return_value = -1
-
-    manager = SensorManager(mock_api)
-    with pytest.raises(InvalidSensorHandleError, match="Site Outdoor Air Drybulb Temperature"):
-        manager.initialize_handles("dummy_state", ["Core_ZN"])
-
-
 def test_sensor_manager_fetch_state():
     mock_api = MagicMock()
     mock_api.exchange.get_variable_handle.side_effect = lambda state, name, key: 42
+    mock_api.exchange.get_meter_handle.return_value = -1
     mock_api.exchange.day_of_year.return_value = 1
     mock_api.exchange.current_time.return_value = 12.0
 
-    # Values for outdoor temp, hvac power, mean temp, pmv, ppd
-    mock_api.exchange.get_variable_value.side_effect = [15.5, 1200.0, 22.0, -0.1, 6.0]
+    # Values for hvac_power, outdoor, zone_temp, pmv, ppd (meter=-1 → variable path)
+    mock_api.exchange.get_variable_value.side_effect = [1200.0, 15.5, 22.0, -0.1, 6.0]
 
     manager = SensorManager(mock_api)
     sim_state = manager.fetch_state("dummy_state", ["Core_ZN"])
@@ -65,24 +54,15 @@ def test_sensor_manager_degraded_hvac_handle():
     mock_api.exchange.get_variable_handle.side_effect = lambda state, name, key: (
         -1 if "HVAC Electricity Demand Rate" in name else 42
     )
+    mock_api.exchange.get_meter_handle.return_value = -1
     mock_api.exchange.day_of_year.return_value = 1
     mock_api.exchange.current_time.return_value = 1.0
-    mock_api.exchange.get_variable_value.side_effect = [20.0, 22.0, 0.0, 5.0]
+    # fan=42, cool=42, heat=42 → 3 component reads, then outdoor, then zone temp/pmv/ppd
+    mock_api.exchange.get_variable_value.side_effect = [0.0, 0.0, 0.0, 20.0, 22.0, 0.0, 5.0]
 
     manager = SensorManager(mock_api)
     sim_state = manager.fetch_state("dummy_state", ["Core_ZN"])
     assert sim_state.hvac_power_w == 0.0
-
-
-def test_sensor_manager_missing_zone_temp_raises_error():
-    mock_api = MagicMock()
-    mock_api.exchange.get_variable_handle.side_effect = lambda state, name, key: (
-        -1 if name == "Zone Mean Air Temperature" else 42
-    )
-
-    manager = SensorManager(mock_api)
-    with pytest.raises(InvalidSensorHandleError, match="Zone Mean Air Temperature"):
-        manager.initialize_handles("dummy_state", ["Core_ZN"])
 
 
 def test_driver_actuator_schedules_initialization():

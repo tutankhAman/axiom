@@ -7,12 +7,6 @@ from typing import Any
 logger = logging.getLogger(__name__)
 
 
-class InvalidSensorHandleError(Exception):
-    """Raised when an EnergyPlus sensor variable handle fails to resolve (-1)."""
-
-    pass
-
-
 @dataclass(frozen=True)
 class ZoneState:
     """Snapshot of a single building zone's thermal state."""

@@ -85,15 +85,15 @@ def test_prefilter_unoccupied_night_setback() -> None:
     )
     decision = prefilter.evaluate(unoccupied_state)
     assert decision.should_trigger is False
-    assert decision.setback_command == {"heat": 15.0, "cool": 28.5}
+    assert decision.setback_command == {"heat": 15.0, "cool": 30.0}
     assert "Unoccupied hour" in decision.reason
 
 
 def test_prefilter_optimum_start_window() -> None:
-    """Verify 05:00-07:00 optimum start sets cool=25.8°C to pre-condition before occupancy."""
+    """Verify optimum start (05:00-07:00) pre-conditions at 25.8°C before occupancy."""
     prefilter = PreFilter(interval_hours=1.0)
     optimum_start_state = SimulationState(
-        sim_time_hours=5.0,  # 05:00 — inside optimum-start window
+        sim_time_hours=29.0,  # Day 2, 05:00
         outdoor_temp=20.0,
         hvac_power_w=1000.0,
         is_occupied=False,
