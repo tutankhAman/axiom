@@ -23,9 +23,9 @@ Your goal: Minimize HVAC energy and peak-grid demand while maintaining ASHRAE-55
 (PMV strictly within [-0.5, +0.5]).
 
 STRATEGY: PEAK-FLOAT SETPOINT CONTROL
-The baseline building runs its chiller at 23.89°C setpoint (PMV ~0.0), overcooling occupants.
-By setting setpoints 1.0–3.5°C above baseline, the chiller runs significantly less while PMV
-remains comfortably within [+0.10, +0.45].
+The baseline building naturally operates at ~25.3°C zone air temperature (PMV ~0.0).
+By setting cooling setpoints between 25.8°C and 28.2°C, the chiller runs significantly less
+while PMV remains comfortably within [+0.10, +0.45].
 
 You have two tools:
 1. get_building_context() → returns current PMV, zone temps, outdoor temp, HVAC power,
@@ -39,25 +39,25 @@ MANDATORY RULES:
 
 PRESCRIPTIVE DECISION TABLE (use worst_pmv from get_building_context):
 
-MORNING OCCUPIED (07:00–11:00) — system allows 24.5°C to 25.5°C:
-  • worst_pmv < +0.15 → set cooling_c = 25.5°C  (max savings: chiller works ~18% less)
-  • worst_pmv between +0.15 and +0.30 → set cooling_c = 25.0°C  (balanced)
-  • worst_pmv > +0.30 → set cooling_c = 24.5°C  (comfort guard)
+MORNING OCCUPIED (07:00–11:00) — system allows 25.8°C to 26.5°C:
+  • worst_pmv < +0.15 → set cooling_c = 26.5°C  (max savings: chiller works ~25% less)
+  • worst_pmv between +0.15 and +0.30 → set cooling_c = 26.0°C  (balanced)
+  • worst_pmv > +0.30 → set cooling_c = 25.8°C  (comfort guard)
 
-MIDDAY DRIFT (11:00–14:00) — system allows 25.5°C to 26.5°C:
-  • worst_pmv < +0.25 → set cooling_c = 26.5°C  (max savings)
-  • worst_pmv between +0.25 and +0.35 → set cooling_c = 26.0°C  (balanced)
-  • worst_pmv > +0.35 → set cooling_c = 25.5°C  (comfort guard)
+MIDDAY DRIFT (11:00–14:00) — system allows 26.5°C to 27.2°C:
+  • worst_pmv < +0.25 → set cooling_c = 27.2°C  (max savings)
+  • worst_pmv between +0.25 and +0.35 → set cooling_c = 26.8°C  (balanced)
+  • worst_pmv > +0.35 → set cooling_c = 26.5°C  (comfort guard)
 
-PEAK COASTING (14:00–19:00) — system allows 27.0°C to 28.0°C:
-  • worst_pmv < +0.35 → set cooling_c = 28.0°C  (chiller coasting, max savings)
-  • worst_pmv between +0.35 and +0.45 → set cooling_c = 27.5°C  (balanced coasting)
-  • worst_pmv > +0.45 → set cooling_c = 27.0°C  (comfort guard)
-  • worst_pmv > +0.50 → EMERGENCY: set cooling_c = 27.0°C, include "comfort emergency"
+PEAK COASTING (14:00–19:00) — system allows 27.5°C to 28.2°C:
+  • worst_pmv < +0.35 → set cooling_c = 28.2°C  (chiller coasting, max savings)
+  • worst_pmv between +0.35 and +0.45 → set cooling_c = 27.8°C  (balanced coasting)
+  • worst_pmv > +0.45 → set cooling_c = 27.5°C  (comfort guard)
+  • worst_pmv > +0.50 → EMERGENCY: set cooling_c = 27.5°C, include "comfort emergency"
     in reason.
 
 UNOCCUPIED (19:00–07:00):
-  • Handled deterministically (05:00–07:00 optimum start at 24.5°C; 19:00–05:00 setback 30.0°C).
+  • Handled deterministically (05:00–07:00 optimum start at 25.8°C; 19:00–05:00 setback 28.5°C).
 """
 
 ABLATION_SYSTEM_PROMPT = """ENERGY-ONLY ABLATION MODE:

@@ -50,19 +50,18 @@ class PreFilter:
         if not state.is_occupied:
             hour = int(state.sim_time_hours % 24)
             if 5 <= hour < 7:
-                # OPTIMUM START (05:00-07:00): Pre-condition building from 30°C night setback
-                # to 24.5°C before occupants arrive at 07:00. This mirrors the baseline's 06:00
-                # schedule drop and eliminates the morning PMV spike.
+                # OPTIMUM START (05:00-07:00): Pre-condition building to 25.8°C before occupancy.
+                # Avoids overcooling (24.5°C was driving chiller at 5.7kW) while keeping PMV ~+0.10.
                 return PreFilterDecision(
                     should_trigger=False,
-                    reason="Optimum start: pre-conditioning to 24.5°C (05:00-07:00)",
-                    setback_command={"heat": 15.0, "cool": 24.5},
+                    reason="Optimum start: pre-conditioning to 25.8°C (05:00-07:00)",
+                    setback_command={"heat": 15.0, "cool": 25.8},
                 )
-            # Deep night setback: chiller fully idle
+            # Night setback: relax setpoint to 28.5°C to prevent excessive building warmup
             return PreFilterDecision(
                 should_trigger=False,
-                reason="Unoccupied hour: deterministic night setback active (cool=30.0°C)",
-                setback_command={"heat": 15.0, "cool": 30.0},
+                reason="Unoccupied hour: deterministic night setback active (cool=28.5°C)",
+                setback_command={"heat": 15.0, "cool": 28.5},
             )
 
         # Enforce minimum cooldown between any triggers
