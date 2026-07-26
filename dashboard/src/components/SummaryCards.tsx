@@ -1,77 +1,99 @@
 import React from "react"
 import { Card, CardContent } from "@/components/ui/card"
-import { Separator } from "@/components/ui/separator"
 import type { Summary } from "@/types"
 
-function formatKwh(kwh: number): string {
-  return `${kwh.toLocaleString("en-US", { minimumFractionDigits: 1, maximumFractionDigits: 1 })}`
+const formatter = new Intl.NumberFormat("en-US", {
+  minimumFractionDigits: 1,
+  maximumFractionDigits: 1,
+})
+
+function savingsVariant(pct: number): "destructive" | "warning" | "success" {
+  if (pct <= 0) return "destructive"
+  if (pct < 15) return "warning"
+  return "success"
 }
 
-function savingsColor(pct: number): string {
-  if (pct <= 0) return "text-red-500"
-  if (pct > 20) return "text-emerald-500"
-  return "text-amber-500"
+function savingsSymbol(pct: number): string {
+  if (pct > 0) return "+"
+  return ""
 }
 
-interface MetricCardProps {
-  label: string
-  value: string
-  subtext?: string
-  highlight?: string
+interface MetricCardGroupProps {
+  title: string
+  primary: { value: string; unit?: string }
+  secondary?: string
+  accent?: boolean
+  variant?: "default" | "success" | "warning" | "destructive"
 }
 
-function MetricCard({ label, value, subtext, highlight }: MetricCardProps) {
+function MetricCardGroup({ title, primary, secondary, accent, variant = "default" }: MetricCardGroupProps) {
+  const accentClass = variant === "success"
+    ? "text-success"
+    : variant === "warning"
+    ? "text-warning"
+    : variant === "destructive"
+    ? "text-destructive"
+    : "text-foreground"
+
   return (
-    <Card>
+    <Card className="group transition-colors duration-300 hover:border-primary/30">
       <CardContent className="p-5">
-        <p className="text-xs font-medium text-muted-foreground tracking-wide uppercase mb-1">
-          {label}
+        <p className="text-[10px] font-medium tracking-[0.18em] uppercase text-muted-foreground mb-2.5">
+          {title}
         </p>
-        <p className={`text-2xl font-semibold tracking-tight ${highlight || ""}`}>
-          {value}
-          {subtext && (
-            <span className="text-xs font-normal text-muted-foreground ml-2">
-              {subtext}
+        <div className="flex items-baseline gap-2">
+          <span className={`text-[1.75rem] font-bold leading-none tracking-tight tabular-nums ${accent ? accentClass : "text-foreground"}`}>
+            {primary.value}
+          </span>
+          {primary.unit && (
+            <span className="text-sm font-medium text-muted-foreground">
+              {primary.unit}
             </span>
           )}
-        </p>
+        </div>
+        {secondary && (
+          <p className="mt-2 text-[11px] font-mono text-muted-foreground tabular-nums">
+            {secondary}
+          </p>
+        )}
       </CardContent>
     </Card>
   )
 }
 
 const SummaryCards = React.memo(function SummaryCards({ summary }: { summary: Summary }) {
-  const savingsPct = summary.pct_savings.toFixed(1)
-  const isNegative = summary.pct_savings <= 0
+  const pct = summary.pct_savings.toFixed(1)
 
   return (
-    <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
-      <MetricCard
-        label="Baseline Energy"
-        value={formatKwh(summary.baseline_kwh)}
-        subtext="kWh"
-      />
-      <MetricCard
-        label="Closed-Loop Energy"
-        value={formatKwh(summary.closed_loop_kwh)}
-        subtext="kWh"
-      />
-      <Card>
-        <CardContent className="p-5">
-          <p className="text-xs font-medium text-muted-foreground tracking-wide uppercase mb-1">
-            Energy Savings
-          </p>
-          <p className={`text-3xl font-bold tracking-tight ${savingsColor(summary.pct_savings)}`}>
-            {isNegative ? "" : "+"}{savingsPct}%
-          </p>
-        </CardContent>
-      </Card>
-      <MetricCard
-        label="Comfort Compliance"
-        value={`${summary.comfort_compliance_pct_closed_loop.toFixed(1)}%`}
-        subtext={`vs ${summary.comfort_compliance_pct_baseline.toFixed(1)}%`}
-      />
-      <Separator className="col-span-2 lg:col-span-4" />
+    <div className="grid grid-cols-2 lg:grid-cols-4 gap-3">
+      <div className="animate-fade-in-up animate-stagger-1">
+        <MetricCardGroup
+          title="Baseline Energy"
+          primary={{ value: formatter.format(summary.baseline_kwh), unit: "kWh" }}
+        />
+      </div>
+      <div className="animate-fade-in-up animate-stagger-2">
+        <MetricCardGroup
+          title="Closed-Loop Energy"
+          primary={{ value: formatter.format(summary.closed_loop_kwh), unit: "kWh" }}
+        />
+      </div>
+      <div className="animate-fade-in-up animate-stagger-3">
+        <MetricCardGroup
+          title="Energy Savings"
+          primary={{ value: `${savingsSymbol(summary.pct_savings)}${pct}%` }}
+          accent
+          variant={savingsVariant(summary.pct_savings)}
+        />
+      </div>
+      <div className="animate-fade-in-up animate-stagger-4">
+        <MetricCardGroup
+          title="Comfort Compliance"
+          primary={{ value: `${summary.comfort_compliance_pct_closed_loop.toFixed(1)}%` }}
+          secondary={`baseline ${summary.comfort_compliance_pct_baseline.toFixed(1)}%`}
+          variant={summary.comfort_compliance_pct_closed_loop >= 90 ? "success" : "warning"}
+        />
+      </div>
     </div>
   )
 })

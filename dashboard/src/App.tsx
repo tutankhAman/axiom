@@ -3,13 +3,14 @@ import SummaryCards from "@/components/SummaryCards"
 import PowerChart from "@/components/PowerChart"
 import ComfortChart from "@/components/ComfortChart"
 import DecisionLog from "@/components/DecisionLog"
-import { Separator } from "@/components/ui/separator"
 import { Badge } from "@/components/ui/badge"
 import type { DashboardData } from "@/types"
 import initialData from "@/dashboard_data.json"
 
 export default function App() {
-  const [data, setData] = useState<DashboardData>(initialData as unknown as DashboardData)
+  const [data, setData] = useState<DashboardData>(
+    initialData as unknown as DashboardData,
+  )
   const [isLiveStream, setIsLiveStream] = useState<boolean>(false)
   const [currentStep, setCurrentStep] = useState<number>(0)
   const lastStepRef = useRef<number>(0)
@@ -20,7 +21,9 @@ export default function App() {
 
     const fetchLiveData = async () => {
       try {
-        const res = await fetch("/live_data.json?t=" + Date.now(), { cache: "no-store" })
+        const res = await fetch("/live_data.json?t=" + Date.now(), {
+          cache: "no-store",
+        })
         if (!res.ok || !active) return
         const json = await res.json()
         if (!json?.summary || !json.power_series || !active) return
@@ -35,7 +38,7 @@ export default function App() {
 
         if (!json.is_live) clearInterval(timer)
       } catch {
-        // fallback silently to static dataset
+        // fallback to static dataset
       }
     }
 
@@ -53,64 +56,65 @@ export default function App() {
   const days = (lastHour / 24).toFixed(1)
 
   return (
-    <div className="min-h-screen bg-background antialiased text-foreground">
-      <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
-        <div className="max-w-7xl mx-auto px-5 py-4 flex items-center justify-between">
-          <div className="flex items-center gap-3">
-            <div>
-              <h1 className="text-base font-semibold tracking-tight flex items-center gap-2">
-                Axiom
-                <span className="text-xs font-normal text-muted-foreground">
-                  (Closed-Loop HVAC Agent)
-                </span>
-              </h1>
-              <p className="text-xs text-muted-foreground">
-                Physical AI Proof-of-Concept &mdash; Real-Time Performance Monitor
-              </p>
-            </div>
+    <div className="min-h-screen bg-background text-foreground antialiased selection:bg-primary/20">
+      {/* Header */}
+      <header className="sticky top-0 z-50 border-b bg-background/80 backdrop-blur-xl supports-[backdrop-filter]:bg-background/60">
+        <div className="max-w-[1440px] mx-auto px-6 h-14 flex items-center justify-between">
+          <div className="flex items-baseline gap-4">
+            <h1 className="text-sm font-semibold tracking-tight text-foreground">
+              Axiom
+            </h1>
+            <span className="hidden sm:inline-block text-[11px] font-mono text-muted-foreground tracking-wide">
+              Closed-Loop HVAC Agent
+            </span>
           </div>
 
           <div className="flex items-center gap-4">
             {isLiveStream ? (
-              <Badge variant="outline" className="bg-emerald-500/10 text-emerald-500 border-emerald-500/20 px-3 py-1 text-xs gap-2 animate-pulse">
-                <span className="relative flex h-2 w-2">
-                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
-                  <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
+              <Badge variant="success" size="sm" className="gap-1.5 animate-pulse">
+                <span className="relative flex h-1.5 w-1.5">
+                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-success opacity-75" />
+                  <span className="relative inline-flex rounded-full h-1.5 w-1.5 bg-success" />
                 </span>
-                LIVE STREAMING (Step #{currentStep})
+                LIVE &middot; Step {currentStep}
               </Badge>
             ) : (
-              <Badge variant="secondary" className="px-3 py-1 text-xs text-muted-foreground">
-                ✓ SIMULATION COMPLETE
+              <Badge variant="secondary" size="sm">
+                Simulation Complete
               </Badge>
             )}
 
-            <span className="text-[11px] text-muted-foreground font-mono tabular-nums">
-              {power_series.length} timesteps &middot; {days} days
+            <span className="hidden sm:block text-[10px] font-mono tabular-nums text-muted-foreground">
+              {power_series.length.toLocaleString()} t &middot; {days}d
             </span>
           </div>
         </div>
       </header>
 
-      <main className="max-w-7xl mx-auto px-5 py-6 space-y-6">
+      {/* Main Content */}
+      <main className="max-w-[1440px] mx-auto px-6 py-8 space-y-5">
+        {/* Summary KPI cards */}
         <SummaryCards summary={summary} />
 
-        <Separator />
-
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
+        {/* Charts — 2-column grid */}
+        <div className="grid grid-cols-1 xl:grid-cols-2 gap-4">
           <PowerChart data={power_series} />
           <ComfortChart data={pmv_series} />
         </div>
 
-        <Separator />
-
+        {/* Decision Log */}
         <DecisionLog decisions={decision_log} />
       </main>
 
-      <footer className="border-t mt-8">
-        <div className="max-w-7xl mx-auto px-5 py-3 text-[11px] text-muted-foreground flex justify-between">
-          <span>Axiom &middot; Physical AI Building Management System</span>
-          <span>Honeywell Hackathon Submission</span>
+      {/* Footer */}
+      <footer className="border-t border-border/50">
+        <div className="max-w-[1440px] mx-auto px-6 py-3 flex items-center justify-between">
+          <span className="text-[10px] font-mono text-muted-foreground tracking-wide">
+            Axiom &middot; Physical AI BMS
+          </span>
+          <span className="text-[10px] font-mono text-muted-foreground">
+            Honeywell Hackathon
+          </span>
         </div>
       </footer>
     </div>

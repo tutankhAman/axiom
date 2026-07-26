@@ -17,83 +17,83 @@ import {
 } from "@/components/ui/chart"
 import type { PowerPoint } from "@/types"
 
+const BASELINE_COLOR = "oklch(0.55 0.01 260)"
+const AGENT_COLOR = "oklch(0.72 0.15 220)"
+
 interface PowerChartProps {
   data: PowerPoint[]
 }
 
 const PowerChart = React.memo(function PowerChart({ data }: PowerChartProps) {
   return (
-    <Card>
-      <CardHeader className="pb-3">
-        <CardTitle className="text-sm font-medium text-muted-foreground tracking-wide uppercase">
-          HVAC Power Demand
-        </CardTitle>
+    <Card className="animate-fade-in-up animate-stagger-5">
+      <CardHeader className="pb-2">
+        <CardTitle>HVAC Power Demand</CardTitle>
       </CardHeader>
       <CardContent>
         <div className="h-[300px]">
           <ChartContainer
             config={{
-              baseline: {
-                label: "Baseline",
-                color: "hsl(0 0% 60%)",
-              },
-              agent: {
-                label: "Closed-Loop Agent",
-                color: "hsl(221.2 83.2% 53.3%)",
-              },
+              baseline: { label: "Baseline", color: BASELINE_COLOR },
+              agent: { label: "Closed-Loop Agent", color: AGENT_COLOR },
             }}
             className="h-full w-full"
           >
-            <LineChart data={data} margin={{ top: 4, right: 8, bottom: 4, left: 0 }}>
+            <LineChart data={data} margin={{ top: 4, right: 4, bottom: 4, left: 0 }}>
               <CartesianGrid
-                strokeDasharray="3 3"
-                className="stroke-muted/30"
+                strokeDasharray="2 4"
+                className="stroke-border"
                 vertical={false}
               />
               <XAxis
                 dataKey="hour"
-                tick={{ fontSize: 11 }}
+                tick={{ fontSize: 10, fontFamily: "JetBrains Mono" }}
                 tickLine={false}
                 axisLine={false}
                 tickFormatter={(v) => `${Number(v).toFixed(0)}h`}
                 type="number"
                 domain={["dataMin", "dataMax"]}
-                tickCount={7}
-                minTickGap={20}
+                tickCount={8}
+                minTickGap={24}
+                className="text-muted-foreground"
               />
               <YAxis
-                tick={{ fontSize: 11 }}
+                tick={{ fontSize: 10, fontFamily: "JetBrains Mono" }}
                 tickLine={false}
                 axisLine={false}
                 tickFormatter={(v) => `${(v / 1000).toFixed(0)}kW`}
                 width={48}
+                className="text-muted-foreground"
               />
               <Tooltip
-                content={<ChartTooltipContent formatter={(v, name) => [`${Number(v).toLocaleString()} W`, name]} />}
+                content={
+                  <ChartTooltipContent
+                    formatter={(v) => [
+                      `${Number(v).toLocaleString()} W`,
+                      "",
+                    ]}
+                  />
+                }
               />
-              <Legend content={
-                <ChartLegend>
-                  <ChartLegendItem color="hsl(0 0% 60%)" label="Baseline" />
-                  <ChartLegendItem color="hsl(221.2 83.2% 53.3%)" label="Closed-Loop Agent" />
-                </ChartLegend>
-              } />
+              <Legend content={<ChartLegend />}>
+                <ChartLegendItem color={BASELINE_COLOR} label="Baseline" />
+                <ChartLegendItem color={AGENT_COLOR} label="Closed-Loop Agent" />
+              </Legend>
               <Line
                 type="monotone"
-                name="Baseline"
                 dataKey="baseline_w"
-                stroke="#9ca3af"
-                strokeWidth={1.5}
+                stroke={BASELINE_COLOR}
+                strokeWidth={1.25}
                 dot={false}
-                activeDot={{ r: 3, fill: "#9ca3af" }}
+                activeDot={{ r: 3, fill: BASELINE_COLOR }}
               />
               <Line
                 type="monotone"
-                name="Closed-Loop Agent"
                 dataKey="agent_w"
-                stroke="hsl(221.2 83.2% 53.3%)"
-                strokeWidth={1.5}
+                stroke={AGENT_COLOR}
+                strokeWidth={1.25}
                 dot={false}
-                activeDot={{ r: 3, fill: "hsl(221.2 83.2% 53.3%)" }}
+                activeDot={{ r: 3, fill: AGENT_COLOR }}
               />
             </LineChart>
           </ChartContainer>

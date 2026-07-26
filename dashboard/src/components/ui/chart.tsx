@@ -21,9 +21,10 @@ const ChartContainer = React.forwardRef<
     <div
       ref={ref}
       className={cn(
-        "flex aspect-video justify-center text-xs",
+        "flex justify-center text-xs",
         "[&_.recharts-cartesian-axis-tick_text]:fill-muted-foreground",
-        "[&_.recharts-cartesian-grid_line[stroke]]:stroke-border/50",
+        "[&_.recharts-cartesian-grid_line]:stroke-border/50",
+        "[&_.recharts-cartesian-grid_line[stroke='']]:stroke-none",
         "[&_.recharts-surface]:outline-none",
         className
       )}
@@ -73,16 +74,17 @@ const ChartTooltipContent = React.forwardRef<
       <div
         ref={ref}
         className={cn(
-          "grid gap-1 p-3 bg-popover text-popover-foreground border border-border rounded-lg shadow-lg min-w-[8rem]",
+          "rounded-md border bg-popover px-3 py-2.5 text-xs shadow-lg",
+          "ring-1 ring-white/[0.04] ring-inset",
           className
         )}
       >
         {!hideLabel && label != null && (
-          <div className="text-xs font-medium text-foreground mb-1">
+          <div className="text-[11px] font-mono font-medium text-primary mb-1.5 pb-1.5 border-b border-border">
             {labelFormatter ? labelFormatter(label) : `Hour ${label}`}
           </div>
         )}
-        <div className="grid gap-1.5">
+        <div className="grid gap-1">
           {payload.map((item, index) => {
             const formatted = formatter
               ? formatter(item.value as number, item.name ?? "")
@@ -93,19 +95,19 @@ const ChartTooltipContent = React.forwardRef<
                 {!hideIndicator && item.color && (
                   <div
                     className={cn(
-                      "rounded-full shrink-0",
-                      indicator === "dot" && "w-2 h-2",
-                      indicator === "line" && "w-4 h-0.5",
+                      "shrink-0",
+                      indicator === "dot" && "w-1.5 h-1.5 rounded-full",
+                      indicator === "line" && "w-3 h-px",
                       indicator === "dashed" &&
-                        "w-4 h-0.5 border-t-[2px] border-dashed"
+                        "w-3 h-px border-t border-dashed border-current"
                     )}
                     style={{ backgroundColor: item.color }}
                   />
                 )}
-                <span className="text-xs text-muted-foreground font-medium flex-1">
+                <span className="font-mono text-muted-foreground flex-1 min-w-0 truncate">
                   {formatted[1]}
                 </span>
-                <span className="text-xs font-semibold text-foreground tabular-nums">
+                <span className="font-mono font-semibold text-foreground tabular-nums">
                   {formatted[0]}
                 </span>
               </div>
@@ -125,7 +127,8 @@ const ChartLegend = React.forwardRef<
   <div
     ref={ref}
     className={cn(
-      "flex flex-wrap items-center gap-4 text-xs text-muted-foreground",
+      "flex flex-wrap items-center gap-5 mt-4 justify-center",
+      "text-[11px] font-mono text-muted-foreground",
       className
     )}
   />
@@ -139,14 +142,14 @@ interface ChartLegendItemProps extends React.HTMLAttributes<HTMLDivElement> {
 
 const ChartLegendItem = React.forwardRef<HTMLDivElement, ChartLegendItemProps>(
   ({ className, color, label, ...props }, ref) => (
-    <div ref={ref} className={cn("flex items-center gap-1.5", className)} {...props}>
+    <div ref={ref} className={cn("flex items-center gap-2", className)} {...props}>
       {color && (
         <div
-          className="h-2 w-2 rounded-full shrink-0"
+          className="h-2.5 w-2.5 rounded-sm shrink-0"
           style={{ backgroundColor: color }}
         />
       )}
-      <span>{label}</span>
+      <span className="tabular-nums">{label}</span>
     </div>
   )
 )

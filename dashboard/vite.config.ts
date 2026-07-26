@@ -7,6 +7,9 @@ export default defineConfig({
   plugins: [react(), tailwindcss()],
   server: {
     host: true,
+    watch: {
+      ignored: ["**/public/live_data.json", "**/dist/live_data.json"],
+    },
   },
   resolve: {
     alias: {

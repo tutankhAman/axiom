@@ -18,101 +18,104 @@ import {
 } from "@/components/ui/chart"
 import type { PivotPoint } from "@/types"
 
+const BASELINE_COLOR = "oklch(0.55 0.01 260)"
+const AGENT_COLOR = "oklch(0.72 0.15 220)"
+
 interface ComfortChartProps {
   data: PivotPoint[]
 }
 
 const ComfortChart = React.memo(function ComfortChart({ data }: ComfortChartProps) {
   return (
-    <Card>
-      <CardHeader className="pb-3">
-        <CardTitle className="text-sm font-medium text-muted-foreground tracking-wide uppercase">
-          Thermal Comfort (PMV)
-        </CardTitle>
+    <Card className="animate-fade-in-up animate-stagger-6">
+      <CardHeader className="pb-2">
+        <CardTitle>Thermal Comfort (PMV)</CardTitle>
       </CardHeader>
       <CardContent>
         <div className="h-[300px]">
           <ChartContainer
             config={{
-              baseline: {
-                label: "Baseline PMV",
-                color: "hsl(0 0% 60%)",
-              },
-              agent: {
-                label: "Agent PMV",
-                color: "hsl(221.2 83.2% 53.3%)",
-              },
+              baseline: { label: "Baseline PMV", color: BASELINE_COLOR },
+              agent: { label: "Agent PMV", color: AGENT_COLOR },
             }}
             className="h-full w-full"
           >
-            <LineChart data={data} margin={{ top: 4, right: 8, bottom: 4, left: 0 }}>
+            <LineChart data={data} margin={{ top: 4, right: 4, bottom: 4, left: 0 }}>
               <CartesianGrid
-                strokeDasharray="3 3"
-                className="stroke-muted/30"
+                strokeDasharray="2 4"
+                className="stroke-border"
                 vertical={false}
               />
               <XAxis
                 dataKey="hour"
-                tick={{ fontSize: 11 }}
+                tick={{ fontSize: 10, fontFamily: "JetBrains Mono" }}
                 tickLine={false}
                 axisLine={false}
                 tickFormatter={(v) => `${Number(v).toFixed(0)}h`}
                 type="number"
                 domain={["dataMin", "dataMax"]}
-                tickCount={7}
-                minTickGap={20}
+                tickCount={8}
+                minTickGap={24}
+                className="text-muted-foreground"
               />
               <YAxis
-                tick={{ fontSize: 11 }}
+                tick={{ fontSize: 10, fontFamily: "JetBrains Mono" }}
                 tickLine={false}
                 axisLine={false}
-                domain={["dataMin - 0.2", "dataMax + 0.2"]}
-                width={36}
+                domain={[-1, 1]}
+                width={32}
+                className="text-muted-foreground"
               />
               <Tooltip
-                content={<ChartTooltipContent formatter={(v, name) => [Number(v).toFixed(3), name]} />}
+                content={
+                  <ChartTooltipContent
+                    formatter={(v) => [Number(v).toFixed(3), ""]}
+                  />
+                }
               />
-              <Legend content={
-                <ChartLegend>
-                  <ChartLegendItem color="hsl(0 0% 60%)" label="Baseline PMV" />
-                  <ChartLegendItem color="hsl(221.2 83.2% 53.3%)" label="Agent PMV" />
-                </ChartLegend>
-              } />
+              <Legend content={<ChartLegend />}>
+                <ChartLegendItem color={BASELINE_COLOR} label="Baseline PMV" />
+                <ChartLegendItem color={AGENT_COLOR} label="Agent PMV" />
+              </Legend>
               <ReferenceArea
                 y1={-0.5}
                 y2={0.5}
-                fill="hsl(142 76% 36% / 0.08)"
-                strokeDasharray=""
+                fill="oklch(0.75 0.16 160 / 0.08)"
+                stroke="oklch(0.75 0.16 160 / 0.15)"
+                strokeDasharray="4 4"
+                strokeWidth={0.5}
               />
               <ReferenceArea
                 y1={-1}
                 y2={-0.5}
-                fill="hsl(0 72% 51% / 0.04)"
-                strokeDasharray=""
+                fill="oklch(0.58 0.22 25 / 0.06)"
+                stroke="oklch(0.58 0.22 25 / 0.1)"
+                strokeDasharray="4 4"
+                strokeWidth={0.5}
               />
               <ReferenceArea
                 y1={0.5}
                 y2={1}
-                fill="hsl(0 72% 51% / 0.04)"
-                strokeDasharray=""
+                fill="oklch(0.58 0.22 25 / 0.06)"
+                stroke="oklch(0.58 0.22 25 / 0.1)"
+                strokeDasharray="4 4"
+                strokeWidth={0.5}
               />
               <Line
                 type="monotone"
-                name="Baseline PMV"
                 dataKey="baseline_pmv"
-                stroke="#9ca3af"
-                strokeWidth={1.5}
+                stroke={BASELINE_COLOR}
+                strokeWidth={1.25}
                 dot={false}
-                activeDot={{ r: 3, fill: "#9ca3af" }}
+                activeDot={{ r: 3, fill: BASELINE_COLOR }}
               />
               <Line
                 type="monotone"
-                name="Agent PMV"
                 dataKey="agent_pmv"
-                stroke="hsl(221.2 83.2% 53.3%)"
-                strokeWidth={1.5}
+                stroke={AGENT_COLOR}
+                strokeWidth={1.25}
                 dot={false}
-                activeDot={{ r: 3, fill: "hsl(221.2 83.2% 53.3%)" }}
+                activeDot={{ r: 3, fill: AGENT_COLOR }}
               />
             </LineChart>
           </ChartContainer>
