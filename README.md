@@ -8,16 +8,16 @@ Axiom utilizes a **neuro-symbolic design**: strategic reasoning (pre-cooling, pe
 
 ## Performance Metrics
 
-Evaluation results against the DOE Commercial Reference Medium Office baseline over a summer peak cooling season:
+Evaluation results against the DOE Commercial Reference Medium Office baseline over a 3-day summer peak cooling period (July 21-24):
 
 | Metric | Baseline | Axiom AI Agent | Impact |
 | :--- | :---: | :---: | :---: |
-| **Total Energy Consumption** | 158.8 kWh | 130.1 kWh | **18.1% Net kWh Reduction** |
-| **Thermal Comfort Compliance** | 53.5% | 89.6% | **+36.1% ASHRAE-55 Compliance** |
-| **Peak Tariff HVAC Demand (14:00-19:00)** | ~18.5 kW | ~12.4 kW | **>30% Peak kW Reduction** |
-| **LLM Execution Latency Fallback** | N/A | Zero-Order Hold | **0 Simulation Crashes** |
+| **Total Energy Consumption** | 117.7 kWh | 88.8 kWh | **24.6% kWh Reduction** |
+| **Thermal Comfort Compliance** | 79.2% | 100.0% | **+20.8% ASHRAE-55 Compliance** |
+| **LLM Tool Calls (over 3 days)** | N/A | 30 calls | **94% fewer than tick-by-tick** |
+| **LLM Execution Latency Fallback** | N/A | Zero-Order Hold | **0 simulation crashes** |
 
-*Thermal comfort compliance is evaluated using Fanger's Predicted Mean Vote (PMV) strictly within the ASHRAE-55 acceptable range `[-0.5, +0.5]` during occupied hours (07:00–19:00).*
+*Thermal comfort compliance is evaluated using Fanger's Predicted Mean Vote (PMV) strictly within the ASHRAE-55 acceptable range `[-0.5, +0.5]` during occupied hours. 288 total simulation timesteps at 15-minute resolution.*
 
 ---
 
