@@ -1,0 +1,3192 @@
+{
+  "summary": {
+    "baseline_kwh": 158.8,
+    "closed_loop_kwh": 130.1,
+    "pct_savings": 18.1,
+    "comfort_compliance_pct_baseline": 53.5,
+    "comfort_compliance_pct_closed_loop": 89.6
+  },
+  "power_series": [
+    {
+      "hour": 0.0,
+      "baseline_w": 571.0,
+      "agent_w": 571.0
+    },
+    {
+      "hour": 0.25,
+      "baseline_w": 571.0,
+      "agent_w": 571.0
+    },
+    {
+      "hour": 0.5,
+      "baseline_w": 571.0,
+      "agent_w": 571.0
+    },
+    {
+      "hour": 0.75,
+      "baseline_w": 571.0,
+      "agent_w": 571.0
+    },
+    {
+      "hour": 1.0,
+      "baseline_w": 571.0,
+      "agent_w": 571.0
+    },
+    {
+      "hour": 1.25,
+      "baseline_w": 571.0,
+      "agent_w": 571.0
+    },
+    {
+      "hour": 1.5,
+      "baseline_w": 571.0,
+      "agent_w": 571.0
+    },
+    {
+      "hour": 1.75,
+      "baseline_w": 571.0,
+      "agent_w": 571.0
+    },
+    {
+      "hour": 2.0,
+      "baseline_w": 571.0,
+      "agent_w": 571.0
+    },
+    {
+      "hour": 2.25,
+      "baseline_w": 571.0,
+      "agent_w": 571.0
+    },
+    {
+      "hour": 2.5,
+      "baseline_w": 571.0,
+      "agent_w": 571.0
+    },
+    {
+      "hour": 2.75,
+      "baseline_w": 571.0,
+      "agent_w": 571.0
+    },
+    {
+      "hour": 3.0,
+      "baseline_w": 571.0,
+      "agent_w": 571.0
+    },
+    {
+      "hour": 3.25,
+      "baseline_w": 571.0,
+      "agent_w": 571.0
+    },
+    {
+      "hour": 3.5,
+      "baseline_w": 571.0,
+      "agent_w": 571.0
+    },
+    {
+      "hour": 3.75,
+      "baseline_w": 571.0,
+      "agent_w": 571.0
+    },
+    {
+      "hour": 4.0,
+      "baseline_w": 571.0,
+      "agent_w": 571.0
+    },
+    {
+      "hour": 4.25,
+      "baseline_w": 571.0,
+      "agent_w": 571.0
+    },
+    {
+      "hour": 4.5,
+      "baseline_w": 571.0,
+      "agent_w": 571.0
+    },
+    {
+      "hour": 4.75,
+      "baseline_w": 571.0,
+      "agent_w": 571.0
+    },
+    {
+      "hour": 5.0,
+      "baseline_w": 571.0,
+      "agent_w": 2040.9
+    },
+    {
+      "hour": 5.25,
+      "baseline_w": 571.0,
+      "agent_w": 1695.8
+    },
+    {
+      "hour": 5.5,
+      "baseline_w": 571.0,
+      "agent_w": 680.2
+    },
+    {
+      "hour": 5.75,
+      "baseline_w": 571.0,
+      "agent_w": 2139.3
+    },
+    {
+      "hour": 6.0,
+      "baseline_w": 571.0,
+      "agent_w": 1367.4
+    },
+    {
+      "hour": 6.25,
+      "baseline_w": 571.0,
+      "agent_w": 1102.9
+    },
+    {
+      "hour": 6.5,
+      "baseline_w": 571.0,
+      "agent_w": 2267.8
+    },
+    {
+      "hour": 6.75,
+      "baseline_w": 571.0,
+      "agent_w": 1446.8
+    },
+    {
+      "hour": 7.0,
+      "baseline_w": 571.0,
+      "agent_w": 571.0
+    },
+    {
+      "hour": 7.25,
+      "baseline_w": 759.3,
+      "agent_w": 1158.3
+    },
+    {
+      "hour": 7.5,
+      "baseline_w": 655.0,
+      "agent_w": 1681.1
+    },
+    {
+      "hour": 7.75,
+      "baseline_w": 571.0,
+      "agent_w": 747.4
+    },
+    {
+      "hour": 8.0,
+      "baseline_w": 842.4,
+      "agent_w": 1226.0
+    },
+    {
+      "hour": 8.25,
+      "baseline_w": 702.7,
+      "agent_w": 1669.2
+    },
+    {
+      "hour": 8.5,
+      "baseline_w": 571.0,
+      "agent_w": 844.3
+    },
+    {
+      "hour": 8.75,
+      "baseline_w": 909.9,
+      "agent_w": 1301.7
+    },
+    {
+      "hour": 9.0,
+      "baseline_w": 714.0,
+      "agent_w": 1949.9
+    },
+    {
+      "hour": 9.25,
+      "baseline_w": 571.0,
+      "agent_w": 928.6
+    },
+    {
+      "hour": 9.5,
+      "baseline_w": 909.6,
+      "agent_w": 1556.0
+    },
+    {
+      "hour": 9.75,
+      "baseline_w": 702.1,
+      "agent_w": 1923.6
+    },
+    {
+      "hour": 10.0,
+      "baseline_w": 571.0,
+      "agent_w": 1418.6
+    },
+    {
+      "hour": 10.25,
+      "baseline_w": 876.4,
+      "agent_w": 1385.8
+    },
+    {
+      "hour": 10.5,
+      "baseline_w": 666.5,
+      "agent_w": 2273.6
+    },
+    {
+      "hour": 10.75,
+      "baseline_w": 571.0,
+      "agent_w": 1547.4
+    },
+    {
+      "hour": 11.0,
+      "baseline_w": 822.5,
+      "agent_w": 1199.0
+    },
+    {
+      "hour": 11.25,
+      "baseline_w": 663.0,
+      "agent_w": 1710.8
+    },
+    {
+      "hour": 11.5,
+      "baseline_w": 910.4,
+      "agent_w": 1780.9
+    },
+    {
+      "hour": 11.75,
+      "baseline_w": 906.0,
+      "agent_w": 1402.5
+    },
+    {
+      "hour": 12.0,
+      "baseline_w": 658.6,
+      "agent_w": 1706.6
+    },
+    {
+      "hour": 12.25,
+      "baseline_w": 571.0,
+      "agent_w": 1604.7
+    },
+    {
+      "hour": 12.5,
+      "baseline_w": 1226.8,
+      "agent_w": 1012.5
+    },
+    {
+      "hour": 12.75,
+      "baseline_w": 712.3,
+      "agent_w": 1028.2
+    },
+    {
+      "hour": 13.0,
+      "baseline_w": 571.0,
+      "agent_w": 2604.1
+    },
+    {
+      "hour": 13.25,
+      "baseline_w": 571.0,
+      "agent_w": 1748.7
+    },
+    {
+      "hour": 13.5,
+      "baseline_w": 1294.4,
+      "agent_w": 907.1
+    },
+    {
+      "hour": 13.75,
+      "baseline_w": 679.7,
+      "agent_w": 2409.2
+    },
+    {
+      "hour": 14.0,
+      "baseline_w": 571.0,
+      "agent_w": 1748.9
+    },
+    {
+      "hour": 14.25,
+      "baseline_w": 571.0,
+      "agent_w": 1050.4
+    },
+    {
+      "hour": 14.5,
+      "baseline_w": 1309.2,
+      "agent_w": 571.0
+    },
+    {
+      "hour": 14.75,
+      "baseline_w": 660.4,
+      "agent_w": 1287.6
+    },
+    {
+      "hour": 15.0,
+      "baseline_w": 571.0,
+      "agent_w": 1354.9
+    },
+    {
+      "hour": 15.25,
+      "baseline_w": 571.0,
+      "agent_w": 656.3
+    },
+    {
+      "hour": 15.5,
+      "baseline_w": 1234.5,
+      "agent_w": 1164.4
+    },
+    {
+      "hour": 15.75,
+      "baseline_w": 632.3,
+      "agent_w": 1046.8
+    },
+    {
+      "hour": 16.0,
+      "baseline_w": 571.0,
+      "agent_w": 574.7
+    },
+    {
+      "hour": 16.25,
+      "baseline_w": 571.0,
+      "agent_w": 571.0
+    },
+    {
+      "hour": 16.5,
+      "baseline_w": 1132.0,
+      "agent_w": 1643.0
+    },
+    {
+      "hour": 16.75,
+      "baseline_w": 617.0,
+      "agent_w": 713.9
+    },
+    {
+      "hour": 17.0,
+      "baseline_w": 571.0,
+      "agent_w": 571.0
+    },
+    {
+      "hour": 17.25,
+      "baseline_w": 571.0,
+      "agent_w": 1176.4
+    },
+    {
+      "hour": 17.5,
+      "baseline_w": 957.0,
+      "agent_w": 877.7
+    },
+    {
+      "hour": 17.75,
+      "baseline_w": 611.8,
+      "agent_w": 571.0
+    },
+    {
+      "hour": 18.0,
+      "baseline_w": 571.0,
+      "agent_w": 571.0
+    },
+    {
+      "hour": 18.25,
+      "baseline_w": 571.0,
+      "agent_w": 1107.9
+    },
+    {
+      "hour": 18.5,
+      "baseline_w": 894.9,
+      "agent_w": 616.0
+    },
+    {
+      "hour": 18.75,
+      "baseline_w": 605.2,
+      "agent_w": 571.0
+    },
+    {
+      "hour": 19.0,
+      "baseline_w": 571.0,
+      "agent_w": 571.0
+    },
+    {
+      "hour": 19.25,
+      "baseline_w": 571.0,
+      "agent_w": 571.0
+    },
+    {
+      "hour": 19.5,
+      "baseline_w": 571.0,
+      "agent_w": 571.0
+    },
+    {
+      "hour": 19.75,
+      "baseline_w": 571.0,
+      "agent_w": 571.0
+    },
+    {
+      "hour": 20.0,
+      "baseline_w": 571.0,
+      "agent_w": 571.0
+    },
+    {
+      "hour": 20.25,
+      "baseline_w": 571.0,
+      "agent_w": 571.0
+    },
+    {
+      "hour": 20.5,
+      "baseline_w": 571.0,
+      "agent_w": 571.0
+    },
+    {
+      "hour": 20.75,
+      "baseline_w": 571.0,
+      "agent_w": 571.0
+    },
+    {
+      "hour": 21.0,
+      "baseline_w": 571.0,
+      "agent_w": 571.0
+    },
+    {
+      "hour": 21.25,
+      "baseline_w": 571.0,
+      "agent_w": 571.0
+    },
+    {
+      "hour": 21.5,
+      "baseline_w": 571.0,
+      "agent_w": 571.0
+    },
+    {
+      "hour": 21.75,
+      "baseline_w": 571.0,
+      "agent_w": 571.0
+    },
+    {
+      "hour": 22.0,
+      "baseline_w": 571.0,
+      "agent_w": 571.0
+    },
+    {
+      "hour": 22.25,
+      "baseline_w": 571.0,
+      "agent_w": 571.0
+    },
+    {
+      "hour": 22.5,
+      "baseline_w": 571.0,
+      "agent_w": 571.0
+    },
+    {
+      "hour": 22.75,
+      "baseline_w": 571.0,
+      "agent_w": 571.0
+    },
+    {
+      "hour": 23.0,
+      "baseline_w": 571.0,
+      "agent_w": 571.0
+    },
+    {
+      "hour": 23.25,
+      "baseline_w": 571.0,
+      "agent_w": 571.0
+    },
+    {
+      "hour": 23.5,
+      "baseline_w": 571.0,
+      "agent_w": 571.0
+    },
+    {
+      "hour": 23.75,
+      "baseline_w": 571.0,
+      "agent_w": 571.0
+    },
+    {
+      "hour": 24.0,
+      "baseline_w": 571.0,
+      "agent_w": 571.0
+    },
+    {
+      "hour": 24.25,
+      "baseline_w": 571.0,
+      "agent_w": 571.0
+    },
+    {
+      "hour": 24.5,
+      "baseline_w": 571.0,
+      "agent_w": 571.0
+    },
+    {
+      "hour": 24.75,
+      "baseline_w": 571.0,
+      "agent_w": 571.0
+    },
+    {
+      "hour": 25.0,
+      "baseline_w": 571.0,
+      "agent_w": 571.0
+    },
+    {
+      "hour": 25.25,
+      "baseline_w": 571.0,
+      "agent_w": 571.0
+    },
+    {
+      "hour": 25.5,
+      "baseline_w": 571.0,
+      "agent_w": 571.0
+    },
+    {
+      "hour": 25.75,
+      "baseline_w": 571.0,
+      "agent_w": 571.0
+    },
+    {
+      "hour": 26.0,
+      "baseline_w": 571.0,
+      "agent_w": 571.0
+    },
+    {
+      "hour": 26.25,
+      "baseline_w": 571.0,
+      "agent_w": 571.0
+    },
+    {
+      "hour": 26.5,
+      "baseline_w": 571.0,
+      "agent_w": 571.0
+    },
+    {
+      "hour": 26.75,
+      "baseline_w": 571.0,
+      "agent_w": 571.0
+    },
+    {
+      "hour": 27.0,
+      "baseline_w": 571.0,
+      "agent_w": 571.0
+    },
+    {
+      "hour": 27.25,
+      "baseline_w": 571.0,
+      "agent_w": 571.0
+    },
+    {
+      "hour": 27.5,
+      "baseline_w": 571.0,
+      "agent_w": 571.0
+    },
+    {
+      "hour": 27.75,
+      "baseline_w": 571.0,
+      "agent_w": 571.0
+    },
+    {
+      "hour": 28.0,
+      "baseline_w": 571.0,
+      "agent_w": 571.0
+    },
+    {
+      "hour": 28.25,
+      "baseline_w": 571.0,
+      "agent_w": 571.0
+    },
+    {
+      "hour": 28.5,
+      "baseline_w": 571.0,
+      "agent_w": 571.0
+    },
+    {
+      "hour": 28.75,
+      "baseline_w": 571.0,
+      "agent_w": 571.0
+    },
+    {
+      "hour": 29.0,
+      "baseline_w": 6399.5,
+      "agent_w": 4511.9
+    },
+    {
+      "hour": 29.25,
+      "baseline_w": 5592.1,
+      "agent_w": 3616.5
+    },
+    {
+      "hour": 29.5,
+      "baseline_w": 6023.9,
+      "agent_w": 3932.4
+    },
+    {
+      "hour": 29.75,
+      "baseline_w": 5889.8,
+      "agent_w": 3895.1
+    },
+    {
+      "hour": 30.0,
+      "baseline_w": 5617.8,
+      "agent_w": 3478.2
+    },
+    {
+      "hour": 30.25,
+      "baseline_w": 5609.8,
+      "agent_w": 3540.8
+    },
+    {
+      "hour": 30.5,
+      "baseline_w": 5602.6,
+      "agent_w": 3617.7
+    },
+    {
+      "hour": 30.75,
+      "baseline_w": 5604.6,
+      "agent_w": 3711.2
+    },
+    {
+      "hour": 31.0,
+      "baseline_w": 6054.3,
+      "agent_w": 3651.6
+    },
+    {
+      "hour": 31.25,
+      "baseline_w": 6078.6,
+      "agent_w": 4138.5
+    },
+    {
+      "hour": 31.5,
+      "baseline_w": 6104.7,
+      "agent_w": 4029.4
+    },
+    {
+      "hour": 31.75,
+      "baseline_w": 6130.8,
+      "agent_w": 4109.0
+    },
+    {
+      "hour": 32.0,
+      "baseline_w": 6166.6,
+      "agent_w": 4071.1
+    },
+    {
+      "hour": 32.25,
+      "baseline_w": 6199.3,
+      "agent_w": 4213.3
+    },
+    {
+      "hour": 32.5,
+      "baseline_w": 6251.9,
+      "agent_w": 4270.3
+    },
+    {
+      "hour": 32.75,
+      "baseline_w": 6308.1,
+      "agent_w": 4357.3
+    },
+    {
+      "hour": 33.0,
+      "baseline_w": 6111.7,
+      "agent_w": 5122.1
+    },
+    {
+      "hour": 33.25,
+      "baseline_w": 6193.9,
+      "agent_w": 4774.3
+    },
+    {
+      "hour": 33.5,
+      "baseline_w": 6193.9,
+      "agent_w": 5012.9
+    },
+    {
+      "hour": 33.75,
+      "baseline_w": 6231.0,
+      "agent_w": 5004.3
+    },
+    {
+      "hour": 34.0,
+      "baseline_w": 6517.7,
+      "agent_w": 5257.6
+    },
+    {
+      "hour": 34.25,
+      "baseline_w": 6545.6,
+      "agent_w": 5312.3
+    },
+    {
+      "hour": 34.5,
+      "baseline_w": 6594.9,
+      "agent_w": 5349.9
+    },
+    {
+      "hour": 34.75,
+      "baseline_w": 6609.6,
+      "agent_w": 5380.3
+    },
+    {
+      "hour": 35.0,
+      "baseline_w": 6215.9,
+      "agent_w": 3205.5
+    },
+    {
+      "hour": 35.25,
+      "baseline_w": 6263.2,
+      "agent_w": 4205.1
+    },
+    {
+      "hour": 35.5,
+      "baseline_w": 6236.5,
+      "agent_w": 3876.3
+    },
+    {
+      "hour": 35.75,
+      "baseline_w": 6268.6,
+      "agent_w": 4008.2
+    },
+    {
+      "hour": 36.0,
+      "baseline_w": 6479.6,
+      "agent_w": 4788.8
+    },
+    {
+      "hour": 36.25,
+      "baseline_w": 6295.9,
+      "agent_w": 4502.4
+    },
+    {
+      "hour": 36.5,
+      "baseline_w": 6194.8,
+      "agent_w": 4481.2
+    },
+    {
+      "hour": 36.75,
+      "baseline_w": 6088.1,
+      "agent_w": 4359.7
+    },
+    {
+      "hour": 37.0,
+      "baseline_w": 5715.0,
+      "agent_w": 4054.4
+    },
+    {
+      "hour": 37.25,
+      "baseline_w": 5723.3,
+      "agent_w": 4016.4
+    },
+    {
+      "hour": 37.5,
+      "baseline_w": 5640.6,
+      "agent_w": 3983.1
+    },
+    {
+      "hour": 37.75,
+      "baseline_w": 5606.5,
+      "agent_w": 3949.9
+    },
+    {
+      "hour": 38.0,
+      "baseline_w": 5891.9,
+      "agent_w": 2742.1
+    },
+    {
+      "hour": 38.25,
+      "baseline_w": 5849.1,
+      "agent_w": 3619.0
+    },
+    {
+      "hour": 38.5,
+      "baseline_w": 5840.9,
+      "agent_w": 2978.1
+    },
+    {
+      "hour": 38.75,
+      "baseline_w": 5801.6,
+      "agent_w": 3268.1
+    },
+    {
+      "hour": 39.0,
+      "baseline_w": 5757.8,
+      "agent_w": 3611.8
+    },
+    {
+      "hour": 39.25,
+      "baseline_w": 5713.9,
+      "agent_w": 3390.1
+    },
+    {
+      "hour": 39.5,
+      "baseline_w": 5682.1,
+      "agent_w": 3492.9
+    },
+    {
+      "hour": 39.75,
+      "baseline_w": 5654.5,
+      "agent_w": 3488.4
+    },
+    {
+      "hour": 40.0,
+      "baseline_w": 5029.0,
+      "agent_w": 2645.0
+    },
+    {
+      "hour": 40.25,
+      "baseline_w": 4914.5,
+      "agent_w": 2766.3
+    },
+    {
+      "hour": 40.5,
+      "baseline_w": 4871.2,
+      "agent_w": 2822.0
+    },
+    {
+      "hour": 40.75,
+      "baseline_w": 4799.5,
+      "agent_w": 2759.7
+    },
+    {
+      "hour": 41.0,
+      "baseline_w": 2284.0,
+      "agent_w": 2682.1
+    },
+    {
+      "hour": 41.25,
+      "baseline_w": 2284.0,
+      "agent_w": 2638.5
+    },
+    {
+      "hour": 41.5,
+      "baseline_w": 2284.0,
+      "agent_w": 2502.4
+    },
+    {
+      "hour": 41.75,
+      "baseline_w": 2284.0,
+      "agent_w": 2584.8
+    },
+    {
+      "hour": 42.0,
+      "baseline_w": 571.0,
+      "agent_w": 571.0
+    },
+    {
+      "hour": 42.25,
+      "baseline_w": 571.0,
+      "agent_w": 1194.1
+    },
+    {
+      "hour": 42.5,
+      "baseline_w": 571.0,
+      "agent_w": 700.9
+    },
+    {
+      "hour": 42.75,
+      "baseline_w": 571.0,
+      "agent_w": 571.0
+    },
+    {
+      "hour": 43.0,
+      "baseline_w": 571.0,
+      "agent_w": 571.0
+    },
+    {
+      "hour": 43.25,
+      "baseline_w": 571.0,
+      "agent_w": 571.0
+    },
+    {
+      "hour": 43.5,
+      "baseline_w": 571.0,
+      "agent_w": 571.0
+    },
+    {
+      "hour": 43.75,
+      "baseline_w": 571.0,
+      "agent_w": 571.0
+    },
+    {
+      "hour": 44.0,
+      "baseline_w": 571.0,
+      "agent_w": 571.0
+    },
+    {
+      "hour": 44.25,
+      "baseline_w": 571.0,
+      "agent_w": 571.0
+    },
+    {
+      "hour": 44.5,
+      "baseline_w": 571.0,
+      "agent_w": 571.0
+    },
+    {
+      "hour": 44.75,
+      "baseline_w": 571.0,
+      "agent_w": 571.0
+    },
+    {
+      "hour": 45.0,
+      "baseline_w": 571.0,
+      "agent_w": 571.0
+    },
+    {
+      "hour": 45.25,
+      "baseline_w": 571.0,
+      "agent_w": 571.0
+    },
+    {
+      "hour": 45.5,
+      "baseline_w": 571.0,
+      "agent_w": 571.0
+    },
+    {
+      "hour": 45.75,
+      "baseline_w": 571.0,
+      "agent_w": 571.0
+    },
+    {
+      "hour": 46.0,
+      "baseline_w": 571.0,
+      "agent_w": 571.0
+    },
+    {
+      "hour": 46.25,
+      "baseline_w": 571.0,
+      "agent_w": 571.0
+    },
+    {
+      "hour": 46.5,
+      "baseline_w": 571.0,
+      "agent_w": 571.0
+    },
+    {
+      "hour": 46.75,
+      "baseline_w": 571.0,
+      "agent_w": 571.0
+    },
+    {
+      "hour": 47.0,
+      "baseline_w": 571.0,
+      "agent_w": 571.0
+    },
+    {
+      "hour": 47.25,
+      "baseline_w": 571.0,
+      "agent_w": 571.0
+    },
+    {
+      "hour": 47.5,
+      "baseline_w": 571.0,
+      "agent_w": 571.0
+    },
+    {
+      "hour": 47.75,
+      "baseline_w": 571.0,
+      "agent_w": 571.0
+    },
+    {
+      "hour": 48.0,
+      "baseline_w": 571.0,
+      "agent_w": 571.0
+    },
+    {
+      "hour": 48.25,
+      "baseline_w": 571.0,
+      "agent_w": 571.0
+    },
+    {
+      "hour": 48.5,
+      "baseline_w": 571.0,
+      "agent_w": 571.0
+    },
+    {
+      "hour": 48.75,
+      "baseline_w": 571.0,
+      "agent_w": 571.0
+    },
+    {
+      "hour": 49.0,
+      "baseline_w": 571.0,
+      "agent_w": 571.0
+    },
+    {
+      "hour": 49.25,
+      "baseline_w": 571.0,
+      "agent_w": 571.0
+    },
+    {
+      "hour": 49.5,
+      "baseline_w": 571.0,
+      "agent_w": 571.0
+    },
+    {
+      "hour": 49.75,
+      "baseline_w": 571.0,
+      "agent_w": 571.0
+    },
+    {
+      "hour": 50.0,
+      "baseline_w": 571.0,
+      "agent_w": 571.0
+    },
+    {
+      "hour": 50.25,
+      "baseline_w": 571.0,
+      "agent_w": 571.0
+    },
+    {
+      "hour": 50.5,
+      "baseline_w": 571.0,
+      "agent_w": 571.0
+    },
+    {
+      "hour": 50.75,
+      "baseline_w": 571.0,
+      "agent_w": 571.0
+    },
+    {
+      "hour": 51.0,
+      "baseline_w": 571.0,
+      "agent_w": 571.0
+    },
+    {
+      "hour": 51.25,
+      "baseline_w": 571.0,
+      "agent_w": 571.0
+    },
+    {
+      "hour": 51.5,
+      "baseline_w": 571.0,
+      "agent_w": 571.0
+    },
+    {
+      "hour": 51.75,
+      "baseline_w": 571.0,
+      "agent_w": 571.0
+    },
+    {
+      "hour": 52.0,
+      "baseline_w": 571.0,
+      "agent_w": 571.0
+    },
+    {
+      "hour": 52.25,
+      "baseline_w": 571.0,
+      "agent_w": 571.0
+    },
+    {
+      "hour": 52.5,
+      "baseline_w": 571.0,
+      "agent_w": 571.0
+    },
+    {
+      "hour": 52.75,
+      "baseline_w": 571.0,
+      "agent_w": 571.0
+    },
+    {
+      "hour": 53.0,
+      "baseline_w": 5164.2,
+      "agent_w": 4260.1
+    },
+    {
+      "hour": 53.25,
+      "baseline_w": 4399.1,
+      "agent_w": 3566.7
+    },
+    {
+      "hour": 53.5,
+      "baseline_w": 4669.7,
+      "agent_w": 3800.3
+    },
+    {
+      "hour": 53.75,
+      "baseline_w": 4586.2,
+      "agent_w": 3659.3
+    },
+    {
+      "hour": 54.0,
+      "baseline_w": 3997.9,
+      "agent_w": 3221.8
+    },
+    {
+      "hour": 54.25,
+      "baseline_w": 3956.9,
+      "agent_w": 3181.3
+    },
+    {
+      "hour": 54.5,
+      "baseline_w": 3935.6,
+      "agent_w": 3186.6
+    },
+    {
+      "hour": 54.75,
+      "baseline_w": 3930.1,
+      "agent_w": 3200.9
+    },
+    {
+      "hour": 55.0,
+      "baseline_w": 4803.0,
+      "agent_w": 2983.2
+    },
+    {
+      "hour": 55.25,
+      "baseline_w": 4813.5,
+      "agent_w": 3496.5
+    },
+    {
+      "hour": 55.5,
+      "baseline_w": 4822.1,
+      "agent_w": 3392.9
+    },
+    {
+      "hour": 55.75,
+      "baseline_w": 4829.4,
+      "agent_w": 3449.7
+    },
+    {
+      "hour": 56.0,
+      "baseline_w": 4840.1,
+      "agent_w": 3521.2
+    },
+    {
+      "hour": 56.25,
+      "baseline_w": 4848.8,
+      "agent_w": 3575.5
+    },
+    {
+      "hour": 56.5,
+      "baseline_w": 4866.8,
+      "agent_w": 3632.5
+    },
+    {
+      "hour": 56.75,
+      "baseline_w": 4887.7,
+      "agent_w": 3686.2
+    },
+    {
+      "hour": 57.0,
+      "baseline_w": 4462.2,
+      "agent_w": 3384.5
+    },
+    {
+      "hour": 57.25,
+      "baseline_w": 4586.0,
+      "agent_w": 3421.7
+    },
+    {
+      "hour": 57.5,
+      "baseline_w": 4543.5,
+      "agent_w": 3448.4
+    },
+    {
+      "hour": 57.75,
+      "baseline_w": 4564.4,
+      "agent_w": 3471.4
+    },
+    {
+      "hour": 58.0,
+      "baseline_w": 4973.2,
+      "agent_w": 3842.5
+    },
+    {
+      "hour": 58.25,
+      "baseline_w": 4950.8,
+      "agent_w": 3876.2
+    },
+    {
+      "hour": 58.5,
+      "baseline_w": 4988.0,
+      "agent_w": 3910.2
+    },
+    {
+      "hour": 58.75,
+      "baseline_w": 5000.2,
+      "agent_w": 3941.2
+    },
+    {
+      "hour": 59.0,
+      "baseline_w": 4331.5,
+      "agent_w": 2905.3
+    },
+    {
+      "hour": 59.25,
+      "baseline_w": 4443.7,
+      "agent_w": 3174.4
+    },
+    {
+      "hour": 59.5,
+      "baseline_w": 4394.6,
+      "agent_w": 3100.5
+    },
+    {
+      "hour": 59.75,
+      "baseline_w": 4407.7,
+      "agent_w": 3136.1
+    },
+    {
+      "hour": 60.0,
+      "baseline_w": 5010.0,
+      "agent_w": 3755.8
+    },
+    {
+      "hour": 60.25,
+      "baseline_w": 4952.2,
+      "agent_w": 3750.1
+    },
+    {
+      "hour": 60.5,
+      "baseline_w": 4951.4,
+      "agent_w": 3744.4
+    },
+    {
+      "hour": 60.75,
+      "baseline_w": 4924.0,
+      "agent_w": 3736.0
+    },
+    {
+      "hour": 61.0,
+      "baseline_w": 4469.0,
+      "agent_w": 2788.3
+    },
+    {
+      "hour": 61.25,
+      "baseline_w": 4554.1,
+      "agent_w": 3109.0
+    },
+    {
+      "hour": 61.5,
+      "baseline_w": 4491.1,
+      "agent_w": 4045.6
+    },
+    {
+      "hour": 61.75,
+      "baseline_w": 4497.3,
+      "agent_w": 3384.6
+    },
+    {
+      "hour": 62.0,
+      "baseline_w": 4877.6,
+      "agent_w": 3975.8
+    },
+    {
+      "hour": 62.25,
+      "baseline_w": 4835.2,
+      "agent_w": 3927.2
+    },
+    {
+      "hour": 62.5,
+      "baseline_w": 4822.8,
+      "agent_w": 2637.1
+    },
+    {
+      "hour": 62.75,
+      "baseline_w": 4774.1,
+      "agent_w": 3084.2
+    },
+    {
+      "hour": 63.0,
+      "baseline_w": 4723.4,
+      "agent_w": 2926.3
+    },
+    {
+      "hour": 63.25,
+      "baseline_w": 4666.2,
+      "agent_w": 2920.2
+    },
+    {
+      "hour": 63.5,
+      "baseline_w": 4615.6,
+      "agent_w": 2927.3
+    },
+    {
+      "hour": 63.75,
+      "baseline_w": 4563.8,
+      "agent_w": 2923.6
+    },
+    {
+      "hour": 64.0,
+      "baseline_w": 3669.1,
+      "agent_w": 2655.7
+    },
+    {
+      "hour": 64.25,
+      "baseline_w": 3604.6,
+      "agent_w": 2653.0
+    },
+    {
+      "hour": 64.5,
+      "baseline_w": 3548.4,
+      "agent_w": 2550.4
+    },
+    {
+      "hour": 64.75,
+      "baseline_w": 3495.6,
+      "agent_w": 2595.6
+    },
+    {
+      "hour": 65.0,
+      "baseline_w": 2284.0,
+      "agent_w": 2589.4
+    },
+    {
+      "hour": 65.25,
+      "baseline_w": 2284.0,
+      "agent_w": 2498.1
+    },
+    {
+      "hour": 65.5,
+      "baseline_w": 2284.0,
+      "agent_w": 2516.0
+    },
+    {
+      "hour": 65.75,
+      "baseline_w": 2284.0,
+      "agent_w": 2502.6
+    },
+    {
+      "hour": 66.0,
+      "baseline_w": 571.0,
+      "agent_w": 571.0
+    },
+    {
+      "hour": 66.25,
+      "baseline_w": 571.0,
+      "agent_w": 571.0
+    },
+    {
+      "hour": 66.5,
+      "baseline_w": 571.0,
+      "agent_w": 1055.3
+    },
+    {
+      "hour": 66.75,
+      "baseline_w": 571.0,
+      "agent_w": 647.4
+    },
+    {
+      "hour": 67.0,
+      "baseline_w": 571.0,
+      "agent_w": 571.0
+    },
+    {
+      "hour": 67.25,
+      "baseline_w": 571.0,
+      "agent_w": 571.0
+    },
+    {
+      "hour": 67.5,
+      "baseline_w": 571.0,
+      "agent_w": 571.0
+    },
+    {
+      "hour": 67.75,
+      "baseline_w": 571.0,
+      "agent_w": 571.0
+    },
+    {
+      "hour": 68.0,
+      "baseline_w": 571.0,
+      "agent_w": 571.0
+    },
+    {
+      "hour": 68.25,
+      "baseline_w": 571.0,
+      "agent_w": 571.0
+    },
+    {
+      "hour": 68.5,
+      "baseline_w": 571.0,
+      "agent_w": 571.0
+    },
+    {
+      "hour": 68.75,
+      "baseline_w": 571.0,
+      "agent_w": 571.0
+    },
+    {
+      "hour": 69.0,
+      "baseline_w": 571.0,
+      "agent_w": 571.0
+    },
+    {
+      "hour": 69.25,
+      "baseline_w": 571.0,
+      "agent_w": 571.0
+    },
+    {
+      "hour": 69.5,
+      "baseline_w": 571.0,
+      "agent_w": 571.0
+    },
+    {
+      "hour": 69.75,
+      "baseline_w": 571.0,
+      "agent_w": 571.0
+    },
+    {
+      "hour": 70.0,
+      "baseline_w": 571.0,
+      "agent_w": 571.0
+    },
+    {
+      "hour": 70.25,
+      "baseline_w": 571.0,
+      "agent_w": 571.0
+    },
+    {
+      "hour": 70.5,
+      "baseline_w": 571.0,
+      "agent_w": 571.0
+    },
+    {
+      "hour": 70.75,
+      "baseline_w": 571.0,
+      "agent_w": 571.0
+    },
+    {
+      "hour": 71.0,
+      "baseline_w": 571.0,
+      "agent_w": 571.0
+    },
+    {
+      "hour": 71.25,
+      "baseline_w": 571.0,
+      "agent_w": 571.0
+    },
+    {
+      "hour": 71.5,
+      "baseline_w": 571.0,
+      "agent_w": 571.0
+    },
+    {
+      "hour": 71.75,
+      "baseline_w": 571.0,
+      "agent_w": 571.0
+    }
+  ],
+  "pmv_series": [
+    {
+      "hour": 0.0,
+      "baseline_pmv": 0.484,
+      "agent_pmv": 0.269
+    },
+    {
+      "hour": 0.25,
+      "baseline_pmv": 0.475,
+      "agent_pmv": 0.26
+    },
+    {
+      "hour": 0.5,
+      "baseline_pmv": 0.469,
+      "agent_pmv": 0.254
+    },
+    {
+      "hour": 0.75,
+      "baseline_pmv": 0.468,
+      "agent_pmv": 0.253
+    },
+    {
+      "hour": 1.0,
+      "baseline_pmv": 0.464,
+      "agent_pmv": 0.249
+    },
+    {
+      "hour": 1.25,
+      "baseline_pmv": 0.457,
+      "agent_pmv": 0.243
+    },
+    {
+      "hour": 1.5,
+      "baseline_pmv": 0.448,
+      "agent_pmv": 0.234
+    },
+    {
+      "hour": 1.75,
+      "baseline_pmv": 0.439,
+      "agent_pmv": 0.225
+    },
+    {
+      "hour": 2.0,
+      "baseline_pmv": 0.429,
+      "agent_pmv": 0.215
+    },
+    {
+      "hour": 2.25,
+      "baseline_pmv": 0.417,
+      "agent_pmv": 0.204
+    },
+    {
+      "hour": 2.5,
+      "baseline_pmv": 0.404,
+      "agent_pmv": 0.192
+    },
+    {
+      "hour": 2.75,
+      "baseline_pmv": 0.393,
+      "agent_pmv": 0.181
+    },
+    {
+      "hour": 3.0,
+      "baseline_pmv": 0.384,
+      "agent_pmv": 0.172
+    },
+    {
+      "hour": 3.25,
+      "baseline_pmv": 0.378,
+      "agent_pmv": 0.166
+    },
+    {
+      "hour": 3.5,
+      "baseline_pmv": 0.372,
+      "agent_pmv": 0.161
+    },
+    {
+      "hour": 3.75,
+      "baseline_pmv": 0.367,
+      "agent_pmv": 0.156
+    },
+    {
+      "hour": 4.0,
+      "baseline_pmv": 0.363,
+      "agent_pmv": 0.152
+    },
+    {
+      "hour": 4.25,
+      "baseline_pmv": 0.36,
+      "agent_pmv": 0.149
+    },
+    {
+      "hour": 4.5,
+      "baseline_pmv": 0.358,
+      "agent_pmv": 0.147
+    },
+    {
+      "hour": 4.75,
+      "baseline_pmv": 0.377,
+      "agent_pmv": 0.167
+    },
+    {
+      "hour": 5.0,
+      "baseline_pmv": 0.401,
+      "agent_pmv": 0.063
+    },
+    {
+      "hour": 5.25,
+      "baseline_pmv": 0.427,
+      "agent_pmv": 0.01
+    },
+    {
+      "hour": 5.5,
+      "baseline_pmv": 0.45,
+      "agent_pmv": 0.094
+    },
+    {
+      "hour": 5.75,
+      "baseline_pmv": 0.472,
+      "agent_pmv": 0.054
+    },
+    {
+      "hour": 6.0,
+      "baseline_pmv": 0.494,
+      "agent_pmv": 0.066
+    },
+    {
+      "hour": 6.25,
+      "baseline_pmv": 0.515,
+      "agent_pmv": 0.119
+    },
+    {
+      "hour": 6.5,
+      "baseline_pmv": 0.537,
+      "agent_pmv": 0.05
+    },
+    {
+      "hour": 6.75,
+      "baseline_pmv": 0.56,
+      "agent_pmv": 0.066
+    },
+    {
+      "hour": 7.0,
+      "baseline_pmv": 0.583,
+      "agent_pmv": 0.193
+    },
+    {
+      "hour": 7.25,
+      "baseline_pmv": 0.582,
+      "agent_pmv": 0.222
+    },
+    {
+      "hour": 7.5,
+      "baseline_pmv": 0.596,
+      "agent_pmv": 0.191
+    },
+    {
+      "hour": 7.75,
+      "baseline_pmv": 0.635,
+      "agent_pmv": 0.252
+    },
+    {
+      "hour": 8.0,
+      "baseline_pmv": 0.632,
+      "agent_pmv": 0.252
+    },
+    {
+      "hour": 8.25,
+      "baseline_pmv": 0.646,
+      "agent_pmv": 0.235
+    },
+    {
+      "hour": 8.5,
+      "baseline_pmv": 0.69,
+      "agent_pmv": 0.303
+    },
+    {
+      "hour": 8.75,
+      "baseline_pmv": 0.681,
+      "agent_pmv": 0.298
+    },
+    {
+      "hour": 9.0,
+      "baseline_pmv": 0.692,
+      "agent_pmv": 0.255
+    },
+    {
+      "hour": 9.25,
+      "baseline_pmv": 0.735,
+      "agent_pmv": 0.316
+    },
+    {
+      "hour": 9.5,
+      "baseline_pmv": 0.728,
+      "agent_pmv": 0.3
+    },
+    {
+      "hour": 9.75,
+      "baseline_pmv": 0.748,
+      "agent_pmv": 0.285
+    },
+    {
+      "hour": 10.0,
+      "baseline_pmv": 0.797,
+      "agent_pmv": 0.329
+    },
+    {
+      "hour": 10.25,
+      "baseline_pmv": 0.792,
+      "agent_pmv": 0.339
+    },
+    {
+      "hour": 10.5,
+      "baseline_pmv": 0.805,
+      "agent_pmv": 0.301
+    },
+    {
+      "hour": 10.75,
+      "baseline_pmv": 0.842,
+      "agent_pmv": 0.328
+    },
+    {
+      "hour": 11.0,
+      "baseline_pmv": 0.843,
+      "agent_pmv": 0.368
+    },
+    {
+      "hour": 11.25,
+      "baseline_pmv": 0.861,
+      "agent_pmv": 0.393
+    },
+    {
+      "hour": 11.5,
+      "baseline_pmv": 0.879,
+      "agent_pmv": 0.395
+    },
+    {
+      "hour": 11.75,
+      "baseline_pmv": 0.872,
+      "agent_pmv": 0.394
+    },
+    {
+      "hour": 12.0,
+      "baseline_pmv": 0.893,
+      "agent_pmv": 0.404
+    },
+    {
+      "hour": 12.25,
+      "baseline_pmv": 0.929,
+      "agent_pmv": 0.417
+    },
+    {
+      "hour": 12.5,
+      "baseline_pmv": 0.897,
+      "agent_pmv": 0.45
+    },
+    {
+      "hour": 12.75,
+      "baseline_pmv": 0.898,
+      "agent_pmv": 0.501
+    },
+    {
+      "hour": 13.0,
+      "baseline_pmv": 0.941,
+      "agent_pmv": 0.44
+    },
+    {
+      "hour": 13.25,
+      "baseline_pmv": 0.98,
+      "agent_pmv": 0.38
+    },
+    {
+      "hour": 13.5,
+      "baseline_pmv": 0.932,
+      "agent_pmv": 0.445
+    },
+    {
+      "hour": 13.75,
+      "baseline_pmv": 0.927,
+      "agent_pmv": 0.417
+    },
+    {
+      "hour": 14.0,
+      "baseline_pmv": 0.958,
+      "agent_pmv": 0.384
+    },
+    {
+      "hour": 14.25,
+      "baseline_pmv": 0.974,
+      "agent_pmv": 0.415
+    },
+    {
+      "hour": 14.5,
+      "baseline_pmv": 0.916,
+      "agent_pmv": 0.521
+    },
+    {
+      "hour": 14.75,
+      "baseline_pmv": 0.907,
+      "agent_pmv": 0.552
+    },
+    {
+      "hour": 15.0,
+      "baseline_pmv": 0.934,
+      "agent_pmv": 0.488
+    },
+    {
+      "hour": 15.25,
+      "baseline_pmv": 0.948,
+      "agent_pmv": 0.495
+    },
+    {
+      "hour": 15.5,
+      "baseline_pmv": 0.891,
+      "agent_pmv": 0.503
+    },
+    {
+      "hour": 15.75,
+      "baseline_pmv": 0.878,
+      "agent_pmv": 0.484
+    },
+    {
+      "hour": 16.0,
+      "baseline_pmv": 0.9,
+      "agent_pmv": 0.512
+    },
+    {
+      "hour": 16.25,
+      "baseline_pmv": 0.913,
+      "agent_pmv": 0.551
+    },
+    {
+      "hour": 16.5,
+      "baseline_pmv": 0.86,
+      "agent_pmv": 0.477
+    },
+    {
+      "hour": 16.75,
+      "baseline_pmv": 0.843,
+      "agent_pmv": 0.457
+    },
+    {
+      "hour": 17.0,
+      "baseline_pmv": 0.848,
+      "agent_pmv": 0.48
+    },
+    {
+      "hour": 17.25,
+      "baseline_pmv": 0.837,
+      "agent_pmv": 0.452
+    },
+    {
+      "hour": 17.5,
+      "baseline_pmv": 0.787,
+      "agent_pmv": 0.405
+    },
+    {
+      "hour": 17.75,
+      "baseline_pmv": 0.754,
+      "agent_pmv": 0.402
+    },
+    {
+      "hour": 18.0,
+      "baseline_pmv": 0.746,
+      "agent_pmv": 0.413
+    },
+    {
+      "hour": 18.25,
+      "baseline_pmv": 0.74,
+      "agent_pmv": 0.379
+    },
+    {
+      "hour": 18.5,
+      "baseline_pmv": 0.709,
+      "agent_pmv": 0.367
+    },
+    {
+      "hour": 18.75,
+      "baseline_pmv": 0.696,
+      "agent_pmv": 0.377
+    },
+    {
+      "hour": 19.0,
+      "baseline_pmv": 0.699,
+      "agent_pmv": 0.38
+    },
+    {
+      "hour": 19.25,
+      "baseline_pmv": 0.698,
+      "agent_pmv": 0.374
+    },
+    {
+      "hour": 19.5,
+      "baseline_pmv": 0.692,
+      "agent_pmv": 0.367
+    },
+    {
+      "hour": 19.75,
+      "baseline_pmv": 0.684,
+      "agent_pmv": 0.362
+    },
+    {
+      "hour": 20.0,
+      "baseline_pmv": 0.676,
+      "agent_pmv": 0.355
+    },
+    {
+      "hour": 20.25,
+      "baseline_pmv": 0.664,
+      "agent_pmv": 0.345
+    },
+    {
+      "hour": 20.5,
+      "baseline_pmv": 0.65,
+      "agent_pmv": 0.333
+    },
+    {
+      "hour": 20.75,
+      "baseline_pmv": 0.637,
+      "agent_pmv": 0.32
+    },
+    {
+      "hour": 21.0,
+      "baseline_pmv": 0.623,
+      "agent_pmv": 0.308
+    },
+    {
+      "hour": 21.25,
+      "baseline_pmv": 0.61,
+      "agent_pmv": 0.295
+    },
+    {
+      "hour": 21.5,
+      "baseline_pmv": 0.596,
+      "agent_pmv": 0.283
+    },
+    {
+      "hour": 21.75,
+      "baseline_pmv": 0.583,
+      "agent_pmv": 0.27
+    },
+    {
+      "hour": 22.0,
+      "baseline_pmv": 0.571,
+      "agent_pmv": 0.259
+    },
+    {
+      "hour": 22.25,
+      "baseline_pmv": 0.561,
+      "agent_pmv": 0.249
+    },
+    {
+      "hour": 22.5,
+      "baseline_pmv": 0.551,
+      "agent_pmv": 0.24
+    },
+    {
+      "hour": 22.75,
+      "baseline_pmv": 0.542,
+      "agent_pmv": 0.232
+    },
+    {
+      "hour": 23.0,
+      "baseline_pmv": 0.56,
+      "agent_pmv": 0.251
+    },
+    {
+      "hour": 23.25,
+      "baseline_pmv": 0.574,
+      "agent_pmv": 0.267
+    },
+    {
+      "hour": 23.5,
+      "baseline_pmv": 0.572,
+      "agent_pmv": 0.266
+    },
+    {
+      "hour": 23.75,
+      "baseline_pmv": 0.561,
+      "agent_pmv": 0.256
+    },
+    {
+      "hour": 24.0,
+      "baseline_pmv": 0.551,
+      "agent_pmv": 0.247
+    },
+    {
+      "hour": 24.25,
+      "baseline_pmv": 0.544,
+      "agent_pmv": 0.241
+    },
+    {
+      "hour": 24.5,
+      "baseline_pmv": 0.538,
+      "agent_pmv": 0.234
+    },
+    {
+      "hour": 24.75,
+      "baseline_pmv": 0.531,
+      "agent_pmv": 0.228
+    },
+    {
+      "hour": 25.0,
+      "baseline_pmv": 0.526,
+      "agent_pmv": 0.223
+    },
+    {
+      "hour": 25.25,
+      "baseline_pmv": 0.521,
+      "agent_pmv": 0.22
+    },
+    {
+      "hour": 25.5,
+      "baseline_pmv": 0.518,
+      "agent_pmv": 0.217
+    },
+    {
+      "hour": 25.75,
+      "baseline_pmv": 0.515,
+      "agent_pmv": 0.215
+    },
+    {
+      "hour": 26.0,
+      "baseline_pmv": 0.511,
+      "agent_pmv": 0.212
+    },
+    {
+      "hour": 26.25,
+      "baseline_pmv": 0.508,
+      "agent_pmv": 0.209
+    },
+    {
+      "hour": 26.5,
+      "baseline_pmv": 0.505,
+      "agent_pmv": 0.207
+    },
+    {
+      "hour": 26.75,
+      "baseline_pmv": 0.502,
+      "agent_pmv": 0.204
+    },
+    {
+      "hour": 27.0,
+      "baseline_pmv": 0.5,
+      "agent_pmv": 0.202
+    },
+    {
+      "hour": 27.25,
+      "baseline_pmv": 0.497,
+      "agent_pmv": 0.2
+    },
+    {
+      "hour": 27.5,
+      "baseline_pmv": 0.495,
+      "agent_pmv": 0.198
+    },
+    {
+      "hour": 27.75,
+      "baseline_pmv": 0.492,
+      "agent_pmv": 0.196
+    },
+    {
+      "hour": 28.0,
+      "baseline_pmv": 0.488,
+      "agent_pmv": 0.192
+    },
+    {
+      "hour": 28.25,
+      "baseline_pmv": 0.483,
+      "agent_pmv": 0.187
+    },
+    {
+      "hour": 28.5,
+      "baseline_pmv": 0.477,
+      "agent_pmv": 0.182
+    },
+    {
+      "hour": 28.75,
+      "baseline_pmv": 0.488,
+      "agent_pmv": 0.194
+    },
+    {
+      "hour": 29.0,
+      "baseline_pmv": 0.026,
+      "agent_pmv": 0.051
+    },
+    {
+      "hour": 29.25,
+      "baseline_pmv": -0.177,
+      "agent_pmv": 0.012
+    },
+    {
+      "hour": 29.5,
+      "baseline_pmv": -0.24,
+      "agent_pmv": 0.005
+    },
+    {
+      "hour": 29.75,
+      "baseline_pmv": -0.263,
+      "agent_pmv": 0.005
+    },
+    {
+      "hour": 30.0,
+      "baseline_pmv": -0.282,
+      "agent_pmv": 0.008
+    },
+    {
+      "hour": 30.25,
+      "baseline_pmv": -0.297,
+      "agent_pmv": 0.016
+    },
+    {
+      "hour": 30.5,
+      "baseline_pmv": -0.309,
+      "agent_pmv": 0.023
+    },
+    {
+      "hour": 30.75,
+      "baseline_pmv": -0.319,
+      "agent_pmv": 0.028
+    },
+    {
+      "hour": 31.0,
+      "baseline_pmv": -0.305,
+      "agent_pmv": 0.129
+    },
+    {
+      "hour": 31.25,
+      "baseline_pmv": -0.295,
+      "agent_pmv": 0.168
+    },
+    {
+      "hour": 31.5,
+      "baseline_pmv": -0.291,
+      "agent_pmv": 0.189
+    },
+    {
+      "hour": 31.75,
+      "baseline_pmv": -0.288,
+      "agent_pmv": 0.205
+    },
+    {
+      "hour": 32.0,
+      "baseline_pmv": -0.284,
+      "agent_pmv": 0.234
+    },
+    {
+      "hour": 32.25,
+      "baseline_pmv": -0.28,
+      "agent_pmv": 0.251
+    },
+    {
+      "hour": 32.5,
+      "baseline_pmv": -0.277,
+      "agent_pmv": 0.265
+    },
+    {
+      "hour": 32.75,
+      "baseline_pmv": -0.274,
+      "agent_pmv": 0.276
+    },
+    {
+      "hour": 33.0,
+      "baseline_pmv": -0.254,
+      "agent_pmv": 0.182
+    },
+    {
+      "hour": 33.25,
+      "baseline_pmv": -0.248,
+      "agent_pmv": 0.158
+    },
+    {
+      "hour": 33.5,
+      "baseline_pmv": -0.245,
+      "agent_pmv": 0.153
+    },
+    {
+      "hour": 33.75,
+      "baseline_pmv": -0.242,
+      "agent_pmv": 0.153
+    },
+    {
+      "hour": 34.0,
+      "baseline_pmv": -0.255,
+      "agent_pmv": 0.156
+    },
+    {
+      "hour": 34.25,
+      "baseline_pmv": -0.258,
+      "agent_pmv": 0.16
+    },
+    {
+      "hour": 34.5,
+      "baseline_pmv": -0.261,
+      "agent_pmv": 0.16
+    },
+    {
+      "hour": 34.75,
+      "baseline_pmv": -0.264,
+      "agent_pmv": 0.159
+    },
+    {
+      "hour": 35.0,
+      "baseline_pmv": -0.256,
+      "agent_pmv": 0.31
+    },
+    {
+      "hour": 35.25,
+      "baseline_pmv": -0.261,
+      "agent_pmv": 0.345
+    },
+    {
+      "hour": 35.5,
+      "baseline_pmv": -0.263,
+      "agent_pmv": 0.359
+    },
+    {
+      "hour": 35.75,
+      "baseline_pmv": -0.264,
+      "agent_pmv": 0.368
+    },
+    {
+      "hour": 36.0,
+      "baseline_pmv": -0.278,
+      "agent_pmv": 0.335
+    },
+    {
+      "hour": 36.25,
+      "baseline_pmv": -0.283,
+      "agent_pmv": 0.329
+    },
+    {
+      "hour": 36.5,
+      "baseline_pmv": -0.291,
+      "agent_pmv": 0.328
+    },
+    {
+      "hour": 36.75,
+      "baseline_pmv": -0.301,
+      "agent_pmv": 0.326
+    },
+    {
+      "hour": 37.0,
+      "baseline_pmv": -0.292,
+      "agent_pmv": 0.324
+    },
+    {
+      "hour": 37.25,
+      "baseline_pmv": -0.298,
+      "agent_pmv": 0.32
+    },
+    {
+      "hour": 37.5,
+      "baseline_pmv": -0.305,
+      "agent_pmv": 0.319
+    },
+    {
+      "hour": 37.75,
+      "baseline_pmv": -0.312,
+      "agent_pmv": 0.317
+    },
+    {
+      "hour": 38.0,
+      "baseline_pmv": -0.333,
+      "agent_pmv": 0.458
+    },
+    {
+      "hour": 38.25,
+      "baseline_pmv": -0.342,
+      "agent_pmv": 0.509
+    },
+    {
+      "hour": 38.5,
+      "baseline_pmv": -0.351,
+      "agent_pmv": 0.568
+    },
+    {
+      "hour": 38.75,
+      "baseline_pmv": -0.36,
+      "agent_pmv": 0.588
+    },
+    {
+      "hour": 39.0,
+      "baseline_pmv": -0.369,
+      "agent_pmv": 0.553
+    },
+    {
+      "hour": 39.25,
+      "baseline_pmv": -0.378,
+      "agent_pmv": 0.544
+    },
+    {
+      "hour": 39.5,
+      "baseline_pmv": -0.384,
+      "agent_pmv": 0.543
+    },
+    {
+      "hour": 39.75,
+      "baseline_pmv": -0.39,
+      "agent_pmv": 0.543
+    },
+    {
+      "hour": 40.0,
+      "baseline_pmv": -0.41,
+      "agent_pmv": 0.536
+    },
+    {
+      "hour": 40.25,
+      "baseline_pmv": -0.421,
+      "agent_pmv": 0.521
+    },
+    {
+      "hour": 40.5,
+      "baseline_pmv": -0.43,
+      "agent_pmv": 0.498
+    },
+    {
+      "hour": 40.75,
+      "baseline_pmv": -0.438,
+      "agent_pmv": 0.484
+    },
+    {
+      "hour": 41.0,
+      "baseline_pmv": -0.26,
+      "agent_pmv": 0.459
+    },
+    {
+      "hour": 41.25,
+      "baseline_pmv": -0.108,
+      "agent_pmv": 0.438
+    },
+    {
+      "hour": 41.5,
+      "baseline_pmv": -0.034,
+      "agent_pmv": 0.434
+    },
+    {
+      "hour": 41.75,
+      "baseline_pmv": -0.006,
+      "agent_pmv": 0.426
+    },
+    {
+      "hour": 42.0,
+      "baseline_pmv": 0.008,
+      "agent_pmv": 0.432
+    },
+    {
+      "hour": 42.25,
+      "baseline_pmv": 0.019,
+      "agent_pmv": 0.394
+    },
+    {
+      "hour": 42.5,
+      "baseline_pmv": 0.027,
+      "agent_pmv": 0.377
+    },
+    {
+      "hour": 42.75,
+      "baseline_pmv": 0.033,
+      "agent_pmv": 0.386
+    },
+    {
+      "hour": 43.0,
+      "baseline_pmv": 0.033,
+      "agent_pmv": 0.388
+    },
+    {
+      "hour": 43.25,
+      "baseline_pmv": 0.032,
+      "agent_pmv": 0.378
+    },
+    {
+      "hour": 43.5,
+      "baseline_pmv": 0.031,
+      "agent_pmv": 0.364
+    },
+    {
+      "hour": 43.75,
+      "baseline_pmv": 0.028,
+      "agent_pmv": 0.353
+    },
+    {
+      "hour": 44.0,
+      "baseline_pmv": 0.027,
+      "agent_pmv": 0.345
+    },
+    {
+      "hour": 44.25,
+      "baseline_pmv": 0.025,
+      "agent_pmv": 0.338
+    },
+    {
+      "hour": 44.5,
+      "baseline_pmv": 0.023,
+      "agent_pmv": 0.331
+    },
+    {
+      "hour": 44.75,
+      "baseline_pmv": 0.021,
+      "agent_pmv": 0.323
+    },
+    {
+      "hour": 45.0,
+      "baseline_pmv": 0.012,
+      "agent_pmv": 0.311
+    },
+    {
+      "hour": 45.25,
+      "baseline_pmv": 0.004,
+      "agent_pmv": 0.298
+    },
+    {
+      "hour": 45.5,
+      "baseline_pmv": -0.003,
+      "agent_pmv": 0.288
+    },
+    {
+      "hour": 45.75,
+      "baseline_pmv": -0.008,
+      "agent_pmv": 0.28
+    },
+    {
+      "hour": 46.0,
+      "baseline_pmv": -0.017,
+      "agent_pmv": 0.268
+    },
+    {
+      "hour": 46.25,
+      "baseline_pmv": -0.029,
+      "agent_pmv": 0.254
+    },
+    {
+      "hour": 46.5,
+      "baseline_pmv": -0.036,
+      "agent_pmv": 0.244
+    },
+    {
+      "hour": 46.75,
+      "baseline_pmv": -0.048,
+      "agent_pmv": 0.23
+    },
+    {
+      "hour": 47.0,
+      "baseline_pmv": -0.021,
+      "agent_pmv": 0.255
+    },
+    {
+      "hour": 47.25,
+      "baseline_pmv": 0.001,
+      "agent_pmv": 0.276
+    },
+    {
+      "hour": 47.5,
+      "baseline_pmv": 0.005,
+      "agent_pmv": 0.278
+    },
+    {
+      "hour": 47.75,
+      "baseline_pmv": -0.0,
+      "agent_pmv": 0.271
+    },
+    {
+      "hour": 48.0,
+      "baseline_pmv": -0.004,
+      "agent_pmv": 0.266
+    },
+    {
+      "hour": 48.25,
+      "baseline_pmv": -0.003,
+      "agent_pmv": 0.265
+    },
+    {
+      "hour": 48.5,
+      "baseline_pmv": -0.002,
+      "agent_pmv": 0.265
+    },
+    {
+      "hour": 48.75,
+      "baseline_pmv": -0.001,
+      "agent_pmv": 0.265
+    },
+    {
+      "hour": 49.0,
+      "baseline_pmv": -0.005,
+      "agent_pmv": 0.259
+    },
+    {
+      "hour": 49.25,
+      "baseline_pmv": -0.012,
+      "agent_pmv": 0.252
+    },
+    {
+      "hour": 49.5,
+      "baseline_pmv": -0.019,
+      "agent_pmv": 0.242
+    },
+    {
+      "hour": 49.75,
+      "baseline_pmv": -0.027,
+      "agent_pmv": 0.233
+    },
+    {
+      "hour": 50.0,
+      "baseline_pmv": -0.034,
+      "agent_pmv": 0.225
+    },
+    {
+      "hour": 50.25,
+      "baseline_pmv": -0.039,
+      "agent_pmv": 0.217
+    },
+    {
+      "hour": 50.5,
+      "baseline_pmv": -0.046,
+      "agent_pmv": 0.21
+    },
+    {
+      "hour": 50.75,
+      "baseline_pmv": -0.052,
+      "agent_pmv": 0.202
+    },
+    {
+      "hour": 51.0,
+      "baseline_pmv": -0.057,
+      "agent_pmv": 0.196
+    },
+    {
+      "hour": 51.25,
+      "baseline_pmv": -0.061,
+      "agent_pmv": 0.19
+    },
+    {
+      "hour": 51.5,
+      "baseline_pmv": -0.065,
+      "agent_pmv": 0.186
+    },
+    {
+      "hour": 51.75,
+      "baseline_pmv": -0.068,
+      "agent_pmv": 0.181
+    },
+    {
+      "hour": 52.0,
+      "baseline_pmv": -0.072,
+      "agent_pmv": 0.176
+    },
+    {
+      "hour": 52.25,
+      "baseline_pmv": -0.076,
+      "agent_pmv": 0.171
+    },
+    {
+      "hour": 52.5,
+      "baseline_pmv": -0.079,
+      "agent_pmv": 0.166
+    },
+    {
+      "hour": 52.75,
+      "baseline_pmv": -0.088,
+      "agent_pmv": 0.156
+    },
+    {
+      "hour": 53.0,
+      "baseline_pmv": -0.329,
+      "agent_pmv": 0.067
+    },
+    {
+      "hour": 53.25,
+      "baseline_pmv": -0.44,
+      "agent_pmv": 0.037
+    },
+    {
+      "hour": 53.5,
+      "baseline_pmv": -0.477,
+      "agent_pmv": 0.024
+    },
+    {
+      "hour": 53.75,
+      "baseline_pmv": -0.496,
+      "agent_pmv": 0.027
+    },
+    {
+      "hour": 54.0,
+      "baseline_pmv": -0.505,
+      "agent_pmv": 0.0
+    },
+    {
+      "hour": 54.25,
+      "baseline_pmv": -0.512,
+      "agent_pmv": -0.018
+    },
+    {
+      "hour": 54.5,
+      "baseline_pmv": -0.517,
+      "agent_pmv": -0.021
+    },
+    {
+      "hour": 54.75,
+      "baseline_pmv": -0.52,
+      "agent_pmv": -0.02
+    },
+    {
+      "hour": 55.0,
+      "baseline_pmv": -0.516,
+      "agent_pmv": 0.095
+    },
+    {
+      "hour": 55.25,
+      "baseline_pmv": -0.514,
+      "agent_pmv": 0.151
+    },
+    {
+      "hour": 55.5,
+      "baseline_pmv": -0.513,
+      "agent_pmv": 0.172
+    },
+    {
+      "hour": 55.75,
+      "baseline_pmv": -0.512,
+      "agent_pmv": 0.184
+    },
+    {
+      "hour": 56.0,
+      "baseline_pmv": -0.512,
+      "agent_pmv": 0.191
+    },
+    {
+      "hour": 56.25,
+      "baseline_pmv": -0.512,
+      "agent_pmv": 0.198
+    },
+    {
+      "hour": 56.5,
+      "baseline_pmv": -0.509,
+      "agent_pmv": 0.206
+    },
+    {
+      "hour": 56.75,
+      "baseline_pmv": -0.507,
+      "agent_pmv": 0.212
+    },
+    {
+      "hour": 57.0,
+      "baseline_pmv": -0.485,
+      "agent_pmv": 0.218
+    },
+    {
+      "hour": 57.25,
+      "baseline_pmv": -0.48,
+      "agent_pmv": 0.223
+    },
+    {
+      "hour": 57.5,
+      "baseline_pmv": -0.479,
+      "agent_pmv": 0.227
+    },
+    {
+      "hour": 57.75,
+      "baseline_pmv": -0.478,
+      "agent_pmv": 0.23
+    },
+    {
+      "hour": 58.0,
+      "baseline_pmv": -0.491,
+      "agent_pmv": 0.235
+    },
+    {
+      "hour": 58.25,
+      "baseline_pmv": -0.494,
+      "agent_pmv": 0.239
+    },
+    {
+      "hour": 58.5,
+      "baseline_pmv": -0.494,
+      "agent_pmv": 0.243
+    },
+    {
+      "hour": 58.75,
+      "baseline_pmv": -0.493,
+      "agent_pmv": 0.246
+    },
+    {
+      "hour": 59.0,
+      "baseline_pmv": -0.476,
+      "agent_pmv": 0.29
+    },
+    {
+      "hour": 59.25,
+      "baseline_pmv": -0.474,
+      "agent_pmv": 0.303
+    },
+    {
+      "hour": 59.5,
+      "baseline_pmv": -0.476,
+      "agent_pmv": 0.305
+    },
+    {
+      "hour": 59.75,
+      "baseline_pmv": -0.478,
+      "agent_pmv": 0.306
+    },
+    {
+      "hour": 60.0,
+      "baseline_pmv": -0.493,
+      "agent_pmv": 0.309
+    },
+    {
+      "hour": 60.25,
+      "baseline_pmv": -0.499,
+      "agent_pmv": 0.311
+    },
+    {
+      "hour": 60.5,
+      "baseline_pmv": -0.501,
+      "agent_pmv": 0.313
+    },
+    {
+      "hour": 60.75,
+      "baseline_pmv": -0.503,
+      "agent_pmv": 0.315
+    },
+    {
+      "hour": 61.0,
+      "baseline_pmv": -0.486,
+      "agent_pmv": 0.377
+    },
+    {
+      "hour": 61.25,
+      "baseline_pmv": -0.485,
+      "agent_pmv": 0.394
+    },
+    {
+      "hour": 61.5,
+      "baseline_pmv": -0.484,
+      "agent_pmv": 0.295
+    },
+    {
+      "hour": 61.75,
+      "baseline_pmv": -0.482,
+      "agent_pmv": 0.275
+    },
+    {
+      "hour": 62.0,
+      "baseline_pmv": -0.494,
+      "agent_pmv": 0.274
+    },
+    {
+      "hour": 62.25,
+      "baseline_pmv": -0.495,
+      "agent_pmv": 0.276
+    },
+    {
+      "hour": 62.5,
+      "baseline_pmv": -0.499,
+      "agent_pmv": 0.393
+    },
+    {
+      "hour": 62.75,
+      "baseline_pmv": -0.504,
+      "agent_pmv": 0.454
+    },
+    {
+      "hour": 63.0,
+      "baseline_pmv": -0.509,
+      "agent_pmv": 0.471
+    },
+    {
+      "hour": 63.25,
+      "baseline_pmv": -0.515,
+      "agent_pmv": 0.474
+    },
+    {
+      "hour": 63.5,
+      "baseline_pmv": -0.52,
+      "agent_pmv": 0.475
+    },
+    {
+      "hour": 63.75,
+      "baseline_pmv": -0.526,
+      "agent_pmv": 0.475
+    },
+    {
+      "hour": 64.0,
+      "baseline_pmv": -0.536,
+      "agent_pmv": 0.409
+    },
+    {
+      "hour": 64.25,
+      "baseline_pmv": -0.544,
+      "agent_pmv": 0.345
+    },
+    {
+      "hour": 64.5,
+      "baseline_pmv": -0.55,
+      "agent_pmv": 0.317
+    },
+    {
+      "hour": 64.75,
+      "baseline_pmv": -0.555,
+      "agent_pmv": 0.301
+    },
+    {
+      "hour": 65.0,
+      "baseline_pmv": -0.484,
+      "agent_pmv": 0.264
+    },
+    {
+      "hour": 65.25,
+      "baseline_pmv": -0.422,
+      "agent_pmv": 0.231
+    },
+    {
+      "hour": 65.5,
+      "baseline_pmv": -0.395,
+      "agent_pmv": 0.202
+    },
+    {
+      "hour": 65.75,
+      "baseline_pmv": -0.398,
+      "agent_pmv": 0.169
+    },
+    {
+      "hour": 66.0,
+      "baseline_pmv": -0.376,
+      "agent_pmv": 0.191
+    },
+    {
+      "hour": 66.25,
+      "baseline_pmv": -0.356,
+      "agent_pmv": 0.21
+    },
+    {
+      "hour": 66.5,
+      "baseline_pmv": -0.345,
+      "agent_pmv": 0.185
+    },
+    {
+      "hour": 66.75,
+      "baseline_pmv": -0.342,
+      "agent_pmv": 0.176
+    },
+    {
+      "hour": 67.0,
+      "baseline_pmv": -0.346,
+      "agent_pmv": 0.179
+    },
+    {
+      "hour": 67.25,
+      "baseline_pmv": -0.36,
+      "agent_pmv": 0.166
+    },
+    {
+      "hour": 67.5,
+      "baseline_pmv": -0.371,
+      "agent_pmv": 0.149
+    },
+    {
+      "hour": 67.75,
+      "baseline_pmv": -0.379,
+      "agent_pmv": 0.134
+    },
+    {
+      "hour": 68.0,
+      "baseline_pmv": -0.383,
+      "agent_pmv": 0.125
+    },
+    {
+      "hour": 68.25,
+      "baseline_pmv": -0.385,
+      "agent_pmv": 0.12
+    },
+    {
+      "hour": 68.5,
+      "baseline_pmv": -0.378,
+      "agent_pmv": 0.125
+    },
+    {
+      "hour": 68.75,
+      "baseline_pmv": -0.374,
+      "agent_pmv": 0.126
+    },
+    {
+      "hour": 69.0,
+      "baseline_pmv": -0.382,
+      "agent_pmv": 0.115
+    },
+    {
+      "hour": 69.25,
+      "baseline_pmv": -0.396,
+      "agent_pmv": 0.099
+    },
+    {
+      "hour": 69.5,
+      "baseline_pmv": -0.408,
+      "agent_pmv": 0.084
+    },
+    {
+      "hour": 69.75,
+      "baseline_pmv": -0.419,
+      "agent_pmv": 0.07
+    },
+    {
+      "hour": 70.0,
+      "baseline_pmv": -0.431,
+      "agent_pmv": 0.056
+    },
+    {
+      "hour": 70.25,
+      "baseline_pmv": -0.451,
+      "agent_pmv": 0.033
+    },
+    {
+      "hour": 70.5,
+      "baseline_pmv": -0.464,
+      "agent_pmv": 0.018
+    },
+    {
+      "hour": 70.75,
+      "baseline_pmv": -0.471,
+      "agent_pmv": 0.009
+    },
+    {
+      "hour": 71.0,
+      "baseline_pmv": -0.451,
+      "agent_pmv": 0.027
+    },
+    {
+      "hour": 71.25,
+      "baseline_pmv": -0.433,
+      "agent_pmv": 0.042
+    },
+    {
+      "hour": 71.5,
+      "baseline_pmv": -0.424,
+      "agent_pmv": 0.05
+    },
+    {
+      "hour": 71.75,
+      "baseline_pmv": -0.427,
+      "agent_pmv": 0.046
+    }
+  ],
+  "decision_log": [
+    {
+      "hour": 0.0,
+      "day": 1,
+      "hour_of_day": 0,
+      "zone": "ALL_ZONES",
+      "heating_c": 15.0,
+      "cooling_c": 29.0,
+      "reason": "Unoccupied night setback: cooling setpoint relaxed to 28.5-29.5\u00b0C to save energy.",
+      "baseline_pmv": 0.484,
+      "agent_pmv": 0.269
+    },
+    {
+      "hour": 6.0,
+      "day": 1,
+      "hour_of_day": 6,
+      "zone": "ALL_ZONES",
+      "heating_c": 15.0,
+      "cooling_c": 25.5,
+      "reason": "Adaptive control: adjusting setpoints based on real-time zone PMV and outdoor temperature forecast.",
+      "baseline_pmv": 0.494,
+      "agent_pmv": 0.066
+    },
+    {
+      "hour": 6.5,
+      "day": 1,
+      "hour_of_day": 6,
+      "zone": "ALL_ZONES",
+      "heating_c": 15.0,
+      "cooling_c": 24.0,
+      "reason": "Optimum start: pre-cooling building from 24.0\u00b0C before occupancy at 07:00.",
+      "baseline_pmv": 0.537,
+      "agent_pmv": 0.05
+    },
+    {
+      "hour": 6.75,
+      "day": 1,
+      "hour_of_day": 6,
+      "zone": "ALL_ZONES",
+      "heating_c": 15.0,
+      "cooling_c": 25.5,
+      "reason": "Adaptive control: adjusting setpoints based on real-time zone PMV and outdoor temperature forecast.",
+      "baseline_pmv": 0.56,
+      "agent_pmv": 0.066
+    },
+    {
+      "hour": 7.5,
+      "day": 1,
+      "hour_of_day": 7,
+      "zone": "ALL_ZONES",
+      "heating_c": 15.0,
+      "cooling_c": 25.0,
+      "reason": "Off-peak occupied: maintaining PMV within ASHRAE-55 bounds at 24.5-25.0\u00b0C cooling setpoint.",
+      "baseline_pmv": 0.596,
+      "agent_pmv": 0.191
+    },
+    {
+      "hour": 7.75,
+      "day": 1,
+      "hour_of_day": 7,
+      "zone": "ALL_ZONES",
+      "heating_c": 15.0,
+      "cooling_c": 25.5,
+      "reason": "Adaptive control: adjusting setpoints based on real-time zone PMV and outdoor temperature forecast.",
+      "baseline_pmv": 0.635,
+      "agent_pmv": 0.252
+    },
+    {
+      "hour": 9.0,
+      "day": 1,
+      "hour_of_day": 9,
+      "zone": "ALL_ZONES",
+      "heating_c": 15.0,
+      "cooling_c": 25.0,
+      "reason": "Off-peak occupied: maintaining PMV within ASHRAE-55 bounds at 24.5-25.0\u00b0C cooling setpoint.",
+      "baseline_pmv": 0.692,
+      "agent_pmv": 0.255
+    },
+    {
+      "hour": 9.25,
+      "day": 1,
+      "hour_of_day": 9,
+      "zone": "ALL_ZONES",
+      "heating_c": 15.0,
+      "cooling_c": 25.5,
+      "reason": "Adaptive control: adjusting setpoints based on real-time zone PMV and outdoor temperature forecast.",
+      "baseline_pmv": 0.735,
+      "agent_pmv": 0.316
+    },
+    {
+      "hour": 9.75,
+      "day": 1,
+      "hour_of_day": 9,
+      "zone": "ALL_ZONES",
+      "heating_c": 15.0,
+      "cooling_c": 25.0,
+      "reason": "Off-peak occupied: maintaining PMV within ASHRAE-55 bounds at 24.5-25.0\u00b0C cooling setpoint.",
+      "baseline_pmv": 0.748,
+      "agent_pmv": 0.285
+    },
+    {
+      "hour": 10.0,
+      "day": 1,
+      "hour_of_day": 10,
+      "zone": "ALL_ZONES",
+      "heating_c": 15.0,
+      "cooling_c": 25.5,
+      "reason": "Adaptive control: adjusting setpoints based on real-time zone PMV and outdoor temperature forecast.",
+      "baseline_pmv": 0.797,
+      "agent_pmv": 0.329
+    },
+    {
+      "hour": 10.5,
+      "day": 1,
+      "hour_of_day": 10,
+      "zone": "ALL_ZONES",
+      "heating_c": 15.0,
+      "cooling_c": 25.0,
+      "reason": "Off-peak occupied: maintaining PMV within ASHRAE-55 bounds at 24.5-25.0\u00b0C cooling setpoint.",
+      "baseline_pmv": 0.805,
+      "agent_pmv": 0.301
+    },
+    {
+      "hour": 10.75,
+      "day": 1,
+      "hour_of_day": 10,
+      "zone": "ALL_ZONES",
+      "heating_c": 15.0,
+      "cooling_c": 25.5,
+      "reason": "Adaptive control: adjusting setpoints based on real-time zone PMV and outdoor temperature forecast.",
+      "baseline_pmv": 0.842,
+      "agent_pmv": 0.328
+    },
+    {
+      "hour": 11.25,
+      "day": 1,
+      "hour_of_day": 11,
+      "zone": "ALL_ZONES",
+      "heating_c": 15.0,
+      "cooling_c": 25.0,
+      "reason": "Off-peak occupied: maintaining PMV within ASHRAE-55 bounds at 24.5-25.0\u00b0C cooling setpoint.",
+      "baseline_pmv": 0.861,
+      "agent_pmv": 0.393
+    },
+    {
+      "hour": 11.5,
+      "day": 1,
+      "hour_of_day": 11,
+      "zone": "ALL_ZONES",
+      "heating_c": 15.0,
+      "cooling_c": 25.5,
+      "reason": "Adaptive control: adjusting setpoints based on real-time zone PMV and outdoor temperature forecast.",
+      "baseline_pmv": 0.879,
+      "agent_pmv": 0.395
+    },
+    {
+      "hour": 12.0,
+      "day": 1,
+      "hour_of_day": 12,
+      "zone": "ALL_ZONES",
+      "heating_c": 15.0,
+      "cooling_c": 25.0,
+      "reason": "Off-peak occupied: maintaining PMV within ASHRAE-55 bounds at 24.5-25.0\u00b0C cooling setpoint.",
+      "baseline_pmv": 0.893,
+      "agent_pmv": 0.404
+    },
+    {
+      "hour": 12.5,
+      "day": 1,
+      "hour_of_day": 12,
+      "zone": "ALL_ZONES",
+      "heating_c": 15.0,
+      "cooling_c": 25.5,
+      "reason": "Adaptive control: adjusting setpoints based on real-time zone PMV and outdoor temperature forecast.",
+      "baseline_pmv": 0.897,
+      "agent_pmv": 0.45
+    },
+    {
+      "hour": 13.0,
+      "day": 1,
+      "hour_of_day": 13,
+      "zone": "ALL_ZONES",
+      "heating_c": 15.0,
+      "cooling_c": 25.0,
+      "reason": "Off-peak occupied: maintaining PMV within ASHRAE-55 bounds at 24.5-25.0\u00b0C cooling setpoint.",
+      "baseline_pmv": 0.941,
+      "agent_pmv": 0.44
+    },
+    {
+      "hour": 13.5,
+      "day": 1,
+      "hour_of_day": 13,
+      "zone": "ALL_ZONES",
+      "heating_c": 15.0,
+      "cooling_c": 25.5,
+      "reason": "Adaptive control: adjusting setpoints based on real-time zone PMV and outdoor temperature forecast.",
+      "baseline_pmv": 0.932,
+      "agent_pmv": 0.445
+    },
+    {
+      "hour": 13.75,
+      "day": 1,
+      "hour_of_day": 13,
+      "zone": "ALL_ZONES",
+      "heating_c": 15.0,
+      "cooling_c": 25.0,
+      "reason": "Off-peak occupied: maintaining PMV within ASHRAE-55 bounds at 24.5-25.0\u00b0C cooling setpoint.",
+      "baseline_pmv": 0.927,
+      "agent_pmv": 0.417
+    },
+    {
+      "hour": 14.0,
+      "day": 1,
+      "hour_of_day": 14,
+      "zone": "ALL_ZONES",
+      "heating_c": 15.0,
+      "cooling_c": 25.5,
+      "reason": "Peak pricing window ($0.25/kWh): floating cooling setpoint to 25.5-26.0\u00b0C while holding PMV below +0.5.",
+      "baseline_pmv": 0.958,
+      "agent_pmv": 0.384
+    },
+    {
+      "hour": 19.0,
+      "day": 1,
+      "hour_of_day": 19,
+      "zone": "ALL_ZONES",
+      "heating_c": 15.0,
+      "cooling_c": 29.0,
+      "reason": "Unoccupied night setback: cooling setpoint relaxed to 28.5-29.5\u00b0C to save energy.",
+      "baseline_pmv": 0.699,
+      "agent_pmv": 0.38
+    },
+    {
+      "hour": 30.0,
+      "day": 2,
+      "hour_of_day": 6,
+      "zone": "ALL_ZONES",
+      "heating_c": 15.0,
+      "cooling_c": 25.5,
+      "reason": "Adaptive control: adjusting setpoints based on real-time zone PMV and outdoor temperature forecast.",
+      "baseline_pmv": -0.282,
+      "agent_pmv": 0.008
+    },
+    {
+      "hour": 38.0,
+      "day": 2,
+      "hour_of_day": 14,
+      "zone": "ALL_ZONES",
+      "heating_c": 15.0,
+      "cooling_c": 25.5,
+      "reason": "Peak pricing window ($0.25/kWh): floating cooling setpoint to 25.5-26.0\u00b0C while holding PMV below +0.5.",
+      "baseline_pmv": -0.333,
+      "agent_pmv": 0.458
+    },
+    {
+      "hour": 43.0,
+      "day": 2,
+      "hour_of_day": 19,
+      "zone": "ALL_ZONES",
+      "heating_c": 15.0,
+      "cooling_c": 29.0,
+      "reason": "Unoccupied night setback: cooling setpoint relaxed to 28.5-29.5\u00b0C to save energy.",
+      "baseline_pmv": 0.033,
+      "agent_pmv": 0.388
+    },
+    {
+      "hour": 54.0,
+      "day": 3,
+      "hour_of_day": 6,
+      "zone": "ALL_ZONES",
+      "heating_c": 15.0,
+      "cooling_c": 25.5,
+      "reason": "Adaptive control: adjusting setpoints based on real-time zone PMV and outdoor temperature forecast.",
+      "baseline_pmv": -0.505,
+      "agent_pmv": 0.0
+    },
+    {
+      "hour": 62.0,
+      "day": 3,
+      "hour_of_day": 14,
+      "zone": "ALL_ZONES",
+      "heating_c": 15.0,
+      "cooling_c": 25.5,
+      "reason": "Peak pricing window ($0.25/kWh): floating cooling setpoint to 25.5-26.0\u00b0C while holding PMV below +0.5.",
+      "baseline_pmv": -0.494,
+      "agent_pmv": 0.274
+    },
+    {
+      "hour": 67.0,
+      "day": 3,
+      "hour_of_day": 19,
+      "zone": "ALL_ZONES",
+      "heating_c": 15.0,
+      "cooling_c": 29.0,
+      "reason": "Unoccupied night setback: cooling setpoint relaxed to 28.5-29.5\u00b0C to save energy.",
+      "baseline_pmv": -0.346,
+      "agent_pmv": 0.179
+    }
+  ]
+}
