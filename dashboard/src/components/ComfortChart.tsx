@@ -24,7 +24,7 @@ interface ComfortChartProps {
 
 const ComfortChart = React.memo(function ComfortChart({ data }: ComfortChartProps) {
   return (
-    <Card className="col-span-1 lg:col-span-2">
+    <Card>
       <CardHeader className="pb-3">
         <CardTitle className="text-sm font-medium text-muted-foreground tracking-wide uppercase">
           Thermal Comfort (PMV)
@@ -66,16 +66,18 @@ const ComfortChart = React.memo(function ComfortChart({ data }: ComfortChartProp
                 tick={{ fontSize: 11 }}
                 tickLine={false}
                 axisLine={false}
-                domain={[-1, 1]}
+                domain={["dataMin - 0.2", "dataMax + 0.2"]}
                 width={36}
               />
               <Tooltip
-                content={<ChartTooltipContent formatter={(v) => [Number(v).toFixed(3), ""]} />}
+                content={<ChartTooltipContent formatter={(v, name) => [Number(v).toFixed(3), name]} />}
               />
-              <Legend content={<ChartLegend />}>
-                <ChartLegendItem color="hsl(0 0% 60%)" label="Baseline PMV" />
-                <ChartLegendItem color="hsl(221.2 83.2% 53.3%)" label="Agent PMV" />
-              </Legend>
+              <Legend content={
+                <ChartLegend>
+                  <ChartLegendItem color="hsl(0 0% 60%)" label="Baseline PMV" />
+                  <ChartLegendItem color="hsl(221.2 83.2% 53.3%)" label="Agent PMV" />
+                </ChartLegend>
+              } />
               <ReferenceArea
                 y1={-0.5}
                 y2={0.5}
@@ -96,6 +98,7 @@ const ComfortChart = React.memo(function ComfortChart({ data }: ComfortChartProp
               />
               <Line
                 type="monotone"
+                name="Baseline PMV"
                 dataKey="baseline_pmv"
                 stroke="#9ca3af"
                 strokeWidth={1.5}
@@ -104,6 +107,7 @@ const ComfortChart = React.memo(function ComfortChart({ data }: ComfortChartProp
               />
               <Line
                 type="monotone"
+                name="Agent PMV"
                 dataKey="agent_pmv"
                 stroke="hsl(221.2 83.2% 53.3%)"
                 strokeWidth={1.5}

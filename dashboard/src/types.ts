@@ -31,6 +31,9 @@ export interface DecisionEntry {
 }
 
 export interface DashboardData {
+  is_live?: boolean
+  status?: "completed" | "running"
+  current_step?: number
   summary: Summary
   power_series: PowerPoint[]
   pmv_series: PivotPoint[]

@@ -23,7 +23,7 @@ interface PowerChartProps {
 
 const PowerChart = React.memo(function PowerChart({ data }: PowerChartProps) {
   return (
-    <Card className="col-span-1 lg:col-span-2">
+    <Card>
       <CardHeader className="pb-3">
         <CardTitle className="text-sm font-medium text-muted-foreground tracking-wide uppercase">
           HVAC Power Demand
@@ -69,14 +69,17 @@ const PowerChart = React.memo(function PowerChart({ data }: PowerChartProps) {
                 width={48}
               />
               <Tooltip
-                content={<ChartTooltipContent formatter={(v) => [`${Number(v).toLocaleString()} W`, ""]} />}
+                content={<ChartTooltipContent formatter={(v, name) => [`${Number(v).toLocaleString()} W`, name]} />}
               />
-              <Legend content={<ChartLegend />}>
-                <ChartLegendItem color="hsl(0 0% 60%)" label="Baseline" />
-                <ChartLegendItem color="hsl(221.2 83.2% 53.3%)" label="Closed-Loop Agent" />
-              </Legend>
+              <Legend content={
+                <ChartLegend>
+                  <ChartLegendItem color="hsl(0 0% 60%)" label="Baseline" />
+                  <ChartLegendItem color="hsl(221.2 83.2% 53.3%)" label="Closed-Loop Agent" />
+                </ChartLegend>
+              } />
               <Line
                 type="monotone"
+                name="Baseline"
                 dataKey="baseline_w"
                 stroke="#9ca3af"
                 strokeWidth={1.5}
@@ -85,6 +88,7 @@ const PowerChart = React.memo(function PowerChart({ data }: PowerChartProps) {
               />
               <Line
                 type="monotone"
+                name="Closed-Loop Agent"
                 dataKey="agent_w"
                 stroke="hsl(221.2 83.2% 53.3%)"
                 strokeWidth={1.5}
