@@ -64,9 +64,6 @@ const ChartTooltipContent = React.forwardRef<
       hideLabel = false,
       hideIndicator = false,
       indicator = "dot",
-      _itemSorter,
-      _labelStyle,
-      ...props
     },
     ref
   ) => {
@@ -79,7 +76,6 @@ const ChartTooltipContent = React.forwardRef<
           "grid gap-1 p-3 bg-popover text-popover-foreground border border-border rounded-lg shadow-lg min-w-[8rem]",
           className
         )}
-        {...props}
       >
         {!hideLabel && label != null && (
           <div className="text-xs font-medium text-foreground mb-1">
@@ -125,14 +121,13 @@ ChartTooltipContent.displayName = "ChartTooltipContent"
 const ChartLegend = React.forwardRef<
   HTMLDivElement,
   React.HTMLAttributes<HTMLDivElement>
->(({ className, _iconSize, _inactiveColor, _itemSorter, _labelStyle, _verticalAlign, _chartWidth, _chartHeight, ...props }, ref) => (
+>(({ className }, ref) => (
   <div
     ref={ref}
     className={cn(
       "flex flex-wrap items-center gap-4 text-xs text-muted-foreground",
       className
     )}
-    {...props}
   />
 ))
 ChartLegend.displayName = "ChartLegend"
