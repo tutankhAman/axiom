@@ -40,31 +40,30 @@ class PreFilter:
 
     def evaluate(self, state: SimulationState) -> PreFilterDecision:
         """Evaluate simulation state against deterministic trigger rules."""
-        
+
         # Handle time reset between Sizing Period and actual RunPeriod
         if self.last_trigger_time is not None and state.sim_time_hours < self.last_trigger_time:
             logger.info("Simulation time reset detected. Clearing trigger history.")
             self.last_trigger_time = None
 
-        # Determine if we are in deterministic night setback (unoccupied)
+        # Determine if we are in deterministic night setback or pre-cooling (unoccupied)
         if not state.is_occupied:
             hour = int(state.sim_time_hours % 24)
-            # Optimum Start: Pre-heat the building starting at 5:00 AM (hours 5 and 6)
-            if 5 <= hour < 7:
-                # If it's cold outside, start pre-heating to 21C
-                if state.outdoor_temp < 15.0:
-                    return PreFilterDecision(
-                        should_trigger=False,
-                        reason="Unoccupied but pre-heating (Optimum Start active)",
-                        setback_command={"heat": 21.0, "cool": 24.0}
-                    )
-                    
-            # Deterministic night setback: bypass LLM entirely
+            if 4 <= hour < 7:
+                # Thermal mass pre-cooling charge (04:00 - 07:00 AM)
+                return PreFilterDecision(
+                    should_trigger=False,
+                    reason="Thermal mass pre-cooling charge (04:00-07:00, unoccupied)",
+                    setback_command={"heat": 15.0, "cool": 21.5},
+                )
+
+            # Deterministic deep night setback: bypass LLM entirely
             return PreFilterDecision(
                 should_trigger=False,
                 reason="Unoccupied hour: deterministic night setback active",
-                setback_command={"heat": 15.56, "cool": 30.0}
+                setback_command={"heat": 15.56, "cool": 30.0},
             )
+
         # Enforce minimum cooldown between any triggers
         if self.last_trigger_time is not None and (
             state.sim_time_hours - self.last_trigger_time
@@ -73,6 +72,7 @@ class PreFilter:
                 should_trigger=False,
                 reason=f"Cooldown active ({self.min_cooldown_hours}h)",
             )
+
         # Rule 1: Comfort constraint violation in any zone
         for zone_name, zone_state in state.zones.items():
             if zone_state.pmv < self.pmv_min or zone_state.pmv > self.pmv_max:

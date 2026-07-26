@@ -10,7 +10,7 @@ logger = logging.getLogger(__name__)
 
 # Constants for strict math validation
 HEAT_MIN, HEAT_MAX = 15.0, 18.0  # Summer heating inactive
-COOL_MIN, COOL_MAX = 24.0, 30.0  # Summer cooling allowed range
+COOL_MIN, COOL_MAX = 21.0, 30.0  # Summer cooling allowed range
 MIN_DEADBAND = 2.0
 
 
@@ -35,7 +35,7 @@ def get_building_context(context: MCPContext) -> dict[str, Any]:
         }
 
     hour = int(state.sim_time_hours % 24)
-    is_peak = 14 <= hour <= 19  # Peak electricity rate 2 PM - 7 PM
+    is_peak = 14 <= hour < 19  # Peak electricity rate 2 PM - 7 PM (14:00 to 18:59)
     price = 0.25 if is_peak else 0.10
 
     # Read EPW forecast
@@ -67,7 +67,9 @@ def get_building_context(context: MCPContext) -> dict[str, Any]:
             "ppd": zone_data.ppd,
         }
 
-    worst_pmv = min(pmv_values) if pmv_values else 0.0
+    min_pmv = min(pmv_values) if pmv_values else 0.0
+    max_pmv = max(pmv_values) if pmv_values else 0.0
+    worst_pmv = max_pmv if abs(max_pmv) >= abs(min_pmv) else min_pmv
     mean_pmv = sum(pmv_values) / len(pmv_values) if pmv_values else 0.0
 
     if worst_pmv < -1.0:
@@ -96,7 +98,9 @@ def get_building_context(context: MCPContext) -> dict[str, Any]:
         "forecast_12h_avg_c": round(avg_forecast, 1),
         "forecast_trend": forecast_trend,
         "comfort_status": comfort_status,
-        "worst_pmv": worst_pmv,
+        "worst_pmv": round(worst_pmv, 3),
+        "max_pmv": round(max_pmv, 3),
+        "min_pmv": round(min_pmv, 3),
         "mean_pmv": round(mean_pmv, 2),
         "zones": zones_summary,
     }
@@ -115,7 +119,7 @@ def set_zone_setpoint(
     """
     val_cool = 27.0 if cooling_c is None else float(cooling_c)
 
-    # MATH SAFETY & NEURO-SYMBOLIC ENFORCER (3-Period Time-Varying Strategy)
+    # MATH SAFETY & NEURO-SYMBOLIC ENFORCER (5-Period Time-Varying Thermal Mass Strategy)
     # Allows LLM contextual agency within safe physical bands while preserving energy savings.
     latest_state = context.bridge.get_latest_state()
     is_occupied = latest_state.is_occupied if latest_state else True
@@ -123,15 +127,15 @@ def set_zone_setpoint(
 
     clamped_heat = 15.0
     if not is_occupied:
-        clamped_cool = 29.44
-    elif 6 <= hour < 7:
-        clamped_cool = max(25.0, min(26.0, val_cool))  # Optimum start pre-cooling
-    elif 7 <= hour < 14:
-        clamped_cool = max(25.5, min(26.5, val_cool))  # Off-peak occupied strategy
+        clamped_cool = 30.0
+    elif 7 <= hour < 11:
+        clamped_cool = max(22.0, min(24.0, val_cool))  # Cold start occupied strategy
+    elif 11 <= hour < 14:
+        clamped_cool = max(24.0, min(26.5, val_cool))  # Drift window strategy
     elif 14 <= hour < 19:
-        clamped_cool = max(27.0, min(28.5, val_cool))  # Peak grid shedding strategy
+        clamped_cool = max(28.0, min(30.0, val_cool))  # Peak coasting strategy
     else:
-        clamped_cool = 29.44
+        clamped_cool = 30.0  # Fallback for unoccupied edge cases
 
     # Enforce minimum deadband between heating and cooling
     if clamped_cool - clamped_heat < MIN_DEADBAND:
@@ -193,15 +197,25 @@ TOOLS_SCHEMA = [
                 "properties": {
                     "heating_c": {
                         "type": "number",
-                        "description": "Target heating setpoint in Celsius (allowed: 15.0°C to 22.0°C)",
+                        "description": (
+                            "Target heating setpoint in Celsius (allowed: 15.0°C to 22.0°C)"
+                        ),
                     },
                     "cooling_c": {
                         "type": "number",
-                        "description": "Target cooling setpoint in Celsius. Allowed bands: 25.5°C to 26.5°C off-peak (07:00-14:00), 27.0°C to 28.5°C peak shedding (14:00-19:00), 29.0°C to 29.5°C unoccupied night.",
+                        "description": (
+                            "Target cooling setpoint in Celsius. Allowed bands: "
+                            "22.0°C to 24.0°C cold start (07:00-11:00), "
+                            "24.0°C to 26.5°C drift window (11:00-14:00), "
+                            "28.0°C to 30.0°C peak coasting (14:00-19:00), "
+                            "30.0°C unoccupied night."
+                        ),
                     },
                     "reason": {
                         "type": "string",
-                        "description": "One-sentence technical explanation for facility manager audit log.",
+                        "description": (
+                            "One-sentence technical explanation for facility manager audit log."
+                        ),
                     },
                 },
                 "required": ["heating_c", "cooling_c", "reason"],

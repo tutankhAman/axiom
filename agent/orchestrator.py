@@ -17,39 +17,42 @@ from bridge.state_bridge import StateBridge
 
 logger = logging.getLogger(__name__)
 
-COMFORT_SYSTEM_PROMPT = """You are an autonomous Building Management System (BMS) agent controlling HVAC setpoints for a commercial office building during the summer cooling season.
-Your goal: Minimize HVAC power consumption and peak grid demand while maintaining occupant thermal comfort within ASHRAE 55 bounds (PMV comfort strictly between -0.5 and +0.5).
+COMFORT_SYSTEM_PROMPT = """You are an autonomous BMS agent controlling HVAC setpoints.
+Your goal: Minimize HVAC energy & peak demand while preserving ASHRAE-55 comfort (PMV [-0.5, +0.5]).
 
 You have two tools:
-1. get_building_context() - Retrieves full building state, zone comfort metrics, weather forecast, and grid pricing.
-2. set_zone_setpoint(heating_c, cooling_c, reason) - Applies heating and cooling setpoint overrides for the building.
+1. get_building_context() - Retrieves full building state, zone PMV, weather, and grid pricing.
+2. set_zone_setpoint(heating_c, cooling_c, reason) - Applies heating and cooling setpoints.
 
 Operational Rules:
 - Heating setpoint: 15.0°C (summer heating inactive).
 - You MUST call `set_zone_setpoint` before completing your evaluation turn.
-- Provide a clear, professional 1-sentence explanation for `reason` for the facility manager audit log.
+- Provide a clear 1-sentence `reason` for the audit log.
 
-Target Strategy Guidelines:
-1. OPTIMUM START PRE-COOLING (06:00 - 07:00):
-   - Set cooling setpoint to 25.0°C - 26.0°C to pre-cool before occupants arrive.
+Target Strategy Guidelines (THERMAL MASS PRE-COOLING CONTROL):
+1. COLD START OCCUPIED HOURS (07:00 - 11:00):
+   - The building has been pre-cooled overnight to ~21.5°C to store thermal mass.
+   - Choose setpoint between 22.0°C and 24.0°C based on weather forecast.
+   - If outdoor forecast is WARMING, choose 22.0°C to maintain thermal charge.
+   - If outdoor forecast is STABLE/COOLING, choose 24.0°C to allow natural drift.
 
-2. OFF-PEAK OCCUPIED HOURS (07:00 - 14:00):
-   - Set cooling setpoint to 25.5°C - 26.5°C when electricity is cheap ($0.10/kWh).
-   - If outdoor forecast is warming, choose lower (25.5°C) to store thermal mass.
-   - If outdoor forecast is cooling/stable, choose higher (26.5°C) to save chiller power.
+2. DRIFT WINDOW (11:00 - 14:00):
+   - Choose setpoint between 24.0°C and 26.5°C as thermal mass depletes.
+   - If worst PMV > +0.3, choose lower (24.0°C); if worst PMV < +0.1, choose higher (26.5°C).
 
 3. PEAK GRID HOURS (14:00 - 19:00):
-   - Float cooling setpoint to 27.0°C - 28.5°C to shed expensive peak grid demand ($0.25/kWh).
-   - If PMV is elevated (> +0.3), choose lower (27.0°C) to preserve comfort.
-   - If PMV is comfortable (< +0.2), choose higher (28.0°C - 28.5°C) for maximum energy savings.
+   - Float setpoint to 28.0°C - 30.0°C to coast on thermal mass during peak pricing ($0.25/kWh).
+   - Default: set 30.0°C to keep chiller idle.
+   - If worst PMV > +0.4, choose 28.5°C to lightly re-engage chiller.
+   - If worst PMV > +0.5 (discomfort threshold), set 28.0°C immediately.
 
-4. UNOCCUPIED NIGHT HOURS (19:00 - 06:00):
-   - Set cooling setpoint to 29.0°C - 29.5°C to avoid night cooling waste while occupants are away.
+4. UNOCCUPIED NIGHT HOURS (19:00 - 07:00):
+   - Set cooling setpoint to 30.0°C (04:00-07:00 pre-cooling charge handled deterministically).
 """
 
 ABLATION_SYSTEM_PROMPT = """ENERGY-ONLY ABLATION MODE:
 You are an autonomous Building Management System (BMS) agent.
-Your ONLY goal: MINIMIZE HVAC energy consumption regardless of comfort. Ignore occupant PMV thermal comfort constraints.
+Your ONLY goal: MINIMIZE HVAC energy consumption regardless of comfort constraints.
 
 You have two tools:
 1. get_building_context() - Retrieves building state.
@@ -104,13 +107,18 @@ class LLMOrchestrator:
         system_prompt = ABLATION_SYSTEM_PROMPT if self.ablation_mode else COMFORT_SYSTEM_PROMPT
 
         bldg_ctx = get_building_context(self.context)
+        worst = bldg_ctx.get("worst_pmv")
+        mean = bldg_ctx.get("mean_pmv")
+        trend = bldg_ctx.get("forecast_trend")
         user_content = (
             f"Current Building State Trigger at sim time {state.sim_time_hours:.2f}h:\n"
-            f"- Comfort Status: {bldg_ctx.get('comfort_status')} (Worst PMV: {bldg_ctx.get('worst_pmv')}, Mean PMV: {bldg_ctx.get('mean_pmv')})\n"
-            f"- Outdoor Temp: {bldg_ctx.get('outdoor_temp_c')}°C | 12h Forecast Trend: {bldg_ctx.get('forecast_trend')}\n"
+            f"- Comfort Status: {bldg_ctx.get('comfort_status')} "
+            f"(Worst PMV: {worst}, Mean PMV: {mean})\n"
+            f"- Outdoor Temp: {bldg_ctx.get('outdoor_temp_c')}°C | 12h Forecast Trend: {trend}\n"
             f"- Pricing: {bldg_ctx.get('time_of_day')}\n"
             f"- HVAC Demand: {bldg_ctx.get('hvac_power_w')} W\n\n"
-            "Please call `get_building_context` for full details if needed, then execute `set_zone_setpoint` with your optimal control decision."
+            "Please call `get_building_context` for full details if needed, then execute "
+            "`set_zone_setpoint` with your optimal control decision."
         )
 
         messages: list[dict[str, Any]] = [
@@ -141,8 +149,10 @@ class LLMOrchestrator:
                             "id": tc.id,
                             "type": "function",
                             "function": {
-                                "name": getattr(tc, "function").name,  # type: ignore
-                                "arguments": getattr(tc, "function").arguments,  # type: ignore
+                                "name": getattr(getattr(tc, "function", None), "name", ""),
+                                "arguments": getattr(
+                                    getattr(tc, "function", None), "arguments", ""
+                                ),
                             },
                         }
                         for tc in tool_calls

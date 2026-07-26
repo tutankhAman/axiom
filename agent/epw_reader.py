@@ -3,6 +3,7 @@ import logging
 
 logger = logging.getLogger(__name__)
 
+
 class EPWReader:
     def __init__(self, epw_path: str):
         self.epw_path = epw_path
@@ -11,7 +12,7 @@ class EPWReader:
 
     def _load(self):
         try:
-            with open(self.epw_path, 'r') as f:
+            with open(self.epw_path) as f:
                 reader = csv.reader(f)
                 in_data = False
                 for row in reader:
@@ -26,7 +27,7 @@ class EPWReader:
     def get_forecast(self, current_hour: float, hours: int) -> list[float]:
         if not self._temperatures:
             return []
-        
+
         # Round current hour to nearest int
         idx = int(round(current_hour))
         forecast = []
@@ -34,5 +35,5 @@ class EPWReader:
             if idx + i < len(self._temperatures):
                 forecast.append(self._temperatures[idx + i])
             else:
-                forecast.append(self._temperatures[-1]) # Fallback
+                forecast.append(self._temperatures[-1])  # Fallback
         return forecast

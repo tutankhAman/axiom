@@ -72,3 +72,18 @@ def test_prefilter_trigger_on_pmv_comfort_violation_low() -> None:
     assert decision.should_trigger is True
     assert "outside comfort band" in decision.reason
     assert prefilter.last_trigger_time == 0.3
+
+
+def test_prefilter_unoccupied_precooling_charge() -> None:
+    prefilter = PreFilter(interval_hours=1.0)
+    unoccupied_state = SimulationState(
+        sim_time_hours=5.0,
+        outdoor_temp=20.0,
+        hvac_power_w=1000.0,
+        is_occupied=False,
+        zones={"Core_ZN": ZoneState(zone_name="Core_ZN", mean_air_temp=24.0, pmv=0.0, ppd=5.0)},
+    )
+    decision = prefilter.evaluate(unoccupied_state)
+    assert decision.should_trigger is False
+    assert decision.setback_command == {"heat": 15.0, "cool": 21.5}
+    assert "Thermal mass pre-cooling charge" in decision.reason

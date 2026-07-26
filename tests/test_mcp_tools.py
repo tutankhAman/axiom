@@ -19,7 +19,7 @@ def test_set_zone_setpoint_clamping() -> None:
         )
     )
 
-    # Test out-of-bounds cooling (too low: -10.0) -> clamps to 25.5 off-peak floor
+    # Test out-of-bounds cooling (too low: -10.0) -> clamps to 22.0 cold start floor
     result = set_zone_setpoint(
         context,
         heating_c=100.0,
@@ -30,7 +30,7 @@ def test_set_zone_setpoint_clamping() -> None:
     assert "Success" in result
     commands = bridge.get_actuation_commands()
     assert commands["HTGSETP_SCH_NO_OPTIMUM"] == 15.0
-    assert commands["CLGSETP_SCH_NO_OPTIMUM"] == 25.5
+    assert commands["CLGSETP_SCH_NO_OPTIMUM"] == 22.0
 
 
 def test_set_zone_setpoint_peak_shedding() -> None:
