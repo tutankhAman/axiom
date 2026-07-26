@@ -1,11 +1,15 @@
-"""Main entrypoint for Phase 2 baseline simulation run and CSV export."""
+"""Main entrypoint for baseline and Phase 3 bridged simulation runs."""
 
+import argparse
 import csv
 import logging
 import os
 import sys
+from typing import Any
 
-from sim import EnergyPlusDriver, SimulationState
+from agent import AgentThread, PreFilter
+from bridge import StateBridge
+from sim import ActuatorManager, EnergyPlusDriver, SimulationState
 
 logger = logging.getLogger("main")
 
@@ -51,11 +55,61 @@ def save_history_to_csv(history: list[SimulationState], csv_path: str) -> None:
     logger.info("Saved %d state snapshots to CSV: %s", len(history), csv_path)
 
 
-def main() -> int:
-    setup_logging()
+def run_phase3(base_dir: str | None = None, output_dir: str | None = None) -> tuple[int, int]:
+    """Run Phase 3 in-memory state bridge + pre-filter agent simulation."""
+    logger.info("Starting Phase 3 Bridged Simulation Run (State Bridge + Pre-filter)...")
+
+    if base_dir is None:
+        base_dir = os.path.dirname(os.path.abspath(__file__))
+    if output_dir is None:
+        output_dir = os.path.join(base_dir, "output", "phase3_bridged_run")
+
+    bridge = StateBridge()
+    prefilter = PreFilter(interval_hours=1.0)
+    agent_thread = AgentThread(bridge)
+    agent_thread.start()
+
+    def on_timestep(sim_state: SimulationState) -> None:
+        bridge.update_state(sim_state)
+        decision = prefilter.evaluate(sim_state)
+        if decision.should_trigger:
+            bridge.trigger()
+
+    def on_actuate(state: Any, actuator_manager: ActuatorManager) -> None:
+        commands = bridge.get_actuation_commands()
+        for sched_name, val in commands.items():
+            actuator_manager.set_schedule_value(state, sched_name, val)
+
+    driver = EnergyPlusDriver(
+        idf_path=os.path.join(base_dir, "models", "baseline.idf"),
+        epw_path=os.path.join(base_dir, "models", "weather.epw"),
+        output_dir=output_dir,
+        on_timestep=on_timestep,
+        on_actuate=on_actuate,
+    )
+
+    try:
+        exit_code = driver.run()
+    finally:
+        agent_thread.stop()
+
+    if exit_code == 0:
+        csv_path = os.path.join(output_dir, "phase3_results.csv")
+        save_history_to_csv(driver.history, csv_path)
+        logger.info(
+            "Phase 3 bridged run finished successfully! Agent thread was triggered %d times.",
+            agent_thread.trigger_count,
+        )
+    else:
+        logger.error("Phase 3 bridged run failed with exit code: %d", exit_code)
+
+    return exit_code, agent_thread.trigger_count
+
+
+def run_baseline(base_dir: str) -> int:
+    """Run Phase 2 untouched baseline simulation."""
     logger.info("Starting Phase 2 Baseline Simulation Run...")
 
-    base_dir = os.path.dirname(os.path.abspath(__file__))
     driver = EnergyPlusDriver(
         idf_path=os.path.join(base_dir, "models", "baseline.idf"),
         epw_path=os.path.join(base_dir, "models", "weather.epw"),
@@ -75,6 +129,26 @@ def main() -> int:
         logger.error("Phase 2 baseline run failed with exit code: %d", exit_code)
 
     return exit_code
+
+
+def main() -> int:
+    setup_logging()
+    parser = argparse.ArgumentParser(description="Eco-Loop Simulation Runner")
+    parser.add_argument(
+        "--phase",
+        choices=["2", "3"],
+        default="3",
+        help="Phase run mode: 2 (baseline), 3 (bridged + prefilter, default)",
+    )
+    args = parser.parse_args()
+
+    base_dir = os.path.dirname(os.path.abspath(__file__))
+
+    if args.phase == "3":
+        exit_code, _ = run_phase3(base_dir)
+        return exit_code
+    else:
+        return run_baseline(base_dir)
 
 
 if __name__ == "__main__":
