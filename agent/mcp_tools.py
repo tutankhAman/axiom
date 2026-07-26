@@ -63,18 +63,22 @@ def get_grid_context(context: MCPContext) -> dict[str, Any]:
 
 def set_zone_setpoint(
     context: MCPContext,
-    zone_id: str,
-    heating_c: float,
-    cooling_c: float,
-    reason: str,
+    zone_id: str = "Core_ZN",
+    heating_c: float | None = 20.0,
+    cooling_c: float | None = 25.0,
+    reason: str = "Automated setpoint adjustment",
 ) -> str:
     """Set the target heating and cooling setpoints for a specific zone.
 
     The reason argument is mandatory to provide an audit trail of agent reasoning.
     """
+    target_zone = zone_id if zone_id else "Core_ZN"
+    val_heat = 20.0 if heating_c is None else float(heating_c)
+    val_cool = 25.0 if cooling_c is None else float(cooling_c)
+
     # CLAMPING: System Integration Priority #1 - Protect the simulation from out-of-bounds writes
-    clamped_heat = max(15.0, min(24.0, heating_c))
-    clamped_cool = max(22.0, min(30.0, cooling_c))
+    clamped_heat = max(15.0, min(24.0, val_heat))
+    clamped_cool = max(22.0, min(30.0, val_cool))
 
     # Ensure cooling is higher than heating to prevent fighting
     if clamped_cool <= clamped_heat:
@@ -94,14 +98,12 @@ def set_zone_setpoint(
 
     logger.info(
         "Agent decided for %s: Heat=%.2f°C, Cool=%.2f°C | Reason: %s",
-        zone_id,
+        target_zone,
         clamped_heat,
         clamped_cool,
         reason,
     )
-    return (
-        f"Success: Set {zone_id} schedules to Heat={clamped_heat:.2f}C, Cool={clamped_cool:.2f}C."
-    )
+    return f"Set {target_zone} schedules: Heat={clamped_heat:.2f}C, Cool={clamped_cool:.2f}C."
 
 
 # OpenAI Tool Schemas

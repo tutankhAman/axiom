@@ -127,7 +127,10 @@ class LLMOrchestrator:
             message = response.choices[0].message
             if message.tool_calls:
                 messages.append(message)  # type: ignore[arg-type]
+                has_getter_tool = False
                 for tool_call in message.tool_calls:
+                    if tool_call.function.name != "set_zone_setpoint":
+                        has_getter_tool = True
                     result = self._execute_tool(tool_call)
                     messages.append(
                         {
@@ -136,15 +139,16 @@ class LLMOrchestrator:
                             "content": result,
                         }
                     )
-                try:
-                    self.client.chat.completions.create(
-                        model=self.model,
-                        messages=messages,  # ty: ignore[invalid-argument-type]
-                        tools=TOOLS_SCHEMA,  # type: ignore
-                        timeout=15.0,
-                    )
-                except Exception:
-                    logger.exception("Follow-up LLM completion failed after tool execution.")
+                if has_getter_tool:
+                    try:
+                        self.client.chat.completions.create(
+                            model=self.model,
+                            messages=messages,  # ty: ignore[invalid-argument-type]
+                            tools=TOOLS_SCHEMA,  # type: ignore
+                            timeout=15.0,
+                        )
+                    except Exception:
+                        logger.exception("Follow-up LLM completion failed after tool execution.")
             else:
                 logger.debug("LLM responded with no tool calls. Holding current setpoints.")
 

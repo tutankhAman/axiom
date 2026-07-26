@@ -29,14 +29,24 @@ class PreFilter:
         interval_hours: float = 1.0,
         pmv_min: float = -0.5,
         pmv_max: float = 0.5,
+        min_cooldown_hours: float = 0.5,
     ) -> None:
         self.interval_hours = interval_hours
         self.pmv_min = pmv_min
         self.pmv_max = pmv_max
+        self.min_cooldown_hours = min_cooldown_hours
         self.last_trigger_time: float | None = None
 
     def evaluate(self, state: SimulationState) -> PreFilterDecision:
         """Evaluate simulation state against deterministic trigger rules."""
+        # Enforce minimum cooldown between any triggers
+        if self.last_trigger_time is not None and (
+            state.sim_time_hours - self.last_trigger_time
+        ) < (self.min_cooldown_hours - 1e-5):
+            return PreFilterDecision(
+                should_trigger=False,
+                reason=f"Cooldown active ({self.min_cooldown_hours}h)",
+            )
         # Rule 1: Comfort constraint violation in any zone
         for zone_name, zone_state in state.zones.items():
             if zone_state.pmv < self.pmv_min or zone_state.pmv > self.pmv_max:
