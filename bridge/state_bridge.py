@@ -22,6 +22,7 @@ class StateBridge:
         self._history: deque[dict] = deque(maxlen=3)
         # Actuation schedule map: schedule_name -> target_value
         self._actuation_commands: dict[str, float] = {}
+        self._last_reason: str = ""
         self.trigger_event = threading.Event()
 
     def update_state(self, state: SimulationState) -> None:
@@ -44,16 +45,28 @@ class StateBridge:
         with self._lock:
             return list(self._history)
 
-    def set_actuation_commands(self, commands: dict[str, float]) -> None:
+    def set_actuation_commands(self, commands: dict[str, float], reason: str = "") -> None:
         """Store target schedule actuation commands safely."""
         with self._lock:
             self._actuation_commands = dict(commands)
-        logger.debug("Updated actuation commands in StateBridge: %s", commands)
+            if reason:
+                self._last_reason = reason
+        logger.debug("Updated actuation commands in StateBridge: %s (Reason: %s)", commands, reason)
 
     def get_actuation_commands(self) -> dict[str, float]:
         """Fetch a copy of current actuation schedule values (Zero-Order Hold)."""
         with self._lock:
             return dict(self._actuation_commands)
+
+    def set_last_reason(self, reason: str) -> None:
+        """Store the latest decision reason from LLM or prefilter."""
+        with self._lock:
+            self._last_reason = reason
+
+    def get_last_reason(self) -> str:
+        """Fetch the latest decision reason."""
+        with self._lock:
+            return self._last_reason
 
     def trigger(self) -> None:
         """Signal the agent thread that a decision evaluation is required."""

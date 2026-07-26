@@ -221,8 +221,11 @@ def run_phase5(
         agent_thread = AgentThread(bridge, ablation_mode=ablation)
         agent_thread.start()
 
+    running_history: list[SimulationState] = []
+
     def on_timestep(sim_state: SimulationState) -> None:
         nonlocal trigger_count
+        running_history.append(sim_state)
         bridge.update_state(sim_state)
         decision = prefilter.evaluate(sim_state)
 
@@ -241,9 +244,9 @@ def run_phase5(
             current_cmds["CLGSETP_SCH_NO_OPTIMUM"] = cool_sp
             current_cmds["HTGSETP_SCH_NO_OPTIMUM_w_SB"] = heat_sp
             current_cmds["CLGSETP_SCH_NO_OPTIMUM_w_SB"] = cool_sp
-            bridge.set_actuation_commands(current_cmds)
-            source = "SETBACK"
             reason = "Night setup / Unoccupied setback applied deterministically."
+            bridge.set_actuation_commands(current_cmds, reason=reason)
+            source = "SETBACK"
 
         elif decision.should_trigger:
             trigger_count += 1
@@ -253,10 +256,13 @@ def run_phase5(
                 new_cmds = bridge.get_actuation_commands()
                 cool_sp = new_cmds.get("CLGSETP_SCH_NO_OPTIMUM", cool_sp)
                 heat_sp = new_cmds.get("HTGSETP_SCH_NO_OPTIMUM", heat_sp)
-                reason = "LLM evaluated building state and selected optimal setpoints."
+                reason = (
+                    bridge.get_last_reason()
+                    or "LLM evaluated building state and selected optimal setpoints."
+                )
             else:
                 bridge.trigger()
-                reason = "Agent thread triggered asynchronously."
+                reason = bridge.get_last_reason() or "Agent thread triggered asynchronously."
 
         zone_temps = (
             [z.mean_air_temp for z in sim_state.zones.values()] if sim_state.zones else [25.0]
@@ -294,7 +300,7 @@ def run_phase5(
             )
 
         exporter.export_snapshot(
-            agent_history=driver.history if "driver" in locals() else [sim_state],
+            agent_history=running_history,
             is_live=True,
             status="simulating",
         )

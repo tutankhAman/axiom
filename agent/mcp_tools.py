@@ -165,7 +165,7 @@ def set_zone_setpoint(
     current_commands["HTGSETP_SCH_NO_OPTIMUM_w_SB"] = clamped_heat
     current_commands["CLGSETP_SCH_NO_OPTIMUM_w_SB"] = clamped_cool
 
-    context.bridge.set_actuation_commands(current_commands)
+    context.bridge.set_actuation_commands(current_commands, reason=reason)
 
     logger.info(
         "Agent setpoint decision applied [Heat=%.1f°C, Cool=%.1f°C] | Reason: %s",
