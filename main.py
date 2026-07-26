@@ -148,7 +148,7 @@ def run_phase5(
         output_dir = os.path.join(base_dir, "output", "phase5_experiments")
 
     bridge = StateBridge()
-    prefilter = PreFilter(interval_hours=1.0)
+    prefilter = PreFilter(interval_hours=1.0, min_cooldown_hours=0.5)
     trigger_count = 0
 
     if sync:

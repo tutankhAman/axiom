@@ -29,7 +29,7 @@ class PreFilter:
         interval_hours: float = 1.0,
         pmv_min: float = -0.5,
         pmv_max: float = 0.5,
-        min_cooldown_hours: float = 0.5,
+        min_cooldown_hours: float = 0.0,
     ) -> None:
         self.interval_hours = interval_hours
         self.pmv_min = pmv_min

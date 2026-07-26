@@ -103,7 +103,9 @@ def set_zone_setpoint(
         clamped_cool,
         reason,
     )
-    return f"Set {target_zone} schedules: Heat={clamped_heat:.2f}C, Cool={clamped_cool:.2f}C."
+    return (
+        f"Success: Set {target_zone} schedules: Heat={clamped_heat:.2f}C, Cool={clamped_cool:.2f}C."
+    )
 
 
 # OpenAI Tool Schemas
