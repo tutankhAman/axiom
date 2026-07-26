@@ -2,7 +2,7 @@
 
 import logging
 from dataclasses import dataclass
-from typing import Any
+from typing import Any, ClassVar
 
 from pyenergyplus.api import EnergyPlusAPI
 
@@ -24,7 +24,11 @@ class ZoneSetpoints:
 class ActuatorManager:
     """Manages acquisition and modification of EnergyPlus actuator handles."""
 
-    SUPPORTED_COMPONENT_TYPES = ["Schedule:Compact", "Schedule:Constant", "Schedule"]
+    SUPPORTED_COMPONENT_TYPES: ClassVar[list[str]] = [
+        "Schedule:Compact",
+        "Schedule:Constant",
+        "Schedule",
+    ]
 
     def __init__(self, api: EnergyPlusAPI) -> None:
         self.api = api
