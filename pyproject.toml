@@ -6,7 +6,7 @@ readme = "README.md"
 requires-python = ">=3.11"
 # EnergyPlus Python API (pyenergyplus) is provided via system installation or pyenergyplus-lbnl package
 dependencies = [
-    "openai>=2.48.0",
+    "openai>=2.48.0,<3.0.0",
     "pyenergyplus-lbnl>=26.1.0; sys_platform == 'never'",  # fallback marker / system install documentation
 ]
 
