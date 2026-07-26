@@ -18,16 +18,22 @@ class AgentThread(threading.Thread):
     the LLMOrchestrator when triggered by the PreFilter.
     """
 
-    def __init__(self, bridge: StateBridge, name: str = "AgentThread") -> None:
+    def __init__(
+        self,
+        bridge: StateBridge,
+        name: str = "AgentThread",
+        ablation_mode: bool = False,
+    ) -> None:
         super().__init__(name=name, daemon=True)
         self.bridge = bridge
+        self.ablation_mode = ablation_mode
         self._stop_event = threading.Event()
         self.trigger_count = 0
         self.invocations: list[SimulationState] = []
 
     def run(self) -> None:
         logger.info("AgentThread started and waiting for state bridge triggers.")
-        orchestrator = LLMOrchestrator(bridge=self.bridge)
+        orchestrator = LLMOrchestrator(bridge=self.bridge, ablation_mode=self.ablation_mode)
 
         while not self._stop_event.is_set():
             # Wait for pre-filter trigger event with short timeout to allow graceful stop

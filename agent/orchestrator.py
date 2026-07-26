@@ -24,8 +24,14 @@ logger = logging.getLogger(__name__)
 class LLMOrchestrator:
     """Handles communication with the local LLM and executes returned tool calls."""
 
-    def __init__(self, bridge: StateBridge, model: str = "qwen2.5:3b-instruct") -> None:
+    def __init__(
+        self,
+        bridge: StateBridge,
+        model: str = "qwen2.5:3b-instruct",
+        ablation_mode: bool = False,
+    ) -> None:
         self.bridge = bridge
+        self.ablation_mode = ablation_mode
         base_url = os.getenv("OLLAMA_BASE_URL", "http://localhost:11434/v1")
         api_key = os.getenv("OLLAMA_API_KEY", "ollama")
         self.model = os.getenv("LLM_MODEL", model)
@@ -80,14 +86,23 @@ class LLMOrchestrator:
         hour = int(state.sim_time_hours % 24)
         price_tier = "PEAK ($0.25/kWh)" if 14 <= hour <= 19 else "OFF-PEAK ($0.10/kWh)"
 
-        system_prompt = (
-            "You are an AI building control agent. Your goal is to minimize HVAC power "
-            "while keeping zone PMV comfort strictly between -0.5 and +0.5. "
-            "You control the global baseline schedules HTGSETP_SCH_NO_OPTIMUM "
-            "and CLGSETP_SCH_NO_OPTIMUM by emitting set_zone_setpoint tool calls. "
-            "Always emit a tool call if comfort is violated. "
-            "You may widen setpoints to save energy during off-peak hours."
-        )
+        if self.ablation_mode:
+            system_prompt = (
+                "You are an AI building control agent in ENERGY-ONLY ABLATION MODE. "
+                "Your sole objective is to MINIMIZE HVAC energy consumption regardless of comfort. "
+                "You may ignore PMV comfort bounds and aggressively widen setpoints to save power. "
+                "You control HTGSETP_SCH_NO_OPTIMUM and CLGSETP_SCH_NO_OPTIMUM by emitting "
+                "set_zone_setpoint tool calls."
+            )
+        else:
+            system_prompt = (
+                "You are an AI building control agent. Your goal is to minimize HVAC power "
+                "while keeping zone PMV comfort strictly between -0.5 and +0.5. "
+                "You control the global baseline schedules HTGSETP_SCH_NO_OPTIMUM "
+                "and CLGSETP_SCH_NO_OPTIMUM by emitting set_zone_setpoint tool calls. "
+                "Always emit a tool call if comfort is violated. "
+                "You may widen setpoints to save energy during off-peak hours."
+            )
 
         user_prompt = (
             f"Current Time: {state.sim_time_hours:.2f}h (Hour {hour}). Grid: {price_tier}\n"
