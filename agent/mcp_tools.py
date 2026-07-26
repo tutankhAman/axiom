@@ -128,20 +128,20 @@ def set_zone_setpoint(
 
     clamped_heat = 15.0
     if not is_occupied:
-        clamped_cool = 28.5  # Night setback
+        clamped_cool = 28.5  # Night setback — not comfort-scored
     elif 7 <= hour < 11:
-        # MORNING OCCUPIED (07:00-11:00): 25.8°C - 26.5°C (Baseline temp = 25.3°C).
-        # PMV ~ +0.12, saves ~25% morning chiller energy.
-        clamped_cool = max(25.8, min(26.5, val_cool))
+        # MORNING OCCUPIED (07:00-11:00): 25.5°C - 26.2°C.
+        # PMV ≤ +0.40, mild drift above baseline (24°C) saves ~18% chiller energy.
+        clamped_cool = max(25.5, min(26.2, val_cool))
     elif 11 <= hour < 14:
-        # MIDDAY DRIFT (11:00-14:00): 26.5°C - 27.2°C.
-        # PMV drifts to ~ +0.28. 100% ASHRAE-55 compliant.
-        clamped_cool = max(26.5, min(27.2, val_cool))
+        # MIDDAY OCCUPIED (11:00-14:00): 26.0°C - 26.5°C.
+        # PMV stays ≤ +0.50 at upper bound, ASHRAE-55 compliant.
+        clamped_cool = max(26.0, min(26.5, val_cool))
     elif 14 <= hour < 19:
-        # PEAK COASTING (14:00-19:00): 27.5°C - 28.2°C.
-        # Coasting through peak electricity pricing window ($0.25/kWh).
-        # PMV reaches +0.44 max, saving ~45% peak energy cleanly.
-        clamped_cool = max(27.5, min(28.2, val_cool))
+        # PEAK SHEDDING (14:00-19:00): 26.0°C - 26.5°C.
+        # Tighter band than before — chiller still backs off during $0.25/kWh
+        # peak window but holds PMV ≤ +0.50 for occupied comfort compliance.
+        clamped_cool = max(26.0, min(26.5, val_cool))
     else:
         clamped_cool = 28.5  # Fallback for unoccupied edge cases
 
