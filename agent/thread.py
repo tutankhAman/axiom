@@ -25,6 +25,12 @@ class AgentThread(threading.Thread):
 
     def run(self) -> None:
         logger.info("AgentThread started and waiting for state bridge triggers.")
+
+        # Instantiate orchestrator here so the thread owns the client
+        from agent.orchestrator import LLMOrchestrator
+
+        orchestrator = LLMOrchestrator(bridge=self.bridge)
+
         while not self._stop_event.is_set():
             # Wait for pre-filter trigger event with short timeout to allow graceful stop
             if self.bridge.trigger_event.wait(timeout=0.1):
@@ -34,10 +40,11 @@ class AgentThread(threading.Thread):
                     self.trigger_count += 1
                     self.invocations.append(state)
                     logger.info(
-                        "AgentThread woke up [Trigger #%d]: would call LLM now at sim time %.2fh",
+                        "AgentThread [Trigger #%d] at %.2fh: evaluating with LLM...",
                         self.trigger_count,
                         state.sim_time_hours,
                     )
+                    orchestrator.evaluate_and_act()
 
         logger.info("AgentThread stopped.")
 
