@@ -17,8 +17,8 @@ import {
 } from "@/components/ui/chart"
 import type { PowerPoint } from "@/types"
 
-const BASELINE_COLOR = "oklch(0.55 0.01 260)"
-const AGENT_COLOR = "oklch(0.72 0.15 220)"
+const BASELINE_COLOR = "oklch(0.45 0.01 260)"
+const AGENT_COLOR = "oklch(0.55 0.15 220)"
 
 interface PowerChartProps {
   data: PowerPoint[]

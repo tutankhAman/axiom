@@ -18,8 +18,8 @@ import {
 } from "@/components/ui/chart"
 import type { PivotPoint } from "@/types"
 
-const BASELINE_COLOR = "oklch(0.55 0.01 260)"
-const AGENT_COLOR = "oklch(0.72 0.15 220)"
+const BASELINE_COLOR = "oklch(0.45 0.01 260)"
+const AGENT_COLOR = "oklch(0.55 0.15 220)"
 
 interface ComfortChartProps {
   data: PivotPoint[]
@@ -80,24 +80,24 @@ const ComfortChart = React.memo(function ComfortChart({ data }: ComfortChartProp
               <ReferenceArea
                 y1={-0.5}
                 y2={0.5}
-                fill="oklch(0.75 0.16 160 / 0.08)"
-                stroke="oklch(0.75 0.16 160 / 0.15)"
+                fill="oklch(0.5 0.14 160 / 0.12)"
+                stroke="oklch(0.5 0.14 160 / 0.3)"
                 strokeDasharray="4 4"
                 strokeWidth={0.5}
               />
               <ReferenceArea
                 y1={-1}
                 y2={-0.5}
-                fill="oklch(0.58 0.22 25 / 0.06)"
-                stroke="oklch(0.58 0.22 25 / 0.1)"
+                fill="oklch(0.52 0.22 25 / 0.06)"
+                stroke="oklch(0.52 0.22 25 / 0.15)"
                 strokeDasharray="4 4"
                 strokeWidth={0.5}
               />
               <ReferenceArea
                 y1={0.5}
                 y2={1}
-                fill="oklch(0.58 0.22 25 / 0.06)"
-                stroke="oklch(0.58 0.22 25 / 0.1)"
+                fill="oklch(0.52 0.22 25 / 0.06)"
+                stroke="oklch(0.52 0.22 25 / 0.15)"
                 strokeDasharray="4 4"
                 strokeWidth={0.5}
               />

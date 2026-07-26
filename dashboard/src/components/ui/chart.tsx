@@ -74,8 +74,7 @@ const ChartTooltipContent = React.forwardRef<
       <div
         ref={ref}
         className={cn(
-          "rounded-md border bg-popover px-3 py-2.5 text-xs shadow-lg",
-          "ring-1 ring-white/[0.04] ring-inset",
+          "rounded-md border bg-popover px-3 py-2.5 text-xs shadow-md",
           className
         )}
       >

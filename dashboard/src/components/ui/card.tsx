@@ -6,11 +6,7 @@ const Card = React.forwardRef<HTMLDivElement, React.ComponentProps<"div">>(
     <div
       ref={ref}
       className={cn(
-        "relative overflow-hidden rounded-lg border bg-card text-card-foreground",
-        "before:absolute before:inset-0 before:rounded-[inherit] before:pointer-events-none",
-        "before:bg-gradient-to-b before:from-white/[0.03] before:to-transparent",
-        "after:absolute after:inset-0 after:rounded-[inherit] after:pointer-events-none",
-        "after:ring-1 after:ring-inset after:ring-white/[0.04]",
+        "relative overflow-hidden rounded-lg border bg-card text-card-foreground shadow-sm",
         className
       )}
       {...props}
