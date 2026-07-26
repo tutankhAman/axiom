@@ -23,7 +23,7 @@ logger = logging.getLogger(__name__)
 class LLMOrchestrator:
     """Handles communication with the local LLM and executes returned tool calls."""
 
-    def __init__(self, bridge: StateBridge, model: str = "qwen2.5:7b-instruct") -> None:
+    def __init__(self, bridge: StateBridge, model: str = "qwen2.5:3b-instruct") -> None:
         self.bridge = bridge
         self.model = model
         # Ollama provides an OpenAI-compatible API on port 11434
