@@ -64,6 +64,8 @@ const ChartTooltipContent = React.forwardRef<
       hideLabel = false,
       hideIndicator = false,
       indicator = "dot",
+      _itemSorter,
+      _labelStyle,
       ...props
     },
     ref
@@ -123,7 +125,7 @@ ChartTooltipContent.displayName = "ChartTooltipContent"
 const ChartLegend = React.forwardRef<
   HTMLDivElement,
   React.HTMLAttributes<HTMLDivElement>
->(({ className, ...props }, ref) => (
+>(({ className, _iconSize, _inactiveColor, _itemSorter, _labelStyle, _verticalAlign, _chartWidth, _chartHeight, ...props }, ref) => (
   <div
     ref={ref}
     className={cn(
