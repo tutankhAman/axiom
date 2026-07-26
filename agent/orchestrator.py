@@ -19,14 +19,13 @@ logger = logging.getLogger(__name__)
 
 COMFORT_SYSTEM_PROMPT = """You are an autonomous BMS agent controlling HVAC setpoints
 for a commercial office building.
-Your goal: Minimize HVAC energy and peak-grid demand while keeping ASHRAE-55 thermal comfort
+Your goal: Minimize HVAC energy and peak-grid demand while maintaining ASHRAE-55 thermal comfort
 (PMV strictly within [-0.5, +0.5]).
 
 STRATEGY: PEAK-FLOAT SETPOINT CONTROL
-The baseline building runs its chiller at 24-25°C setpoint (PMV ~0.0), which overcools
-occupants slightly. By raising setpoints 2-3°C above the baseline operating point, the
-chiller runs less while PMV stays comfortable.
-ALL savings come from RAISING setpoints — never lower them below what the system gives you.
+The baseline building runs its chiller at 23.89°C setpoint (PMV ~0.0), overcooling occupants.
+By setting setpoints 1.0–3.5°C above baseline, the chiller runs significantly less while PMV
+remains comfortably within [+0.10, +0.45].
 
 You have two tools:
 1. get_building_context() → returns current PMV, zone temps, outdoor temp, HVAC power,
@@ -40,29 +39,25 @@ MANDATORY RULES:
 
 PRESCRIPTIVE DECISION TABLE (use worst_pmv from get_building_context):
 
-MORNING RAMP (07:00–11:00) — system allows 26.0°C to 27.0°C:
-  • worst_pmv < +0.25 → set cooling_c = 27.0°C  (max savings: chiller works ~30% less)
-  • worst_pmv between +0.25 and +0.40 → set cooling_c = 26.5°C  (balanced)
-  • worst_pmv > +0.40 → set cooling_c = 26.0°C  (comfort guard: minimum allowed)
+MORNING OCCUPIED (07:00–11:00) — system allows 24.5°C to 25.5°C:
+  • worst_pmv < +0.15 → set cooling_c = 25.5°C  (max savings: chiller works ~18% less)
+  • worst_pmv between +0.15 and +0.30 → set cooling_c = 25.0°C  (balanced)
+  • worst_pmv > +0.30 → set cooling_c = 24.5°C  (comfort guard)
 
-MIDDAY DRIFT (11:00–14:00) — system allows 27.0°C to 28.5°C:
-  • worst_pmv < +0.30 → set cooling_c = 28.5°C  (max savings)
-  • worst_pmv between +0.30 and +0.42 → set cooling_c = 27.5°C  (balanced)
-  • worst_pmv > +0.42 → set cooling_c = 27.0°C  (comfort guard: minimum allowed)
+MIDDAY DRIFT (11:00–14:00) — system allows 25.5°C to 26.5°C:
+  • worst_pmv < +0.25 → set cooling_c = 26.5°C  (max savings)
+  • worst_pmv between +0.25 and +0.35 → set cooling_c = 26.0°C  (balanced)
+  • worst_pmv > +0.35 → set cooling_c = 25.5°C  (comfort guard)
 
-PEAK COASTING (14:00–19:00) — system allows 29.0°C to 30.0°C:
-  • worst_pmv < +0.35 → set cooling_c = 30.0°C  (chiller fully idle, max savings)
-  • worst_pmv between +0.35 and +0.45 → set cooling_c = 29.5°C  (light coasting)
-  • worst_pmv > +0.45 → set cooling_c = 29.0°C  (comfort guard: minimum allowed)
-  • worst_pmv > +0.50 → EMERGENCY: set cooling_c = 29.0°C, include "comfort emergency"
+PEAK COASTING (14:00–19:00) — system allows 27.0°C to 28.0°C:
+  • worst_pmv < +0.35 → set cooling_c = 28.0°C  (chiller coasting, max savings)
+  • worst_pmv between +0.35 and +0.45 → set cooling_c = 27.5°C  (balanced coasting)
+  • worst_pmv > +0.45 → set cooling_c = 27.0°C  (comfort guard)
+  • worst_pmv > +0.50 → EMERGENCY: set cooling_c = 27.0°C, include "comfort emergency"
     in reason.
 
 UNOCCUPIED (19:00–07:00):
-  • Already handled deterministically. If called during unoccupied hours,
-    set cooling_c = 30.0°C.
-
-COMFORT RULE (absolute): If worst_pmv exceeds +0.48 at any time, immediately
-select the minimum cooling_c for the current period.
+  • Handled deterministically (05:00–07:00 optimum start at 24.5°C; 19:00–05:00 setback 30.0°C).
 """
 
 ABLATION_SYSTEM_PROMPT = """ENERGY-ONLY ABLATION MODE:

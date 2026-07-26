@@ -8,7 +8,7 @@ from sim.sensors import SimulationState, ZoneState
 def test_set_zone_setpoint_clamping() -> None:
     bridge = StateBridge()
     context = MCPContext(bridge)
-    # Set simulated state at hour 10.0 (morning ramp period, 26.0-27.0°C band)
+    # Set simulated state at hour 10.0 (morning occupied period, 24.5-25.5°C band)
     bridge.update_state(
         SimulationState(
             sim_time_hours=10.0,
@@ -19,7 +19,7 @@ def test_set_zone_setpoint_clamping() -> None:
         )
     )
 
-    # Test out-of-bounds cooling (too low: -10.0) -> clamps to 26.0 morning ramp floor
+    # Test out-of-bounds cooling (too low: -10.0) -> clamps to 24.5 morning floor
     result = set_zone_setpoint(
         context,
         heating_c=100.0,
@@ -30,13 +30,13 @@ def test_set_zone_setpoint_clamping() -> None:
     assert "Success" in result
     commands = bridge.get_actuation_commands()
     assert commands["HTGSETP_SCH_NO_OPTIMUM"] == 15.0
-    assert commands["CLGSETP_SCH_NO_OPTIMUM"] == 26.0
+    assert commands["CLGSETP_SCH_NO_OPTIMUM"] == 24.5
 
 
 def test_set_zone_setpoint_peak_shedding() -> None:
     bridge = StateBridge()
     context = MCPContext(bridge)
-    # Set simulated state at hour 15.0 (peak occupied, 29.0-30.0°C band)
+    # Set simulated state at hour 15.0 (peak occupied, 27.0-28.0°C band)
     bridge.update_state(
         SimulationState(
             sim_time_hours=15.0,
@@ -50,13 +50,13 @@ def test_set_zone_setpoint_peak_shedding() -> None:
     set_zone_setpoint(
         context,
         heating_c=15.0,
-        cooling_c=29.5,  # Within peak band 29.0-30.0°C
+        cooling_c=27.5,  # Within peak band 27.0-28.0°C
         reason="Peak coasting operation",
     )
 
     commands = bridge.get_actuation_commands()
     assert commands["HTGSETP_SCH_NO_OPTIMUM"] == 15.0
-    assert commands["CLGSETP_SCH_NO_OPTIMUM"] == 29.5
+    assert commands["CLGSETP_SCH_NO_OPTIMUM"] == 27.5
 
 
 def test_get_building_context() -> None:

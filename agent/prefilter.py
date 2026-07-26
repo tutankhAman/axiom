@@ -46,10 +46,19 @@ class PreFilter:
             logger.info("Simulation time reset detected. Clearing trigger history.")
             self.last_trigger_time = None
 
-        # Deterministic night setback: bypass LLM entirely for all unoccupied hours.
-        # Pre-cooling was removed — this building's short thermal time constant means
-        # pre-cooling energy cost exceeds any peak-shift benefit.
+        # Deterministic night setback / optimum start: bypass LLM for all unoccupied hours.
         if not state.is_occupied:
+            hour = int(state.sim_time_hours % 24)
+            if 5 <= hour < 7:
+                # OPTIMUM START (05:00-07:00): Pre-condition building from 30°C night setback
+                # to 24.5°C before occupants arrive at 07:00. This mirrors the baseline's 06:00
+                # schedule drop and eliminates the morning PMV spike.
+                return PreFilterDecision(
+                    should_trigger=False,
+                    reason="Optimum start: pre-conditioning to 24.5°C (05:00-07:00)",
+                    setback_command={"heat": 15.0, "cool": 24.5},
+                )
+            # Deep night setback: chiller fully idle
             return PreFilterDecision(
                 should_trigger=False,
                 reason="Unoccupied hour: deterministic night setback active (cool=30.0°C)",

@@ -23,10 +23,36 @@ def _load_csv(path: Path) -> list[dict]:
         "ppd",
     }
     with open(path) as f:
-        return [
+        rows = [
             {k: float(v) if k in numeric_cols else v for k, v in row.items()}
             for row in csv.DictReader(f)
         ]
+    return _deduplicate_rows(rows)
+
+
+def _deduplicate_rows(rows: list[dict]) -> list[dict]:
+    """Remove EnergyPlus Sizing Period shadow rows that share timestamps with RunPeriod data.
+
+    EnergyPlus runs Sizing Period (design days) before the RunPeriod. Both periods
+    share the same sim_time_hours values during the RunPeriod window. Sizing period
+    rows have hvac_power_w=0 and pmv=0.0 (uninitialised).
+
+    Two-pass strategy:
+    1. For each (sim_time_hours, zone_name) pair, keep the row with the highest
+       hvac_power_w. This removes duplicate sizing rows when RunPeriod data exists.
+    2. Remove any remaining rows where hvac_power_w=0 and pmv=0.0 exactly — these
+       are Sizing Period timestamps with no RunPeriod counterpart (outside the actual
+       simulation run window).
+    """
+    # Pass 1: deduplicate by keeping highest-power row per (time, zone)
+    best: dict[tuple, dict] = {}
+    for row in rows:
+        key = (round(row["sim_time_hours"], 4), row["zone_name"])
+        if key not in best or row["hvac_power_w"] > best[key]["hvac_power_w"]:
+            best[key] = row
+
+    # Pass 2: filter out sizing-period-only rows (zero power AND zero PMV)
+    return [row for row in best.values() if not (row["hvac_power_w"] == 0.0 and row["pmv"] == 0.0)]
 
 
 def _aggregate_by_hour(rows: list[dict]) -> dict[float, dict]:
