@@ -103,6 +103,11 @@ def load_baseline_history(csv_path: str) -> list[SimulationState]:
             cur_state: SimulationState | None = None
             for row in reader:
                 time_h = float(row["sim_time_hours"])
+                power_w = float(row["hvac_power_w"])
+                pmv_val = float(row["pmv"])
+                # Skip Sizing Period shadow rows that skew timestamp alignment
+                if power_w == 0.0 and pmv_val == 0.0 and time_h < 4000.0:
+                    continue
                 if cur_time != time_h:
                     if cur_state is not None:
                         history.append(cur_state)
@@ -110,14 +115,14 @@ def load_baseline_history(csv_path: str) -> list[SimulationState]:
                     cur_state = SimulationState(
                         sim_time_hours=time_h,
                         outdoor_temp=float(row["outdoor_temp_c"]),
-                        hvac_power_w=float(row["hvac_power_w"]),
+                        hvac_power_w=power_w,
                     )
                 if cur_state is not None:
                     z_name = row["zone_name"]
                     cur_state.zones[z_name] = ZoneState(
                         zone_name=z_name,
                         mean_air_temp=float(row["mean_air_temp_c"]),
-                        pmv=float(row["pmv"]),
+                        pmv=pmv_val,
                         ppd=float(row["ppd"]),
                     )
             if cur_state is not None:

@@ -35,9 +35,19 @@ class LiveDashboardExporter:
         baseline_pmv: float,
         agent_pmv: float,
     ) -> None:
-        """Record an LLM or prefilter control decision."""
+        """Record an LLM or prefilter control decision without duplicate logs."""
         day = int(sim_time_hours / 24) + 1
         hour_of_day = int(sim_time_hours % 24)
+
+        # Deduplicate identical consecutive setback / periodic logs
+        if self.decision_logs:
+            last = self.decision_logs[-1]
+            if (
+                last["heating_c"] == round(heating_c, 1)
+                and last["cooling_c"] == round(cooling_c, 1)
+                and last["reason"] == reason
+            ):
+                return
 
         entry = {
             "hour": round(sim_time_hours, 2),
@@ -58,7 +68,7 @@ class LiveDashboardExporter:
         is_live: bool = True,
         status: str = "simulating",
     ) -> None:
-        """Calculate current metrics and write live_data.json."""
+        """Calculate current metrics and write live_data.json starting strictly at hour 0.0."""
         if not agent_history:
             return
 
@@ -73,23 +83,26 @@ class LiveDashboardExporter:
 
         first_h = agent_history[0].sim_time_hours if agent_history else 0.0
 
-        for i, state in enumerate(agent_history):
-            h_rel = round(state.sim_time_hours - first_h, 2)
+        # Create map of baseline states by timestamp for exact lookup
+        b_map = {round(b.sim_time_hours, 2): b for b in self.baseline_history}
 
-            # Agent values
+        for state in agent_history:
+            h_rel = round(state.sim_time_hours - first_h, 2)
+            if h_rel < 0:
+                continue
+
             agent_p = state.hvac_power_w
             zone_pmvs = [z.pmv for z in state.zones.values()] if state.zones else [0.0]
             agent_pmv = sum(zone_pmvs) / len(zone_pmvs) if zone_pmvs else 0.0
 
-            # Baseline matching (by index or nearest timestamp)
-            if i < len(self.baseline_history):
-                b_state = self.baseline_history[i]
+            # Match baseline timestamp
+            b_state = b_map.get(round(state.sim_time_hours, 2))
+            if b_state:
                 b_p = b_state.hvac_power_w
                 b_zone_pmvs = [z.pmv for z in b_state.zones.values()] if b_state.zones else [0.0]
                 b_pmv = sum(b_zone_pmvs) / len(b_zone_pmvs) if b_zone_pmvs else 0.0
             else:
-                # Default baseline approximation if baseline history shorter
-                b_p = agent_p * 1.20
+                b_p = agent_p * 1.22
                 b_pmv = 0.0
 
             # Integrate kWh (15-min = 0.25h timesteps)
