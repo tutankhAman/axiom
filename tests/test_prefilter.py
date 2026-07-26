@@ -74,10 +74,10 @@ def test_prefilter_trigger_on_pmv_comfort_violation_low() -> None:
     assert prefilter.last_trigger_time == 0.3
 
 
-def test_prefilter_unoccupied_precooling_charge() -> None:
+def test_prefilter_unoccupied_night_setback() -> None:
     prefilter = PreFilter(interval_hours=1.0)
     unoccupied_state = SimulationState(
-        sim_time_hours=5.0,
+        sim_time_hours=5.0,  # 05:00 — unoccupied (pre-cooling was removed)
         outdoor_temp=20.0,
         hvac_power_w=1000.0,
         is_occupied=False,
@@ -85,5 +85,5 @@ def test_prefilter_unoccupied_precooling_charge() -> None:
     )
     decision = prefilter.evaluate(unoccupied_state)
     assert decision.should_trigger is False
-    assert decision.setback_command == {"heat": 15.0, "cool": 21.5}
-    assert "Thermal mass pre-cooling charge" in decision.reason
+    assert decision.setback_command == {"heat": 15.0, "cool": 30.0}
+    assert "Unoccupied hour" in decision.reason

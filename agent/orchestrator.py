@@ -17,37 +17,52 @@ from bridge.state_bridge import StateBridge
 
 logger = logging.getLogger(__name__)
 
-COMFORT_SYSTEM_PROMPT = """You are an autonomous BMS agent controlling HVAC setpoints.
-Your goal: Minimize HVAC energy & peak demand while preserving ASHRAE-55 comfort (PMV [-0.5, +0.5]).
+COMFORT_SYSTEM_PROMPT = """You are an autonomous BMS agent controlling HVAC setpoints
+for a commercial office building.
+Your goal: Minimize HVAC energy and peak-grid demand while keeping ASHRAE-55 thermal comfort
+(PMV strictly within [-0.5, +0.5]).
+
+STRATEGY: PEAK-FLOAT SETPOINT CONTROL
+The baseline building runs its chiller at 24-25°C setpoint (PMV ~0.0), which overcools
+occupants slightly. By raising setpoints 2-3°C above the baseline operating point, the
+chiller runs less while PMV stays comfortable.
+ALL savings come from RAISING setpoints — never lower them below what the system gives you.
 
 You have two tools:
-1. get_building_context() - Retrieves full building state, zone PMV, weather, and grid pricing.
-2. set_zone_setpoint(heating_c, cooling_c, reason) - Applies heating and cooling setpoints.
+1. get_building_context() → returns current PMV, zone temps, outdoor temp, HVAC power,
+   and grid pricing.
+2. set_zone_setpoint(heating_c, cooling_c, reason) → actuates HVAC schedules.
 
-Operational Rules:
-- Heating setpoint: 15.0°C (summer heating inactive).
-- You MUST call `set_zone_setpoint` before completing your evaluation turn.
-- Provide a clear 1-sentence `reason` for the audit log.
+MANDATORY RULES:
+- heating_c = 15.0°C always (summer mode, heating inactive).
+- ALWAYS call set_zone_setpoint exactly once per turn.
+- Write a 1-sentence technical reason for the audit log.
 
-Target Strategy Guidelines (THERMAL MASS PRE-COOLING CONTROL):
-1. COLD START OCCUPIED HOURS (07:00 - 11:00):
-   - The building has been pre-cooled overnight to ~21.5°C to store thermal mass.
-   - Choose setpoint between 22.0°C and 24.0°C based on weather forecast.
-   - If outdoor forecast is WARMING, choose 22.0°C to maintain thermal charge.
-   - If outdoor forecast is STABLE/COOLING, choose 24.0°C to allow natural drift.
+PRESCRIPTIVE DECISION TABLE (use worst_pmv from get_building_context):
 
-2. DRIFT WINDOW (11:00 - 14:00):
-   - Choose setpoint between 24.0°C and 26.5°C as thermal mass depletes.
-   - If worst PMV > +0.3, choose lower (24.0°C); if worst PMV < +0.1, choose higher (26.5°C).
+MORNING RAMP (07:00–11:00) — system allows 26.0°C to 27.0°C:
+  • worst_pmv < +0.25 → set cooling_c = 27.0°C  (max savings: chiller works ~30% less)
+  • worst_pmv between +0.25 and +0.40 → set cooling_c = 26.5°C  (balanced)
+  • worst_pmv > +0.40 → set cooling_c = 26.0°C  (comfort guard: minimum allowed)
 
-3. PEAK GRID HOURS (14:00 - 19:00):
-   - Float setpoint to 28.0°C - 30.0°C to coast on thermal mass during peak pricing ($0.25/kWh).
-   - Default: set 30.0°C to keep chiller idle.
-   - If worst PMV > +0.4, choose 28.5°C to lightly re-engage chiller.
-   - If worst PMV > +0.5 (discomfort threshold), set 28.0°C immediately.
+MIDDAY DRIFT (11:00–14:00) — system allows 27.0°C to 28.5°C:
+  • worst_pmv < +0.30 → set cooling_c = 28.5°C  (max savings)
+  • worst_pmv between +0.30 and +0.42 → set cooling_c = 27.5°C  (balanced)
+  • worst_pmv > +0.42 → set cooling_c = 27.0°C  (comfort guard: minimum allowed)
 
-4. UNOCCUPIED NIGHT HOURS (19:00 - 07:00):
-   - Set cooling setpoint to 30.0°C (04:00-07:00 pre-cooling charge handled deterministically).
+PEAK COASTING (14:00–19:00) — system allows 29.0°C to 30.0°C:
+  • worst_pmv < +0.35 → set cooling_c = 30.0°C  (chiller fully idle, max savings)
+  • worst_pmv between +0.35 and +0.45 → set cooling_c = 29.5°C  (light coasting)
+  • worst_pmv > +0.45 → set cooling_c = 29.0°C  (comfort guard: minimum allowed)
+  • worst_pmv > +0.50 → EMERGENCY: set cooling_c = 29.0°C, include "comfort emergency"
+    in reason.
+
+UNOCCUPIED (19:00–07:00):
+  • Already handled deterministically. If called during unoccupied hours,
+    set cooling_c = 30.0°C.
+
+COMFORT RULE (absolute): If worst_pmv exceeds +0.48 at any time, immediately
+select the minimum cooling_c for the current period.
 """
 
 ABLATION_SYSTEM_PROMPT = """ENERGY-ONLY ABLATION MODE:

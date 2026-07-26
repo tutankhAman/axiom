@@ -46,22 +46,14 @@ class PreFilter:
             logger.info("Simulation time reset detected. Clearing trigger history.")
             self.last_trigger_time = None
 
-        # Determine if we are in deterministic night setback or pre-cooling (unoccupied)
+        # Deterministic night setback: bypass LLM entirely for all unoccupied hours.
+        # Pre-cooling was removed — this building's short thermal time constant means
+        # pre-cooling energy cost exceeds any peak-shift benefit.
         if not state.is_occupied:
-            hour = int(state.sim_time_hours % 24)
-            if 4 <= hour < 7:
-                # Thermal mass pre-cooling charge (04:00 - 07:00 AM)
-                return PreFilterDecision(
-                    should_trigger=False,
-                    reason="Thermal mass pre-cooling charge (04:00-07:00, unoccupied)",
-                    setback_command={"heat": 15.0, "cool": 21.5},
-                )
-
-            # Deterministic deep night setback: bypass LLM entirely
             return PreFilterDecision(
                 should_trigger=False,
-                reason="Unoccupied hour: deterministic night setback active",
-                setback_command={"heat": 15.56, "cool": 30.0},
+                reason="Unoccupied hour: deterministic night setback active (cool=30.0°C)",
+                setback_command={"heat": 15.0, "cool": 30.0},
             )
 
         # Enforce minimum cooldown between any triggers

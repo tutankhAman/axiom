@@ -57,7 +57,8 @@ def test_orchestrator_comfort_mode_system_prompt() -> None:
     messages = call_args.kwargs["messages"]
     system_msg = next(m for m in messages if m["role"] == "system")
 
-    assert "PMV [-0.5, +0.5]" in system_msg["content"]
+    assert "ASHRAE-55 thermal comfort" in system_msg["content"]
+    assert "PEAK-FLOAT SETPOINT CONTROL" in system_msg["content"]
 
 
 def test_run_phase5_sync_execution(tmp_path) -> None:
