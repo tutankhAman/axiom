@@ -29,10 +29,9 @@ class StateBridge:
         with self._lock:
             if self._latest_state is not None:
                 # Add to history
-                self._history.append({
-                    'state': self._latest_state,
-                    'setpoints': dict(self._actuation_commands)
-                })
+                self._history.append(
+                    {"state": self._latest_state, "setpoints": dict(self._actuation_commands)}
+                )
             self._latest_state = state
 
     def get_latest_state(self) -> SimulationState | None:

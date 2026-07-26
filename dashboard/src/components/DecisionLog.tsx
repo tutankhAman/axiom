@@ -31,45 +31,47 @@ function strategyLabel(hourOfDay: number): string {
 
 export default function DecisionLog({ decisions }: DecisionLogProps) {
   return (
-    <div className="rounded-xl border bg-card">
-      <div className="px-5 py-4 border-b">
-        <h3 className="text-sm font-medium text-muted-foreground tracking-wide uppercase">
+    <div className="border bg-card overflow-hidden">
+      <div className="px-6 py-5 border-b">
+        <h3 className="text-base font-semibold text-foreground tracking-tight">
           Agent Decision Log
         </h3>
       </div>
-      <ScrollArea className="max-h-[400px]">
-        <Table>
-          <TableHeader>
-            <TableRow>
-              <TableHead className="w-[60px]">Day</TableHead>
-              <TableHead className="w-[56px]">Hour</TableHead>
-              <TableHead className="w-[80px]">Strategy</TableHead>
-              <TableHead className="w-[80px]">Zone</TableHead>
-              <TableHead className="w-[80px]">Setpoint</TableHead>
-              <TableHead>Reason</TableHead>
-            </TableRow>
-          </TableHeader>
-          <TableBody>
-            {decisions.map((d, i) => (
-              <TableRow key={i}>
-                <TableCell className="font-mono text-xs tabular-nums">{d.day}</TableCell>
-                <TableCell className="font-mono text-xs tabular-nums">{d.hour_of_day}:00</TableCell>
-                <TableCell>
-                  <Badge className={`text-[10px] font-medium ${strategyBadge(d.hour_of_day)}`}>
-                    {strategyLabel(d.hour_of_day)}
-                  </Badge>
-                </TableCell>
-                <TableCell className="font-mono text-xs">{d.zone}</TableCell>
-                <TableCell className="font-mono text-xs tabular-nums">
-                  {d.cooling_c}°C
-                </TableCell>
-                <TableCell className="text-xs text-muted-foreground max-w-[320px] truncate" title={d.reason}>
-                  {d.reason}
-                </TableCell>
+      <ScrollArea className="h-[500px] w-full">
+        <div className="w-full">
+          <Table>
+            <TableHeader>
+              <TableRow>
+                <TableHead className="w-[60px] font-semibold text-sm text-foreground">Day</TableHead>
+                <TableHead className="w-[56px] font-semibold text-sm text-foreground">Hour</TableHead>
+                <TableHead className="w-[80px] font-semibold text-sm text-foreground">Strategy</TableHead>
+                <TableHead className="w-[80px] font-semibold text-sm text-foreground">Zone</TableHead>
+                <TableHead className="w-[80px] font-semibold text-sm text-foreground">Setpoint</TableHead>
+                <TableHead className="font-semibold text-sm text-foreground">Reason</TableHead>
               </TableRow>
-            ))}
-          </TableBody>
-        </Table>
+            </TableHeader>
+            <TableBody>
+              {decisions.map((d, i) => (
+                <TableRow key={i}>
+                  <TableCell className="font-mono text-sm tabular-nums">{d.day}</TableCell>
+                  <TableCell className="font-mono text-sm tabular-nums">{d.hour_of_day}:00</TableCell>
+                  <TableCell>
+                    <Badge className={`text-xs font-medium ${strategyBadge(d.hour_of_day)}`}>
+                      {strategyLabel(d.hour_of_day)}
+                    </Badge>
+                  </TableCell>
+                  <TableCell className="font-mono text-sm">{d.zone}</TableCell>
+                  <TableCell className="font-mono text-sm tabular-nums">
+                    {d.cooling_c}°C
+                  </TableCell>
+                  <TableCell className="text-sm text-muted-foreground max-w-[320px] truncate" title={d.reason}>
+                    {d.reason}
+                  </TableCell>
+                </TableRow>
+              ))}
+            </TableBody>
+          </Table>
+        </div>
       </ScrollArea>
       <Separator />
     </div>

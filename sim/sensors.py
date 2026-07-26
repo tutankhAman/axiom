@@ -46,7 +46,7 @@ class SensorManager:
         self._outdoor_temp_handle: int = -1
         self._hvac_power_handle: int = -1
         self._occupancy_handle: int = -1
-        
+
         # State tracking
         self._cumulative_hvac_kwh: float = 0.0
         self._last_time_hours: float = 0.0
