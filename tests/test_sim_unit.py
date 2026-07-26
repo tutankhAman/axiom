@@ -83,3 +83,15 @@ def test_sensor_manager_missing_zone_temp_raises_error():
     manager = SensorManager(mock_api)
     with pytest.raises(InvalidSensorHandleError, match="Zone Mean Air Temperature"):
         manager.initialize_handles("dummy_state", ["Core_ZN"])
+
+
+def test_driver_actuator_schedules_initialization():
+    from sim.driver import DEFAULT_ACTUATOR_SCHEDULES, EnergyPlusDriver
+
+    driver_default = EnergyPlusDriver(idf_path="dummy.idf", epw_path="dummy.epw")
+    assert driver_default.actuator_schedules == DEFAULT_ACTUATOR_SCHEDULES
+
+    driver_empty = EnergyPlusDriver(
+        idf_path="dummy.idf", epw_path="dummy.epw", actuator_schedules=[]
+    )
+    assert driver_empty.actuator_schedules == []
