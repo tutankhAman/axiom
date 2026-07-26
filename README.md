@@ -1,5 +1,11 @@
 # Axiom — Closed-Loop Physical AI Building Agent
 
+
+
+https://github.com/user-attachments/assets/e892ea5f-ece7-497b-965c-d928a4aa2001
+
+
+
 Axiom is a Physical AI Proof-of-Concept (PoC) that automates commercial building HVAC operation. It pairs the **EnergyPlus** physics simulation engine with an open-source Large Language Model (**Qwen 2.5**) via the **Model Context Protocol (MCP)** to execute autonomous, closed-loop thermal setpoint optimization.
 
 Axiom utilizes a **neuro-symbolic design**: strategic reasoning (pre-cooling, peak load shedding, setback recovery) is managed by the LLM via tool-calling, while physical safety bounds, deadband smoothing, and emergency interlocks are enforced deterministically in Python.
