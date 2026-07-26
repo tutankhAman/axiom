@@ -44,8 +44,10 @@ class EnergyPlusDriver:
         self.idf_path = os.path.abspath(idf_path)
         self.epw_path = os.path.abspath(epw_path)
         self.output_dir = os.path.abspath(output_dir)
-        self.zone_names = zone_names or DEFAULT_ZONES
-        self.actuator_schedules = actuator_schedules or DEFAULT_ACTUATOR_SCHEDULES
+        self.zone_names = DEFAULT_ZONES if zone_names is None else zone_names
+        self.actuator_schedules = (
+            DEFAULT_ACTUATOR_SCHEDULES if actuator_schedules is None else actuator_schedules
+        )
         self.on_timestep = on_timestep
         self.on_actuate = on_actuate
 
