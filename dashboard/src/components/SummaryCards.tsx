@@ -1,3 +1,4 @@
+import React from "react"
 import { Card, CardContent } from "@/components/ui/card"
 import { Separator } from "@/components/ui/separator"
 import type { Summary } from "@/types"
@@ -39,7 +40,7 @@ function MetricCard({ label, value, subtext, highlight }: MetricCardProps) {
   )
 }
 
-export default function SummaryCards({ summary }: { summary: Summary }) {
+const SummaryCards = React.memo(function SummaryCards({ summary }: { summary: Summary }) {
   const savingsPct = summary.pct_savings.toFixed(1)
   const isNegative = summary.pct_savings <= 0
 
@@ -73,4 +74,6 @@ export default function SummaryCards({ summary }: { summary: Summary }) {
       <Separator className="col-span-2 lg:col-span-4" />
     </div>
   )
-}
+})
+
+export default SummaryCards

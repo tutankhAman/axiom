@@ -1,3 +1,4 @@
+import React from "react"
 import {
   LineChart,
   Line,
@@ -20,7 +21,7 @@ interface PowerChartProps {
   data: PowerPoint[]
 }
 
-export default function PowerChart({ data }: PowerChartProps) {
+const PowerChart = React.memo(function PowerChart({ data }: PowerChartProps) {
   return (
     <Card className="col-span-1 lg:col-span-2">
       <CardHeader className="pb-3">
@@ -96,4 +97,6 @@ export default function PowerChart({ data }: PowerChartProps) {
       </CardContent>
     </Card>
   )
-}
+})
+
+export default PowerChart

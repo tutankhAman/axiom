@@ -1,3 +1,4 @@
+import React from "react"
 import {
   LineChart,
   Line,
@@ -21,7 +22,7 @@ interface ComfortChartProps {
   data: PivotPoint[]
 }
 
-export default function ComfortChart({ data }: ComfortChartProps) {
+const ComfortChart = React.memo(function ComfortChart({ data }: ComfortChartProps) {
   return (
     <Card className="col-span-1 lg:col-span-2">
       <CardHeader className="pb-3">
@@ -115,4 +116,6 @@ export default function ComfortChart({ data }: ComfortChartProps) {
       </CardContent>
     </Card>
   )
-}
+})
+
+export default ComfortChart

@@ -1,3 +1,4 @@
+import React from "react"
 import {
   Table,
   TableBody,
@@ -29,7 +30,7 @@ function strategyLabel(hourOfDay: number): string {
   return "setback"
 }
 
-export default function DecisionLog({ decisions }: DecisionLogProps) {
+const DecisionLog = React.memo(function DecisionLog({ decisions }: DecisionLogProps) {
   return (
     <div className="border bg-card overflow-hidden">
       <div className="px-6 py-5 border-b">
@@ -51,8 +52,8 @@ export default function DecisionLog({ decisions }: DecisionLogProps) {
               </TableRow>
             </TableHeader>
             <TableBody>
-              {[...decisions].reverse().map((d, i) => (
-                <TableRow key={i}>
+              {[...decisions].reverse().map((d) => (
+                <TableRow key={`${d.day}-${d.hour_of_day}-${d.zone}`}>
                   <TableCell className="font-mono text-sm tabular-nums">{d.day}</TableCell>
                   <TableCell className="font-mono text-sm tabular-nums">{d.hour_of_day}:00</TableCell>
                   <TableCell>
@@ -76,4 +77,6 @@ export default function DecisionLog({ decisions }: DecisionLogProps) {
       <Separator />
     </div>
   )
-}
+})
+
+export default DecisionLog

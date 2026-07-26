@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react"
+import { useState, useEffect, useRef } from "react"
 import SummaryCards from "@/components/SummaryCards"
 import PowerChart from "@/components/PowerChart"
 import ComfortChart from "@/components/ComfortChart"
@@ -12,30 +12,40 @@ export default function App() {
   const [data, setData] = useState<DashboardData>(initialData as unknown as DashboardData)
   const [isLiveStream, setIsLiveStream] = useState<boolean>(false)
   const [currentStep, setCurrentStep] = useState<number>(0)
+  const lastStepRef = useRef<number>(0)
 
-  // Real-time polling hook for live simulation feed
   useEffect(() => {
+    let active = true
+    let timer: ReturnType<typeof setInterval>
+
     const fetchLiveData = async () => {
       try {
         const res = await fetch("/live_data.json?t=" + Date.now(), { cache: "no-store" })
-        if (res.ok) {
-          const json = await res.json()
-          if (json && json.summary && json.power_series) {
-            setData(json as DashboardData)
-            setIsLiveStream(Boolean(json.is_live))
-            if (json.current_step) setCurrentStep(json.current_step)
-          }
-        }
-      } catch (err) {
-        // Fallback silently to initial static dataset if live feed not present
+        if (!res.ok || !active) return
+        const json = await res.json()
+        if (!json?.summary || !json.power_series || !active) return
+
+        const step = json.current_step || 0
+        if (step === lastStepRef.current) return
+        lastStepRef.current = step
+
+        setData(json as DashboardData)
+        setIsLiveStream(Boolean(json.is_live))
+        if (step) setCurrentStep(step)
+
+        if (!json.is_live) clearInterval(timer)
+      } catch {
+        // fallback silently to static dataset
       }
     }
 
-    // Poll every 1000ms
-    const interval = setInterval(fetchLiveData, 1000)
-    fetchLiveData() // Immediate check
+    fetchLiveData()
+    timer = setInterval(fetchLiveData, 2000)
 
-    return () => clearInterval(interval)
+    return () => {
+      active = false
+      clearInterval(timer)
+    }
   }, [])
 
   const { summary, power_series, pmv_series, decision_log } = data
