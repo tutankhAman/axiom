@@ -9,10 +9,13 @@ Recharts for the two charts
 No PapaParse, no client-side CSV parsing, no scroll animations, no texture/glassmorphism, no custom glow effects
 Data pipeline
 
-One Python script, run once after Phase 5's two sim runs finish, producing a single dashboard_data.json:
+One Python script (or `LiveDashboardExporter`), producing a single `dashboard_data.json`:
 
-json
+```json
 {
+  "is_live": false,
+  "status": "completed",
+  "current_step": 288,
   "summary": {
     "baseline_kwh": 0,
     "closed_loop_kwh": 0,
@@ -46,7 +49,8 @@ Components (4 total, no more)
 Optional 5th panel, only if Phase 6 finishes early: cost/peak-shedding breakdown. Not rubric-scored, don't let it displace panel 4.
 
 Execution steps
-npx create-vite@latest dashboard --template react, add Tailwind, add shadcn/ui (npx shadcn@latest init, add card, table, badge components).
-Python script: read both result CSVs, compute summary stats + series + decision log, write dashboard_data.json.
-Build the 4 components above, static import of the JSON, no loading states needed since it's a static file for a local demo.
-Done. Don't add a step 5 for styling polish, the shadcn defaults are the polish.
+- Dashboard already exists via React + Vite + Tailwind + shadcn/ui (Card, Table, Badge, Separator, ScrollArea) + Recharts.
+- The `LiveDashboardExporter` streams `live_data.json` to `dashboard/public/` every timestep with `is_live`, `status`, `current_step`, and `decision_log`.
+- The dashboard polls `/live_data.json` every 2s while `is_live` is true; when `status` becomes `"completed"`, polling stops and the final snapshot is displayed.
+- No client-side CSV parsing; all math is done in Python. The dashboard renders numbers and series it's handed.
+Done. Don't add a step for styling polish; the shadcn defaults are the polish.

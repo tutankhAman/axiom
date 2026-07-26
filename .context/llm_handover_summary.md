@@ -44,10 +44,10 @@
   - Occupied Cooling: `25.5°C` (clamped)
   - Occupied Heating: `15.0°C` (inactive in summer)
   - Unoccupied Setup: `29.44°C`
-- **Expected Results:**
+- **Expected Results (Targets):**
   - **Net Energy Savings:** +15% to +20% reduction in total kWh.
   - **Peak Demand Reduction:** >30% reduction in peak kW demand (14:00–19:00).
-  - **Thermal Comfort Compliance:** >95% occupied time inside ASHRAE 55 PMV `[-0.5, +0.5]`.
+  - **Thermal Comfort Compliance (Target):** >90% occupied time inside ASHRAE 55 PMV `[-0.5, +0.5]`.
 
 ---
 
@@ -70,6 +70,6 @@
 ---
 
 ## 6. Immediate Next Steps for Incoming LLM
-1. **Evaluate `task-2145` Results:** Once `task-2145` finishes, execute `python3 scratch/evaluate_results.py` to compare `output/phase5_experiments/phase5_comfort_results.csv` against `output/baseline_results.csv`.
+1. **Evaluate `task-2145` Results:** Once `task-2145` finishes, run `uv run python scripts/generate_dashboard_data.py` to compare `output/phase5_experiments/phase5_comfort_results.csv` against `output/baseline_results.csv`.
 2. **Verify Positive kWh Savings:** If occupied cooling setpoint `25.5°C` produced net positive kWh savings (>0%), proceed immediately to Phase 6. If baseline still pulled lower kWh, bump occupied cooling floor in `mcp_tools.py` to **26.0°C**.
-3. **Execute Phase 6 (Quantitative Savings Dashboard):** Refer to `.context/phase6_dashboard_plan.md` to bootstrap the React/Vite dashboard app, visualize power time-series, PMV comfort scatter plot, and net savings metrics.
+3. **Verify Dashboard:** Confirm the existing React/Vite dashboard at `http://localhost:5173` renders the updated savings, power time-series, and PMV results from the generated `dashboard_data.json`.
