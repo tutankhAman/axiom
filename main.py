@@ -215,6 +215,23 @@ def run_phase5(
     baseline_csv = os.path.join(base_dir, "output", "baseline_results.csv")
     baseline_history = load_baseline_history(baseline_csv)
 
+    # Ensure baseline covers the requested simulation duration
+    baseline_max_hours = (
+        max(b.sim_time_hours for b in baseline_history) if baseline_history else 0.0
+    )
+    target_hours = days * 24.0
+    if baseline_max_hours < target_hours - 1.0:
+        logger.info(
+            "Baseline CSV covers only %.1fh (requested %.1fh). Re-running baseline...",
+            baseline_max_hours,
+            target_hours,
+        )
+        baseline_exit = run_baseline(base_dir, days=days)
+        if baseline_exit != 0:
+            logger.error("Baseline re-run failed with exit code %d", baseline_exit)
+            sys.exit(baseline_exit)
+        baseline_history = load_baseline_history(baseline_csv)
+
     bridge = StateBridge()
     prefilter = PreFilter(interval_hours=1.0, min_cooldown_hours=0.5)
     exporter = LiveDashboardExporter(baseline_history=baseline_history)

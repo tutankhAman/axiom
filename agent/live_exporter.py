@@ -111,7 +111,8 @@ class LiveDashboardExporter:
 
             # Integrate kWh (15-min = 0.25h timesteps)
             total_agent_kwh += (agent_p * 0.25) / 1000.0
-            total_baseline_kwh += (b_p * 0.25) / 1000.0
+            if b_state:
+                total_baseline_kwh += (b_p * 0.25) / 1000.0
 
             # Occupied comfort (evaluated ONLY during occupied hours, excluding weekends)
             if state.is_occupied:
