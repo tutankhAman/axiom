@@ -48,6 +48,17 @@ class PreFilter:
 
         # Determine if we are in deterministic night setback (unoccupied)
         if not state.is_occupied:
+            hour = int(state.sim_time_hours % 24)
+            # Optimum Start: Pre-heat the building starting at 5:00 AM (hours 5 and 6)
+            if 5 <= hour < 7:
+                # If it's cold outside, start pre-heating to 21C
+                if state.outdoor_temp < 15.0:
+                    return PreFilterDecision(
+                        should_trigger=False,
+                        reason="Unoccupied but pre-heating (Optimum Start active)",
+                        setback_command={"heat": 21.0, "cool": 24.0}
+                    )
+                    
             # Deterministic night setback: bypass LLM entirely
             return PreFilterDecision(
                 should_trigger=False,
