@@ -1,4 +1,4 @@
-"""Pretty console formatter for Axiom Eco-Loop Building Agent."""
+"""Pretty console formatter for Axiom Eco-Loop Building Agent without emojis."""
 
 # ANSI Color Codes
 CYAN = "\033[96m"
@@ -14,7 +14,7 @@ BLUE = "\033[94m"
 
 def print_banner(mode_str: str, sync_str: str, days: float) -> None:
     """Print clean ASCII startup banner."""
-    title = "🏢 AXIOM ECO-LOOP BUILDING AGENT — PHYSICAL AI POC"
+    title = "AXIOM ECO-LOOP BUILDING AGENT -- PHYSICAL AI POC"
     b_top = f"{CYAN}{BOLD}╔═══════════════════════════════════════════════════════════════╗{RESET}"
     b_mid = f"{CYAN}{BOLD}╠═══════════════════════════════════════════════════════════════╣{RESET}"
     b_bot = f"{CYAN}{BOLD}╚═══════════════════════════════════════════════════════════════╝{RESET}"
@@ -60,19 +60,19 @@ def print_timestep_card(
 
     power_kw = hvac_power_w / 1000.0
 
-    print(f"{MAGENTA}┌── 🕒 {BOLD}{time_str}{RESET} {occ_tag} {pricing_tag} ──┐{RESET}")
-    print(f"│ Out: {outdoor_temp:.1f}°C | Zone: {mean_zone_temp:.1f}°C | Power: {power_kw:.2f}kW")
-    print(f"│ 📊 PMV Status: {pmv_str}")
+    print(f"{MAGENTA}┌── [TIME] {BOLD}{time_str}{RESET} {occ_tag} {pricing_tag} ──┐{RESET}")
+    print(f"│ Out: {outdoor_temp:.1f}C | Zone: {mean_zone_temp:.1f}C | Power: {power_kw:.2f}kW")
+    print(f"│ [PMV STATUS] {pmv_str}")
 
     if trigger_source == "LLM":
-        cl_str = f"{GREEN}{cool_setpoint:.1f}°C{RESET}"
-        ht_str = f"{RED}{heat_setpoint:.1f}°C{RESET}"
-        print(f"│ 🤖 {BOLD}LLM DECISION:{RESET} Cool: {cl_str} | Heat: {ht_str}")
+        cl_str = f"{GREEN}{cool_setpoint:.1f}C{RESET}"
+        ht_str = f"{RED}{heat_setpoint:.1f}C{RESET}"
+        print(f"│ [LLM DECISION] Cool: {cl_str} | Heat: {ht_str}")
         if reason:
-            print(f"│ 💡 {DIM}Reason:{RESET} {reason}")
+            print(f"│ [REASON] {reason}")
     else:
-        sp_fmt = f"Cool: {cool_setpoint:.1f}°C | Heat: {heat_setpoint:.1f}°C"
-        print(f"│ 🛡️ {DIM}Rule Engine / ZOH:{RESET} {sp_fmt}")
+        sp_fmt = f"Cool: {cool_setpoint:.1f}C | Heat: {heat_setpoint:.1f}C"
+        print(f"│ [RULE ENGINE / ZOH] {sp_fmt}")
 
     print(f"{MAGENTA}└───────────────────────────────────────────────────────────────┘{RESET}\n")
 
@@ -90,15 +90,15 @@ def print_summary_card(
     b_top = f"{GREEN}{BOLD}╔═══════════════════════════════════════════════════════════════╗{RESET}"
     b_mid = f"{GREEN}{BOLD}╠═══════════════════════════════════════════════════════════════╣{RESET}"
     b_bot = f"{GREEN}{BOLD}╚═══════════════════════════════════════════════════════════════╝{RESET}"
-    dur_str = f"⏱️ Duration   : {BOLD}{total_hours:.1f} Hours ({total_hours / 24:.1f} Days){RESET}"
+    dur_str = f"Duration   : {BOLD}{total_hours:.1f} Hours ({total_hours / 24:.1f} Days){RESET}"
     print(f"\n{b_top}")
-    print(f"{GREEN}{BOLD}║                 🎉 EXPERIMENT RUN COMPLETED                   ║{RESET}")
+    print(f"{GREEN}{BOLD}║                 EXPERIMENT RUN COMPLETED                      ║{RESET}")
     print(f"{b_mid}")
-    print(f"{GREEN}║ {dur_str}{GREEN:<27}║{RESET}")
-    print(f"{GREEN}║ 🤖 LLM Calls  : {BOLD}{total_triggers} Triggers{RESET}{GREEN:<36}║{RESET}")
-    print(f"{GREEN}║ ⚡ Baseline   : {BOLD}{baseline_kwh:.1f} kWh{RESET}{GREEN:<36}║{RESET}")
-    print(f"{GREEN}║ 🔋 Axiom AI   : {BOLD}{agent_kwh:.1f} kWh{RESET}{GREEN:<36}║{RESET}")
-    print(f"{GREEN}║ 💰 Savings    : {BOLD}{GREEN}{savings_pct:+.1f}%{RESET}{GREEN:<38}║{RESET}")
-    print(f"{GREEN}║ 🧘 Comfort    : {BOLD}{comfort_pct:.1f}% ASHRAE-55{RESET}{GREEN:<26}║{RESET}")
-    print(f"{GREEN}║ 📄 Export CSV : {BOLD}{csv_path:<36}{RESET}{GREEN}║{RESET}")
+    print(f"{GREEN}║ {dur_str}{GREEN:<29}║{RESET}")
+    print(f"{GREEN}║ LLM Calls  : {BOLD}{total_triggers} Triggers{RESET}{GREEN:<38}║{RESET}")
+    print(f"{GREEN}║ Baseline   : {BOLD}{baseline_kwh:.1f} kWh{RESET}{GREEN:<38}║{RESET}")
+    print(f"{GREEN}║ Axiom AI   : {BOLD}{agent_kwh:.1f} kWh{RESET}{GREEN:<38}║{RESET}")
+    print(f"{GREEN}║ Savings    : {BOLD}{GREEN}{savings_pct:+.1f}%{RESET}{GREEN:<40}║{RESET}")
+    print(f"{GREEN}║ Comfort    : {BOLD}{comfort_pct:.1f}% ASHRAE-55{RESET}{GREEN:<28}║{RESET}")
+    print(f"{GREEN}║ Export CSV : {BOLD}{csv_path:<38}{RESET}{GREEN}║{RESET}")
     print(f"{b_bot}\n")

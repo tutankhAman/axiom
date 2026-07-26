@@ -11,6 +11,7 @@ PROJECT_ROOT = Path(__file__).resolve().parents[1]
 BASELINE_CSV = PROJECT_ROOT / "output" / "baseline_results.csv"
 PHASE5_CSV = PROJECT_ROOT / "output" / "phase5_experiments" / "phase5_comfort_results.csv"
 OUTPUT_JSON = PROJECT_ROOT / "dashboard" / "src" / "dashboard_data.json"
+PUBLIC_JSON = PROJECT_ROOT / "dashboard" / "public" / "live_data.json"
 
 
 def _load_csv(path: Path) -> list[dict]:
@@ -31,27 +32,13 @@ def _load_csv(path: Path) -> list[dict]:
 
 
 def _deduplicate_rows(rows: list[dict]) -> list[dict]:
-    """Remove EnergyPlus Sizing Period shadow rows that share timestamps with RunPeriod data.
-
-    EnergyPlus runs Sizing Period (design days) before the RunPeriod. Both periods
-    share the same sim_time_hours values during the RunPeriod window. Sizing period
-    rows have hvac_power_w=0 and pmv=0.0 (uninitialised).
-
-    Two-pass strategy:
-    1. For each (sim_time_hours, zone_name) pair, keep the row with the highest
-       hvac_power_w. This removes duplicate sizing rows when RunPeriod data exists.
-    2. Remove any remaining rows where hvac_power_w=0 and pmv=0.0 exactly — these
-       are Sizing Period timestamps with no RunPeriod counterpart (outside the actual
-       simulation run window).
-    """
-    # Pass 1: deduplicate by keeping highest-power row per (time, zone)
+    """Remove EnergyPlus Sizing Period shadow rows that share timestamps with RunPeriod data."""
     best: dict[tuple, dict] = {}
     for row in rows:
         key = (round(row["sim_time_hours"], 4), row["zone_name"])
         if key not in best or row["hvac_power_w"] > best[key]["hvac_power_w"]:
             best[key] = row
 
-    # Pass 2: filter out sizing-period-only rows (zero power AND zero PMV)
     return [row for row in best.values() if not (row["hvac_power_w"] == 0.0 and row["pmv"] == 0.0)]
 
 
@@ -70,15 +57,11 @@ def _select_largest_block(
     baseline_hours: dict[float, dict],
     agent_hours: dict[float, dict],
 ) -> tuple[dict[float, dict], dict[float, dict], float]:
-    """Find the largest continuous block of timestamps common to both CSVs.
-
-    Returns filtered (baseline_hours, agent_hours, block_start_hour).
-    """
+    """Find the largest continuous block of timestamps common to both CSVs."""
     common = sorted(set(baseline_hours.keys()) & set(agent_hours.keys()))
     if not common:
         return baseline_hours, agent_hours, 0.0
 
-    # Split into continuous blocks (gap > 1h = boundary)
     blocks: list[list[float]] = []
     current = [common[0]]
     for i in range(1, len(common)):
@@ -122,8 +105,9 @@ def _reindex_to_zero(
     agent_hours: dict[float, dict],
     first_hour: float,
 ) -> tuple[dict[float, dict], dict[float, dict]]:
-    b = {round(h - first_hour, 2): v for h, v in baseline_hours.items()}
-    a = {round(h - first_hour, 2): v for h, v in agent_hours.items()}
+    """Reindex timestamps starting from 0.0 and filter out any pre-simulation sizing rows."""
+    b = {round(h - first_hour, 2): v for h, v in baseline_hours.items() if h >= first_hour}
+    a = {round(h - first_hour, 2): v for h, v in agent_hours.items() if h >= first_hour}
     return b, a
 
 
@@ -251,10 +235,7 @@ def main() -> None:
     raw_b = _aggregate_by_hour(baseline_rows)
     raw_a = _aggregate_by_hour(agent_rows)
 
-    # Select only the largest continuous block (the 3-day Phase 5 run)
     b_block, a_block, first_hour = _select_largest_block(raw_b, raw_a)
-
-    # Reindex timestamps to start at hour 0
     b_block, a_block = _reindex_to_zero(b_block, a_block, first_hour)
 
     baseline_kwh = _integrate_kwh(b_block)
@@ -283,19 +264,22 @@ def main() -> None:
         "power_series": power_series,
         "pmv_series": pmv_series,
         "decision_log": decision_log,
+        "is_live": False,
+        "status": "completed",
     }
 
-    OUTPUT_JSON.parent.mkdir(parents=True, exist_ok=True)
-    with open(OUTPUT_JSON, "w") as f:
-        json.dump(data, f, indent=2)
+    for json_file in [OUTPUT_JSON, PUBLIC_JSON]:
+        json_file.parent.mkdir(parents=True, exist_ok=True)
+        with open(json_file, "w") as f:
+            json.dump(data, f, indent=2)
 
-    print(f"Generated {OUTPUT_JSON}")
+    print(f"Generated clean dashboard data at {OUTPUT_JSON} and {PUBLIC_JSON}")
     print(f"  Summary: {json.dumps(summary)}")
     days = len(b_block) * 0.25 / 24
     print(f"  Block: {len(b_block)} timesteps ({len(b_block) * 0.25:.1f}h = {days:.1f} days)")
-    print(f"  Power series: {len(power_series)} points")
-    print(f"  PMV series: {len(pmv_series)} points")
-    print(f"  Decision log: {len(decision_log)} entries")
+    h_start = power_series[0]["hour"] if power_series else 0.0
+    h_end = power_series[-1]["hour"] if power_series else 0.0
+    print(f"  Power series: {len(power_series)} points (Hours: {h_start} to {h_end})")
 
 
 if __name__ == "__main__":
