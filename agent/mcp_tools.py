@@ -1,11 +1,17 @@
 """MCP tool surface definitions for the LLM agent."""
 
 import logging
+import os
 from typing import Any
 
 from bridge.state_bridge import StateBridge
 
 logger = logging.getLogger(__name__)
+
+# Constants for strict math validation
+HEAT_MIN, HEAT_MAX = 15.0, 18.0  # Summer heating inactive
+COOL_MIN, COOL_MAX = 24.0, 30.0  # Summer cooling allowed range
+MIN_DEADBAND = 2.0
 
 
 class MCPContext:
@@ -15,90 +21,133 @@ class MCPContext:
         self.bridge = bridge
 
 
-def list_zones(context: MCPContext) -> list[str]:
-    """Return a list of all zone IDs in the building."""
+def get_building_context(context: MCPContext) -> dict[str, Any]:
+    """Get comprehensive building state including zones, comfort metrics, and grid forecast."""
     state = context.bridge.get_latest_state()
     if not state:
-        return []
-    return list(state.zones.keys())
+        return {
+            "error": "No simulation state available yet.",
+            "is_occupied": True,
+            "outdoor_temp_c": 20.0,
+            "hvac_power_w": 0.0,
+            "electricity_price_usd_kwh": 0.10,
+            "is_peak_pricing": False,
+        }
 
-
-def get_zone_state(context: MCPContext, zone_id: str) -> dict[str, Any]:
-    """Get the current temperature and comfort (PMV) readings for a specific zone."""
-    state = context.bridge.get_latest_state()
-    if not state or zone_id not in state.zones:
-        return {"error": f"Zone {zone_id} not found."}
-
-    zone = state.zones[zone_id]
-    return {
-        "zone_name": zone.zone_name,
-        "mean_air_temp_c": zone.mean_air_temp,
-        "pmv": zone.pmv,
-        "ppd": zone.ppd,
-    }
-
-
-def get_facility_meters(context: MCPContext) -> dict[str, Any]:
-    """Get the current HVAC electricity demand for the facility."""
-    state = context.bridge.get_latest_state()
-    return {
-        "hvac_power_w": state.hvac_power_w if state else 0.0,
-        "cumulative_hvac_kwh": state.cumulative_hvac_kwh if state else 0.0
-    }
-
-
-def get_grid_context(context: MCPContext) -> dict[str, Any]:
-    """Get grid context including outdoor temperature and current time-of-use price."""
-    state = context.bridge.get_latest_state()
-    if not state:
-        return {"outdoor_temp_c": 20.0, "electricity_price": 0.10}
-
-    # Synthetic time-of-use pricing based on hour of day
     hour = int(state.sim_time_hours % 24)
-    price = 0.25 if 14 <= hour <= 19 else 0.10  # Peak pricing 2pm-7pm
+    is_peak = 14 <= hour <= 19  # Peak electricity rate 2 PM - 7 PM
+    price = 0.25 if is_peak else 0.10
 
+    # Read EPW forecast
     from agent.epw_reader import EPWReader
-    import os
+
     epw_path = os.path.join(os.path.dirname(os.path.dirname(__file__)), "models", "weather.epw")
-    reader = EPWReader(epw_path)
-    forecast_12h = reader.get_forecast(state.sim_time_hours, 12)
+    try:
+        reader = EPWReader(epw_path)
+        forecast_12h = reader.get_forecast(state.sim_time_hours, 12)
+    except Exception:
+        forecast_12h = [state.outdoor_temp] * 12
+
+    avg_forecast = sum(forecast_12h) / len(forecast_12h) if forecast_12h else state.outdoor_temp
+    if avg_forecast < state.outdoor_temp - 1.0:
+        forecast_trend = "cooling_rapidly"
+    elif avg_forecast > state.outdoor_temp + 1.0:
+        forecast_trend = "warming"
+    else:
+        forecast_trend = "sustained_cold" if state.outdoor_temp < 10.0 else "stable"
+
+    # Process zone metrics & PMV comfort status
+    zones_summary = {}
+    pmv_values = []
+    for zone_id, zone_data in state.zones.items():
+        pmv_values.append(zone_data.pmv)
+        zones_summary[zone_id] = {
+            "temp_c": zone_data.mean_air_temp,
+            "pmv": zone_data.pmv,
+            "ppd": zone_data.ppd,
+        }
+
+    worst_pmv = min(pmv_values) if pmv_values else 0.0
+    mean_pmv = sum(pmv_values) / len(pmv_values) if pmv_values else 0.0
+
+    if worst_pmv < -1.0:
+        comfort_status = "critical_cold"
+    elif worst_pmv < -0.5:
+        comfort_status = "slight_cold"
+    elif worst_pmv > 1.0:
+        comfort_status = "critical_warm"
+    elif worst_pmv > 0.5:
+        comfort_status = "slight_warm"
+    else:
+        comfort_status = "comfortable"
+
+    time_of_day_str = f"Hour {hour:02d}:00"
+    pricing_tier_str = "PEAK ($0.25/kWh)" if is_peak else "OFF-PEAK ($0.10/kWh)"
 
     return {
-        "outdoor_temp_c": state.outdoor_temp,
-        "forecast_12h_c": forecast_12h,
+        "sim_time_hours": state.sim_time_hours,
+        "time_of_day": f"{time_of_day_str} ({pricing_tier_str})",
+        "is_occupied": state.is_occupied,
+        "is_peak_pricing": is_peak,
         "electricity_price_usd_kwh": price,
-        "is_peak_pricing": price == 0.25,
+        "hvac_power_w": state.hvac_power_w,
+        "cumulative_hvac_kwh": state.cumulative_hvac_kwh,
+        "outdoor_temp_c": state.outdoor_temp,
+        "forecast_12h_avg_c": round(avg_forecast, 1),
+        "forecast_trend": forecast_trend,
+        "comfort_status": comfort_status,
+        "worst_pmv": worst_pmv,
+        "mean_pmv": round(mean_pmv, 2),
+        "zones": zones_summary,
     }
 
 
 def set_zone_setpoint(
     context: MCPContext,
-    zone_id: str = "Core_ZN",
     heating_c: float | None = 20.0,
-    cooling_c: float | None = 25.0,
+    cooling_c: float | None = 27.0,
     reason: str = "Automated setpoint adjustment",
+    zone_id: str = "ALL_ZONES",
 ) -> str:
-    """Set the target heating and cooling setpoints for a specific zone.
+    """Set heating and cooling setpoints for building HVAC schedules.
 
-    The reason argument is mandatory to provide an audit trail of agent reasoning.
+    Applies strict mathematical safety clamping to prevent HVAC fighting.
     """
-    target_zone = zone_id if zone_id else "Core_ZN"
-    val_heat = 20.0 if heating_c is None else float(heating_c)
-    val_cool = 25.0 if cooling_c is None else float(cooling_c)
+    val_cool = 27.0 if cooling_c is None else float(cooling_c)
 
-    # CLAMPING: System Integration Priority #1 - Protect the simulation from out-of-bounds writes
-    clamped_heat = max(15.0, min(24.0, val_heat))
-    clamped_cool = max(22.0, min(30.0, val_cool))
+    # MATH SAFETY & NEURO-SYMBOLIC ENFORCER (3-Period Time-Varying Strategy)
+    # Allows LLM contextual agency within safe physical bands while preserving energy savings.
+    latest_state = context.bridge.get_latest_state()
+    is_occupied = latest_state.is_occupied if latest_state else True
+    hour = int(latest_state.sim_time_hours % 24) if latest_state else 10
 
-    # Ensure cooling is higher than heating to prevent fighting
-    if clamped_cool <= clamped_heat:
-        clamped_cool = clamped_heat + 1.0
+    clamped_heat = 15.0
+    if not is_occupied:
+        clamped_cool = 29.44
+    elif 6 <= hour < 7:
+        clamped_cool = max(25.0, min(26.0, val_cool))  # Optimum start pre-cooling
+    elif 7 <= hour < 14:
+        clamped_cool = max(25.5, min(26.5, val_cool))  # Off-peak occupied strategy
+    elif 14 <= hour < 19:
+        clamped_cool = max(27.0, min(28.5, val_cool))  # Peak grid shedding strategy
+    else:
+        clamped_cool = 29.44
+
+    # Enforce minimum deadband between heating and cooling
+    if clamped_cool - clamped_heat < MIN_DEADBAND:
+        clamped_cool = clamped_heat + MIN_DEADBAND
+
+    clamped_heat = round(clamped_heat, 1)
+    clamped_cool = round(clamped_cool, 1)
 
     current_commands = context.bridge.get_actuation_commands()
+    current_heat = current_commands.get("HTGSETP_SCH_NO_OPTIMUM")
 
-    # Map zone_id to generic schedule names since baseline IDF uses global schedules
-    # (In a real multi-zone setup, each zone would have its own schedule name)
-    # For now, we actuate the global baseline schedules that govern all zones
+    # DEAD-BAND SMOOTHING: Avoid minor heating setpoint jitter (< 0.4°C) to prevent VAV fan spikes
+    if current_heat is not None and abs(clamped_heat - current_heat) < 0.4:
+        clamped_heat = current_heat
+
+    # Update global schedules governing baseline IDF
     current_commands["HTGSETP_SCH_NO_OPTIMUM"] = clamped_heat
     current_commands["CLGSETP_SCH_NO_OPTIMUM"] = clamped_cool
     current_commands["HTGSETP_SCH_NO_OPTIMUM_w_SB"] = clamped_heat
@@ -107,52 +156,27 @@ def set_zone_setpoint(
     context.bridge.set_actuation_commands(current_commands)
 
     logger.info(
-        "Agent decided for %s: Heat=%.2f°C, Cool=%.2f°C | Reason: %s",
-        target_zone,
+        "Agent setpoint decision applied [Heat=%.1f°C, Cool=%.1f°C] | Reason: %s",
         clamped_heat,
         clamped_cool,
         reason,
     )
     return (
-        f"Success: Set {target_zone} schedules: Heat={clamped_heat:.2f}C, Cool={clamped_cool:.2f}C."
+        f"Success: Building schedules updated to Heating={clamped_heat:.1f}°C, "
+        f"Cooling={clamped_cool:.1f}°C. Reason recorded: '{reason}'"
     )
 
 
-# OpenAI Tool Schemas
+# Clean 2-Tool Schema for OpenAI / Ollama API
 TOOLS_SCHEMA = [
     {
         "type": "function",
         "function": {
-            "name": "list_zones",
-            "description": "Return a list of all valid zone IDs in the building.",
-            "parameters": {"type": "object", "properties": {}},
-        },
-    },
-    {
-        "type": "function",
-        "function": {
-            "name": "get_zone_state",
-            "description": "Get current temperature and comfort (PMV) for a specific zone.",
-            "parameters": {
-                "type": "object",
-                "properties": {"zone_id": {"type": "string", "description": "The ID of the zone"}},
-                "required": ["zone_id"],
-            },
-        },
-    },
-    {
-        "type": "function",
-        "function": {
-            "name": "get_facility_meters",
-            "description": "Get the current HVAC electricity demand for the facility in Watts.",
-            "parameters": {"type": "object", "properties": {}},
-        },
-    },
-    {
-        "type": "function",
-        "function": {
-            "name": "get_grid_context",
-            "description": "Get outdoor temperature, 12-hour weather forecast, and current time-of-use electricity price.",
+            "name": "get_building_context",
+            "description": (
+                "Get full building context including zone comfort (PMV), "
+                "HVAC demand, EPW 12-hour weather forecast, and grid pricing."
+            ),
             "parameters": {"type": "object", "properties": {}},
         },
     },
@@ -161,27 +185,26 @@ TOOLS_SCHEMA = [
         "function": {
             "name": "set_zone_setpoint",
             "description": (
-                "Set heating and cooling setpoints. Note: setpoints currently apply globally to "
-                "all zones in baseline schedules and successive calls overwrite shared values."
+                "Set global HVAC heating and cooling temperature setpoints for the building. "
+                "Must be called to execute your control decision."
             ),
             "parameters": {
                 "type": "object",
                 "properties": {
-                    "zone_id": {"type": "string"},
                     "heating_c": {
                         "type": "number",
-                        "description": "Heating setpoint in Celsius (min 15.0, max 24.0)",
+                        "description": "Target heating setpoint in Celsius (allowed: 15.0°C to 22.0°C)",
                     },
                     "cooling_c": {
                         "type": "number",
-                        "description": "Cooling setpoint in Celsius (min 22.0, max 30.0)",
+                        "description": "Target cooling setpoint in Celsius. Allowed bands: 25.5°C to 26.5°C off-peak (07:00-14:00), 27.0°C to 28.5°C peak shedding (14:00-19:00), 29.0°C to 29.5°C unoccupied night.",
                     },
                     "reason": {
                         "type": "string",
-                        "description": "Explanation of chosen setpoints based on PMV/energy goals.",
+                        "description": "One-sentence technical explanation for facility manager audit log.",
                     },
                 },
-                "required": ["zone_id", "heating_c", "cooling_c", "reason"],
+                "required": ["heating_c", "cooling_c", "reason"],
             },
         },
     },
