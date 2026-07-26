@@ -131,20 +131,116 @@ def run_baseline(base_dir: str) -> int:
     return exit_code
 
 
+def run_phase5(
+    base_dir: str | None = None,
+    output_dir: str | None = None,
+    sync: bool = False,
+    ablation: bool = False,
+) -> tuple[int, int]:
+    """Run Phase 5 experiment variants (Comfort-Constrained vs Energy-Only Ablation)."""
+    mode_str = "Ablation (Energy-Only)" if ablation else "Comfort-Constrained"
+    sync_str = "Synchronous (Benchmarking)" if sync else "Asynchronous (Demo)"
+    logger.info("Starting Phase 5 Experiment Run: Mode=%s, Execution=%s", mode_str, sync_str)
+
+    if base_dir is None:
+        base_dir = os.path.dirname(os.path.abspath(__file__))
+    if output_dir is None:
+        output_dir = os.path.join(base_dir, "output", "phase5_experiments")
+
+    bridge = StateBridge()
+    prefilter = PreFilter(interval_hours=1.0)
+    trigger_count = 0
+
+    if sync:
+        from agent.orchestrator import LLMOrchestrator
+
+        orchestrator = LLMOrchestrator(bridge=bridge, ablation_mode=ablation)
+        agent_thread = None
+    else:
+        orchestrator = None
+        agent_thread = AgentThread(bridge, ablation_mode=ablation)
+        agent_thread.start()
+
+    def on_timestep(sim_state: SimulationState) -> None:
+        nonlocal trigger_count
+        bridge.update_state(sim_state)
+        decision = prefilter.evaluate(sim_state)
+        if decision.should_trigger:
+            trigger_count += 1
+            if sync and orchestrator:
+                logger.info(
+                    "Phase 5 [Trigger #%d] at %.2fh: evaluating LLM synchronously...",
+                    trigger_count,
+                    sim_state.sim_time_hours,
+                )
+                orchestrator.evaluate_and_act()
+            else:
+                bridge.trigger()
+
+    def on_actuate(state: Any, actuator_manager: ActuatorManager) -> None:
+        commands = bridge.get_actuation_commands()
+        for sched_name, val in commands.items():
+            actuator_manager.set_schedule_value(state, sched_name, val)
+
+    driver = EnergyPlusDriver(
+        idf_path=os.path.join(base_dir, "models", "baseline.idf"),
+        epw_path=os.path.join(base_dir, "models", "weather.epw"),
+        output_dir=output_dir,
+        on_timestep=on_timestep,
+        on_actuate=on_actuate,
+    )
+
+    try:
+        exit_code = driver.run()
+    finally:
+        if agent_thread:
+            agent_thread.stop()
+
+    final_triggers = trigger_count if sync else (agent_thread.trigger_count if agent_thread else 0)
+
+    if exit_code == 0:
+        filename = "phase5_ablation_results.csv" if ablation else "phase5_comfort_results.csv"
+        csv_path = os.path.join(output_dir, filename)
+        save_history_to_csv(driver.history, csv_path)
+        logger.info(
+            "Phase 5 run (%s) finished! Triggered %d times. Results saved to %s",
+            mode_str,
+            final_triggers,
+            csv_path,
+        )
+    else:
+        logger.error("Phase 5 run failed with exit code: %d", exit_code)
+
+    return exit_code, final_triggers
+
+
 def main() -> int:
     setup_logging()
     parser = argparse.ArgumentParser(description="Eco-Loop Simulation Runner")
     parser.add_argument(
         "--phase",
-        choices=["2", "3"],
+        choices=["2", "3", "5"],
         default="3",
-        help="Phase run mode: 2 (baseline), 3 (bridged + prefilter, default)",
+        help="Phase run mode: 2 (baseline), 3 (bridged demo), 5 (experiments)",
+    )
+    parser.add_argument(
+        "--sync",
+        action="store_true",
+        help="Run LLM evaluation synchronously (blocks EnergyPlus for benchmarking)",
+    )
+    parser.add_argument(
+        "--ablation",
+        action="store_true",
+        help="Run in energy-only ablation mode (ignores PMV comfort constraints)",
     )
     args = parser.parse_args()
 
     base_dir = os.path.dirname(os.path.abspath(__file__))
 
-    if args.phase == "3":
+    if args.phase == "5":
+        exit_code, _ = run_phase5(base_dir, sync=args.sync, ablation=args.ablation)
+        return exit_code
+    elif args.phase == "3":
         exit_code, _ = run_phase3(base_dir)
         return exit_code
     else:
