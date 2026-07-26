@@ -1,31 +1,102 @@
-"""LLM orchestration for batched tool execution against Ollama."""
+"""LLM orchestration for tool calling against local Ollama API."""
 
 import json
 import logging
 import os
-from typing import Any
+from typing import Any, cast
 
 import openai
 
 from agent.mcp_tools import (
     TOOLS_SCHEMA,
     MCPContext,
-    get_facility_meters,
-    get_grid_context,
-    get_zone_state,
-    list_zones,
+    get_building_context,
     set_zone_setpoint,
 )
 from bridge.state_bridge import StateBridge
 
 logger = logging.getLogger(__name__)
 
+COMFORT_SYSTEM_PROMPT = """You are an autonomous BMS agent controlling HVAC setpoints
+for a commercial office building.
+Your goal: Minimize HVAC energy and peak-grid demand while maintaining ASHRAE-55 thermal comfort
+(PMV strictly within [-0.5, +0.5]).
+
+STRATEGY: PEAK-FLOAT SETPOINT CONTROL
+The baseline building naturally operates at ~25.3°C zone air temperature (PMV ~0.0).
+By setting cooling setpoints between 25.8°C and 28.2°C, the chiller runs significantly less
+while PMV remains comfortably within [+0.10, +0.45].
+
+You have two tools:
+1. get_building_context() → returns current PMV, zone temps, outdoor temp, HVAC power,
+   and grid pricing.
+2. set_zone_setpoint(heating_c, cooling_c, reason) → actuates HVAC schedules.
+
+MANDATORY RULES:
+- heating_c = 15.0°C always (summer mode, heating inactive).
+- ALWAYS call set_zone_setpoint exactly once per turn.
+- Write a 1-sentence technical reason for the audit log.
+
+PRESCRIPTIVE DECISION TABLE (use worst_pmv from get_building_context):
+
+MORNING OCCUPIED (07:00–11:00) — system allows 25.8°C to 26.5°C:
+  • worst_pmv < +0.15 → set cooling_c = 26.5°C  (max savings: chiller works ~25% less)
+  • worst_pmv between +0.15 and +0.30 → set cooling_c = 26.0°C  (balanced)
+  • worst_pmv > +0.30 → set cooling_c = 25.8°C  (comfort guard)
+
+MIDDAY DRIFT (11:00–14:00) — system allows 26.5°C to 27.2°C:
+  • worst_pmv < +0.25 → set cooling_c = 27.2°C  (max savings)
+  • worst_pmv between +0.25 and +0.35 → set cooling_c = 26.8°C  (balanced)
+  • worst_pmv > +0.35 → set cooling_c = 26.5°C  (comfort guard)
+
+PEAK COASTING (14:00–19:00) — system allows 27.5°C to 28.2°C:
+  • worst_pmv < +0.35 → set cooling_c = 28.2°C  (chiller coasting, max savings)
+  • worst_pmv between +0.35 and +0.45 → set cooling_c = 27.8°C  (balanced coasting)
+  • worst_pmv > +0.45 → set cooling_c = 27.5°C  (comfort guard)
+  • worst_pmv > +0.50 → EMERGENCY: set cooling_c = 27.5°C, include "comfort emergency"
+    in reason.
+
+UNOCCUPIED (19:00–07:00):
+  • Handled deterministically (05:00–07:00 optimum start at 25.8°C; 19:00–05:00 setback 28.5°C).
+"""
+
+ABLATION_SYSTEM_PROMPT = """ENERGY-ONLY ABLATION MODE:
+You are an autonomous Building Management System (BMS) agent.
+Your ONLY goal: MINIMIZE HVAC energy consumption regardless of comfort constraints.
+
+You have two tools:
+1. get_building_context() - Retrieves building state.
+2. set_zone_setpoint(heating_c, cooling_c, reason) - Applies setpoints.
+
+Rules:
+- Keep heating setpoint as low as allowed (15.0°C) to maximize energy savings.
+- You MUST call `set_zone_setpoint` before completing your evaluation turn.
+"""
+
+
+def _coerce_scalar(val: Any, default: float) -> float | None:
+    """Coerce tool call argument to scalar float, safely handling list/string edge cases."""
+    if val is None:
+        return None
+    if isinstance(val, list):
+        return float(val[0]) if val else default
+    try:
+        return float(val)
+    except (ValueError, TypeError):
+        return default
+
 
 class LLMOrchestrator:
-    """Handles communication with the local LLM and executes returned tool calls."""
+    """Handles LLM agent tool calling execution loop against Ollama."""
 
-    def __init__(self, bridge: StateBridge, model: str = "qwen2.5:3b-instruct") -> None:
+    def __init__(
+        self,
+        bridge: StateBridge,
+        model: str = "qwen2.5:3b-instruct",
+        ablation_mode: bool = False,
+    ) -> None:
         self.bridge = bridge
+        self.ablation_mode = ablation_mode
         base_url = os.getenv("OLLAMA_BASE_URL", "http://localhost:11434/v1")
         api_key = os.getenv("OLLAMA_API_KEY", "ollama")
         self.model = os.getenv("LLM_MODEL", model)
@@ -36,103 +107,118 @@ class LLMOrchestrator:
         )
         self.context = MCPContext(bridge)
 
-    def _execute_tool(self, tool_call: Any) -> str:
-        """Route and execute a single tool call."""
-        func_name = tool_call.function.name
-
-        try:
-            kwargs = json.loads(tool_call.function.arguments)
-        except json.JSONDecodeError:
-            logger.exception("Failed to parse tool arguments for %s", func_name)
-            return "Error: Invalid JSON arguments."
-
-        logger.debug("Executing tool: %s with args %s", func_name, kwargs)
-
-        try:
-            if func_name == "list_zones":
-                return json.dumps(list_zones(self.context))
-            elif func_name == "get_zone_state":
-                return json.dumps(get_zone_state(self.context, **kwargs))
-            elif func_name == "get_facility_meters":
-                return json.dumps(get_facility_meters(self.context))
-            elif func_name == "get_grid_context":
-                return json.dumps(get_grid_context(self.context))
-            elif func_name == "set_zone_setpoint":
-                return set_zone_setpoint(self.context, **kwargs)
-            else:
-                logger.error("Tool '%s' not found.", func_name)
-                return f"Error: Tool '{func_name}' not found."
-        except Exception:
-            logger.exception("Error executing tool %s", func_name)
-            return "Error executing tool."
-
     def evaluate_and_act(self) -> None:
-        """Fetch state, build batched prompt, call LLM, and execute tool calls."""
+        """Run tool-calling loop to evaluate building context and actuate setpoints."""
         state = self.bridge.get_latest_state()
         if not state:
+            logger.warning("No simulation state found in StateBridge. Skipping evaluation.")
             return
 
-        zones_summary = "\n".join(
-            f"- {z}: Temp={d.mean_air_temp}C, PMV={d.pmv}" for z, d in state.zones.items()
-        )
+        system_prompt = ABLATION_SYSTEM_PROMPT if self.ablation_mode else COMFORT_SYSTEM_PROMPT
 
-        # Synthetic grid info
-        hour = int(state.sim_time_hours % 24)
-        price_tier = "PEAK ($0.25/kWh)" if 14 <= hour <= 19 else "OFF-PEAK ($0.10/kWh)"
-
-        system_prompt = (
-            "You are an AI building control agent. Your goal is to minimize HVAC power "
-            "while keeping zone PMV comfort strictly between -0.5 and +0.5. "
-            "You control the global baseline schedules HTGSETP_SCH_NO_OPTIMUM "
-            "and CLGSETP_SCH_NO_OPTIMUM by emitting set_zone_setpoint tool calls. "
-            "Always emit a tool call if comfort is violated. "
-            "You may widen setpoints to save energy during off-peak hours."
-        )
-
-        user_prompt = (
-            f"Current Time: {state.sim_time_hours:.2f}h (Hour {hour}). Grid: {price_tier}\n"
-            f"Outdoor Temp: {state.outdoor_temp:.1f}C. HVAC Power: {state.hvac_power_w:.1f}W\n"
-            f"Zone States:\n{zones_summary}\n\n"
-            "Evaluate comfort and energy, and use set_zone_setpoint to adjust if necessary."
+        bldg_ctx = get_building_context(self.context)
+        worst = bldg_ctx.get("worst_pmv")
+        mean = bldg_ctx.get("mean_pmv")
+        trend = bldg_ctx.get("forecast_trend")
+        user_content = (
+            f"Current Building State Trigger at sim time {state.sim_time_hours:.2f}h:\n"
+            f"- Comfort Status: {bldg_ctx.get('comfort_status')} "
+            f"(Worst PMV: {worst}, Mean PMV: {mean})\n"
+            f"- Outdoor Temp: {bldg_ctx.get('outdoor_temp_c')}°C | 12h Forecast Trend: {trend}\n"
+            f"- Pricing: {bldg_ctx.get('time_of_day')}\n"
+            f"- HVAC Demand: {bldg_ctx.get('hvac_power_w')} W\n\n"
+            "Please call `get_building_context` for full details if needed, then execute "
+            "`set_zone_setpoint` with your optimal control decision."
         )
 
         messages: list[dict[str, Any]] = [
             {"role": "system", "content": system_prompt},
-            {"role": "user", "content": user_prompt},
+            {"role": "user", "content": user_content},
         ]
 
         try:
-            response = self.client.chat.completions.create(
-                model=self.model,
-                messages=messages,  # ty: ignore[invalid-argument-type]
-                tools=TOOLS_SCHEMA,  # type: ignore
-                timeout=15.0,  # Strict timeout to prevent hanging the loop
-            )
+            # Allow up to 3 round-trips for tool execution
+            for turn in range(3):
+                response = self.client.chat.completions.create(
+                    model=self.model,
+                    messages=cast(Any, messages),
+                    tools=cast(Any, TOOLS_SCHEMA),
+                    tool_choice="auto",
+                    timeout=15.0,
+                )
 
-            message = response.choices[0].message
-            if message.tool_calls:
-                messages.append(message)  # type: ignore[arg-type]
-                for tool_call in message.tool_calls:
-                    result = self._execute_tool(tool_call)
+                response_message = response.choices[0].message
+                tool_calls = response_message.tool_calls
+
+                msg_dict: dict[str, Any] = {"role": "assistant"}
+                if response_message.content:
+                    msg_dict["content"] = response_message.content
+                if tool_calls:
+                    msg_dict["tool_calls"] = [
+                        {
+                            "id": tc.id,
+                            "type": "function",
+                            "function": {
+                                "name": getattr(getattr(tc, "function", None), "name", ""),
+                                "arguments": getattr(
+                                    getattr(tc, "function", None), "arguments", ""
+                                ),
+                            },
+                        }
+                        for tc in tool_calls
+                    ]
+                messages.append(msg_dict)
+
+                if not tool_calls:
+                    logger.debug("LLM responded with text without tool call. Turn %d.", turn)
+                    if turn == 2:
+                        logger.warning("LLM max turns reached. ZOH maintained.")
+                    continue
+
+                setpoint_executed = False
+                for tool_call in tool_calls:
+                    func_obj = getattr(tool_call, "function", None)
+                    func_name = getattr(func_obj, "name", "") if func_obj else ""
+                    try:
+                        args = (
+                            json.loads(getattr(func_obj, "arguments", "{}") or "{}")
+                            if func_obj
+                            else {}
+                        )
+                    except json.JSONDecodeError:
+                        args = {}
+
+                    logger.info("🤖 Agent invoking tool: %s(%s)", func_name, args)
+
+                    if func_name == "get_building_context":
+                        result = get_building_context(self.context)
+                        result_str = json.dumps(result)
+                    elif func_name == "set_zone_setpoint":
+                        h_val = _coerce_scalar(args.get("heating_c"), 15.0)
+                        c_val = _coerce_scalar(args.get("cooling_c"), 27.0)
+                        result_str = set_zone_setpoint(
+                            self.context,
+                            heating_c=h_val,
+                            cooling_c=c_val,
+                            reason=args.get("reason", "Agent setpoint update"),
+                        )
+                        setpoint_executed = True
+                    else:
+                        result_str = f"Error: Unknown tool {func_name}"
+
                     messages.append(
                         {
                             "role": "tool",
                             "tool_call_id": tool_call.id,
-                            "content": result,
+                            "content": result_str,
                         }
                     )
-                try:
-                    self.client.chat.completions.create(
-                        model=self.model,
-                        messages=messages,  # ty: ignore[invalid-argument-type]
-                        tools=TOOLS_SCHEMA,  # type: ignore
-                        timeout=15.0,
-                    )
-                except Exception:
-                    logger.exception("Follow-up LLM completion failed after tool execution.")
-            else:
-                logger.debug("LLM responded with no tool calls. Holding current setpoints.")
 
-        except Exception:
-            # FALLBACK PATH: Log error and suppress. Zero-Order Hold continues.
-            logger.exception("LLM evaluation failed. Falling back to Zero-Order Hold.")
+                if setpoint_executed:
+                    logger.debug("LLM setpoint tool execution completed successfully.")
+                    return
+
+        except openai.APITimeoutError:
+            logger.warning("LLM evaluation timed out (15s). Falling back to Zero-Order Hold.")
+        except Exception as e:
+            logger.warning("LLM evaluation failed (%s). Falling back to Zero-Order Hold.", e)

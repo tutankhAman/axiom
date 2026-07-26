@@ -1,44 +1,79 @@
 """Tests for MCP tools."""
 
-from agent.mcp_tools import MCPContext, set_zone_setpoint
+from agent.mcp_tools import MCPContext, get_building_context, set_zone_setpoint
 from bridge.state_bridge import StateBridge
+from sim.sensors import SimulationState, ZoneState
 
 
 def test_set_zone_setpoint_clamping() -> None:
     bridge = StateBridge()
     context = MCPContext(bridge)
+    # Set simulated state at hour 10.0 (morning occupied period, 25.5-26.2°C band)
+    bridge.update_state(
+        SimulationState(
+            sim_time_hours=10.0,
+            outdoor_temp=28.0,
+            hvac_power_w=3000.0,
+            is_occupied=True,
+            zones={"Core_ZN": ZoneState("Core_ZN", 25.0, 0.1, 5.0)},
+        )
+    )
 
-    # Test out-of-bounds heating (too high) and cooling (too low)
+    # Test out-of-bounds cooling (too low: -10.0) -> clamps to 25.5 morning floor
     result = set_zone_setpoint(
         context,
-        zone_id="Zone_1",
         heating_c=100.0,
         cooling_c=-10.0,
-        reason="I am crazy",
+        reason="Test out of bounds",
     )
 
     assert "Success" in result
-
     commands = bridge.get_actuation_commands()
-
-    # Heating clamped to max 24.0
-    assert commands["HTGSETP_SCH_NO_OPTIMUM"] == 24.0
-    # Cooling clamped to min 22.0, but because cooling must be > heating, it should be 25.0
-    assert commands["CLGSETP_SCH_NO_OPTIMUM"] == 25.0
+    assert commands["HTGSETP_SCH_NO_OPTIMUM"] == 15.0
+    assert commands["CLGSETP_SCH_NO_OPTIMUM"] == 25.5
 
 
-def test_set_zone_setpoint_normal() -> None:
+def test_set_zone_setpoint_peak_shedding() -> None:
     bridge = StateBridge()
     context = MCPContext(bridge)
+    # Set simulated state at hour 15.0 (peak occupied, 26.0-26.5°C band)
+    bridge.update_state(
+        SimulationState(
+            sim_time_hours=15.0,
+            outdoor_temp=33.0,
+            hvac_power_w=5000.0,
+            is_occupied=True,
+            zones={"Core_ZN": ZoneState("Core_ZN", 26.0, 0.3, 8.0)},
+        )
+    )
 
     set_zone_setpoint(
         context,
-        zone_id="Zone_1",
-        heating_c=20.0,
-        cooling_c=26.0,
-        reason="Normal operation",
+        heating_c=15.0,
+        cooling_c=27.8,  # Above peak band, clamped to 26.5
+        reason="Peak coasting operation",
     )
 
     commands = bridge.get_actuation_commands()
-    assert commands["HTGSETP_SCH_NO_OPTIMUM"] == 20.0
-    assert commands["CLGSETP_SCH_NO_OPTIMUM"] == 26.0
+    assert commands["HTGSETP_SCH_NO_OPTIMUM"] == 15.0
+    assert commands["CLGSETP_SCH_NO_OPTIMUM"] == 26.5
+
+
+def test_get_building_context() -> None:
+    bridge = StateBridge()
+    context = MCPContext(bridge)
+
+    bridge.update_state(
+        SimulationState(
+            sim_time_hours=14.0,
+            outdoor_temp=5.0,
+            hvac_power_w=5000.0,
+            is_occupied=True,
+            zones={"Core_ZN": ZoneState("Core_ZN", 20.0, -0.6, 12.0)},
+        )
+    )
+
+    ctx_data = get_building_context(context)
+    assert ctx_data["is_peak_pricing"] is True
+    assert ctx_data["comfort_status"] == "slight_cold"
+    assert ctx_data["worst_pmv"] == -0.6

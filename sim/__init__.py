@@ -1,6 +1,6 @@
 """Simulation package for EnergyPlus interaction."""
 
-from sim.actuators import ActuatorManager, InvalidActuatorHandleError, ZoneSetpoints
+from sim.actuators import ActuatorManager, InvalidActuatorHandleError
 from sim.driver import EnergyPlusDriver
 from sim.sensors import SensorManager, SimulationState, ZoneState
 
@@ -10,6 +10,5 @@ __all__ = [
     "InvalidActuatorHandleError",
     "SensorManager",
     "SimulationState",
-    "ZoneSetpoints",
     "ZoneState",
 ]

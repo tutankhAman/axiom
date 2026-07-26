@@ -1,0 +1,23 @@
+import tailwindcss from '@tailwindcss/vite'
+import react from '@vitejs/plugin-react'
+import { defineConfig } from 'vite'
+import path from 'path'
+
+export default defineConfig({
+  plugins: [react(), tailwindcss()],
+  server: {
+    host: true,
+    watch: {
+      ignored: [
+        "**/public/live_data.json",
+        "**/dist/live_data.json",
+        "**/src/dashboard_data.json",
+      ],
+    },
+  },
+  resolve: {
+    alias: {
+      '@': path.resolve(__dirname, './src'),
+    },
+  },
+})

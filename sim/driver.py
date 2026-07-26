@@ -27,6 +27,8 @@ DEFAULT_ACTUATOR_SCHEDULES = [
     "CLGSETP_SCH_NO_OPTIMUM_w_SB",
 ]
 
+KIND_OF_SIM_RUN_PERIOD_WEATHER = 3
+
 
 class EnergyPlusDriver:
     """Manages EnergyPlus simulation execution, sensor/actuator state collection, and callbacks."""
@@ -87,6 +89,10 @@ class EnergyPlusDriver:
         if self.api.exchange.warmup_flag(state) != 0:
             return
 
+        # Ensure only actual RunPeriod weather simulation timesteps are recorded
+        if self.api.exchange.kind_of_sim(state) != KIND_OF_SIM_RUN_PERIOD_WEATHER:
+            return
+
         try:
             sim_state = self.sensor_manager.fetch_state(state, self.zone_names)
             self.history.append(sim_state)
@@ -118,6 +124,7 @@ class EnergyPlusDriver:
         self.history = []
         self.run_completed = False
         self.callback_error = None
+        self.sensor_manager.reset()
 
         state = self.api.state_manager.new_state()
 

@@ -129,11 +129,11 @@
 
   RunPeriod,
     RUNPERIOD 1,             !- Name
-    1,                       !- Begin Month
-    1,                       !- Begin Day of Month
+    7,                       !- Begin Month
+    21,                       !- Begin Day of Month
     ,                        !- Begin Year
-    1,                       !- End Month
-    3,                       !- End Day of Month
+    7,                        !- End Month
+    23,                       !- End Day of Month
     ,                        !- End Year
     Sunday,                  !- Day of Week for Start Day
     No,                      !- Use Weather File Holidays and Special Days
@@ -6285,3 +6285,5 @@
   Output:Variable, *, Facility Total HVAC Electricity Demand Rate, timestep;
   Output:Variable, *, Site Outdoor Air Drybulb Temperature, timestep;
 
+
+  Output:VariableDictionary, regular;
