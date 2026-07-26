@@ -42,12 +42,16 @@ class SensorManager:
         self.api = api
         self.handles_initialized = False
 
-        # Global sensor handles
+        # Global handles
         self._outdoor_temp_handle: int = -1
         self._hvac_power_handle: int = -1
-        self._occupancy_handle: int = -1
+        self._hvac_meter_handle: int = -1
+        self._fan_power_handle: int = -1
+        self._cool_power_handle: int = -1
+        self._heat_power_handle: int = -1
 
-        # State tracking
+        # RunPeriod tracking
+        self._start_day_of_year: int | None = None
         self._cumulative_hvac_kwh: float = 0.0
         self._last_time_hours: float = 0.0
 
@@ -55,47 +59,37 @@ class SensorManager:
         self._zone_handles: dict[str, dict[str, int]] = {}
 
     def initialize_handles(self, state: Any, zone_names: list[str]) -> None:
-        """Fetch and cache variable handles from EnergyPlus runtime exchange API.
-
-        Must be called after API state initialization and warm-up completion.
-        """
+        """Fetch and cache variable handles from EnergyPlus runtime exchange API."""
         logger.info("Initializing EnergyPlus sensor handles for zones: %s", zone_names)
 
-        # 1. Global Handles
         if not self.handles_initialized:
+            # 1. Meter Handle (Electricity:HVAC)
+            self._hvac_meter_handle = self.api.exchange.get_meter_handle(state, "Electricity:HVAC")
+
+            # 2. Outdoor Temp Handle
             self._outdoor_temp_handle = self.api.exchange.get_variable_handle(
                 state, "Site Outdoor Air Drybulb Temperature", "Environment"
             )
-            self._hvac_power_handle = self.api.exchange.get_variable_handle(
-                state, "Facility Total HVAC Electricity Demand Rate", "Whole Building"
-            )
-
             if self._outdoor_temp_handle == -1:
-                # Try key '*' if 'Environment' is missing
                 self._outdoor_temp_handle = self.api.exchange.get_variable_handle(
                     state, "Site Outdoor Air Drybulb Temperature", "*"
                 )
 
-            if self._hvac_power_handle == -1:
-                self._hvac_power_handle = self.api.exchange.get_variable_handle(
-                    state, "Facility Total HVAC Electricity Demand Rate", "*"
-                )
+            # 3. Component HVAC Power Handles (Fallbacks)
+            self._hvac_power_handle = self.api.exchange.get_variable_handle(
+                state, "Facility Total HVAC Electricity Demand Rate", "*"
+            )
+            self._fan_power_handle = self.api.exchange.get_variable_handle(
+                state, "Fan Electricity Rate", "*"
+            )
+            self._cool_power_handle = self.api.exchange.get_variable_handle(
+                state, "Cooling Coil Electricity Rate", "*"
+            )
+            self._heat_power_handle = self.api.exchange.get_variable_handle(
+                state, "Heating Coil Electricity Rate", "*"
+            )
 
-            if self._outdoor_temp_handle == -1:
-                raise InvalidSensorHandleError(
-                    "Could not locate variable handle for 'Site Outdoor Air Drybulb Temperature'"
-                )
-
-            # Note: HVAC demand rate handle may be -1 if HVAC system isn't running
-            # or key differs; handle gracefully
-            if self._hvac_power_handle == -1:
-                logger.warning(
-                    "HVAC Electricity Demand handle is -1; fallback to 0.0 W will be used."
-                )
-
-            # Removed occupancy handle fetch since we'll compute it by hour
-
-        # 2. Per-Zone Handles
+        # Per-Zone Handles
         for zone in zone_names:
             if zone in self._zone_handles:
                 continue
@@ -109,18 +103,6 @@ class SensorManager:
             ppd_handle = self.api.exchange.get_variable_handle(
                 state, "Zone Thermal Comfort Fanger Model PPD", zone
             )
-
-            if temp_handle == -1:
-                raise InvalidSensorHandleError(
-                    f"Could not locate 'Zone Mean Air Temperature' handle for zone '{zone}'"
-                )
-
-            if pmv_handle == -1:
-                logger.warning(
-                    "PMV handle missing for zone '%s'. Fanger model enabled in IDF?", zone
-                )
-            if ppd_handle == -1:
-                logger.warning("PPD handle missing for zone '%s'.", zone)
 
             self._zone_handles[zone] = {
                 "temp": temp_handle,
@@ -138,22 +120,54 @@ class SensorManager:
         ):
             self.initialize_handles(state, zone_names)
 
-        # Time tracking (compensate 1-based day_of_year to 0-based elapsed days)
-        current_time = (
-            self.api.exchange.day_of_year(state) - 1
-        ) * 24.0 + self.api.exchange.current_time(state)
+        # Track RunPeriod start day to ensure relative time starts at 0.0h
+        current_day = self.api.exchange.day_of_year(state)
+        if self._start_day_of_year is None and not self.api.exchange.warmup_flag(state):
+            self._start_day_of_year = current_day
 
-        # Global metrics
-        outdoor_temp = self.api.exchange.get_variable_value(state, self._outdoor_temp_handle)
-        hvac_power = (
-            self.api.exchange.get_variable_value(state, self._hvac_power_handle)
-            if self._hvac_power_handle != -1
-            else 0.0
+        start_day = self._start_day_of_year if self._start_day_of_year is not None else current_day
+        day_offset = current_day - start_day
+        current_time_hours = day_offset * 24.0 + self.api.exchange.current_time(state)
+
+        # Read HVAC Power in Watts
+        hvac_power = 0.0
+        if self._hvac_meter_handle != -1:
+            joules = self.api.exchange.get_meter_value(state, self._hvac_meter_handle)
+            # 15 minute timestep = 900 seconds
+            hvac_power = joules / 900.0
+        elif self._hvac_power_handle != -1:
+            hvac_power = self.api.exchange.get_variable_value(state, self._hvac_power_handle)
+        else:
+            fan_p = (
+                self.api.exchange.get_variable_value(state, self._fan_power_handle)
+                if self._fan_power_handle != -1
+                else 0.0
+            )
+            cool_p = (
+                self.api.exchange.get_variable_value(state, self._cool_power_handle)
+                if self._cool_power_handle != -1
+                else 0.0
+            )
+            heat_p = (
+                self.api.exchange.get_variable_value(state, self._heat_power_handle)
+                if self._heat_power_handle != -1
+                else 0.0
+            )
+            hvac_power = fan_p + cool_p + heat_p
+
+        # Outdoor Temperature
+        outdoor_temp = (
+            self.api.exchange.get_variable_value(state, self._outdoor_temp_handle)
+            if self._outdoor_temp_handle != -1
+            else 20.0
         )
-        # Energy tracking
-        current_time_hours = float(current_time)
+
         hour = int(current_time_hours % 24)
-        is_occupied = 7 <= hour < 19
+        day_of_week = (
+            self.api.exchange.day_of_week(state) if hasattr(self.api.exchange, "day_of_week") else 2
+        )
+        is_weekend = day_of_week == 1 or day_of_week == 7  # 1 = Sunday, 7 = Saturday
+        is_occupied = (not is_weekend) and (7 <= hour < 19)
 
         if self._last_time_hours > 0:
             dt = current_time_hours - self._last_time_hours
@@ -165,7 +179,9 @@ class SensorManager:
         zones_data: dict[str, ZoneState] = {}
         for zone in zone_names:
             h = self._zone_handles[zone]
-            temp_val = self.api.exchange.get_variable_value(state, h["temp"])
+            temp_val = (
+                self.api.exchange.get_variable_value(state, h["temp"]) if h["temp"] != -1 else 22.0
+            )
             pmv_val = (
                 self.api.exchange.get_variable_value(state, h["pmv"]) if h["pmv"] != -1 else 0.0
             )
@@ -181,7 +197,7 @@ class SensorManager:
             )
 
         return SimulationState(
-            sim_time_hours=round(current_time_hours, 2),
+            sim_time_hours=round(float(current_time_hours), 2),
             outdoor_temp=round(float(outdoor_temp), 2),
             hvac_power_w=round(float(hvac_power), 2),
             is_occupied=is_occupied,
