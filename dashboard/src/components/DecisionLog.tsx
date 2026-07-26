@@ -51,7 +51,7 @@ export default function DecisionLog({ decisions }: DecisionLogProps) {
               </TableRow>
             </TableHeader>
             <TableBody>
-              {decisions.map((d, i) => (
+              {[...decisions].reverse().map((d, i) => (
                 <TableRow key={i}>
                   <TableCell className="font-mono text-sm tabular-nums">{d.day}</TableCell>
                   <TableCell className="font-mono text-sm tabular-nums">{d.hour_of_day}:00</TableCell>

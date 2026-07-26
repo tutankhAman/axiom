@@ -229,6 +229,10 @@ def _build_decision_log(
 
 
 def main() -> None:
+    if not BASELINE_CSV.exists() or not PHASE5_CSV.exists():
+        print(f"Waiting for simulation outputs at {BASELINE_CSV} and {PHASE5_CSV}")
+        return
+
     baseline_rows = _load_csv(BASELINE_CSV)
     agent_rows = _load_csv(PHASE5_CSV)
 

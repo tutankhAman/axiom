@@ -6285,3 +6285,5 @@
   Output:Variable, *, Facility Total HVAC Electricity Demand Rate, timestep;
   Output:Variable, *, Site Outdoor Air Drybulb Temperature, timestep;
 
+
+  Output:VariableDictionary, regular;

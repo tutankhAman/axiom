@@ -87,6 +87,10 @@ class EnergyPlusDriver:
         if self.api.exchange.warmup_flag(state) != 0:
             return
 
+        # Ensure only actual RunPeriod weather simulation timesteps are recorded
+        if self.api.exchange.kind_of_sim(state) != 3:
+            return
+
         try:
             sim_state = self.sensor_manager.fetch_state(state, self.zone_names)
             self.history.append(sim_state)
