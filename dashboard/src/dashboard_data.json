@@ -1,14 +1,14 @@
 {
   "is_live": false,
   "status": "completed",
-  "current_step": 384,
-  "current_sim_time_hours": 96.0,
+  "current_step": 288,
+  "current_sim_time_hours": 72.0,
   "summary": {
-    "baseline_kwh": 154.5,
-    "closed_loop_kwh": 126.6,
-    "pct_savings": 18.0,
+    "baseline_kwh": 117.7,
+    "closed_loop_kwh": 88.8,
+    "pct_savings": 24.5,
     "comfort_compliance_pct_closed_loop": 100.0,
-    "comfort_compliance_pct_baseline": 52.8
+    "comfort_compliance_pct_baseline": 79.2
   },
   "power_series": [
     {
@@ -174,12 +174,12 @@
     {
       "hour": 8.0,
       "baseline_w": 271.4,
-      "agent_w": 176.5
+      "agent_w": 176.8
     },
     {
       "hour": 8.25,
       "baseline_w": 131.7,
-      "agent_w": 69.4
+      "agent_w": 69.3
     },
     {
       "hour": 8.5,
@@ -189,12 +189,12 @@
     {
       "hour": 8.75,
       "baseline_w": 338.9,
-      "agent_w": 251.3
+      "agent_w": 251.4
     },
     {
       "hour": 9.0,
       "baseline_w": 143.1,
-      "agent_w": 85.7
+      "agent_w": 85.6
     },
     {
       "hour": 9.25,
@@ -204,7 +204,7 @@
     {
       "hour": 9.5,
       "baseline_w": 338.8,
-      "agent_w": 251.7
+      "agent_w": 251.6
     },
     {
       "hour": 9.75,
@@ -224,7 +224,7 @@
     {
       "hour": 10.5,
       "baseline_w": 95.5,
-      "agent_w": 215.6
+      "agent_w": 215.5
     },
     {
       "hour": 10.75,
@@ -244,12 +244,12 @@
     {
       "hour": 11.5,
       "baseline_w": 339.0,
-      "agent_w": 178.9
+      "agent_w": 179.2
     },
     {
       "hour": 11.75,
       "baseline_w": 334.8,
-      "agent_w": 28.6
+      "agent_w": 28.7
     },
     {
       "hour": 12.0,
@@ -264,12 +264,12 @@
     {
       "hour": 12.5,
       "baseline_w": 655.2,
-      "agent_w": 160.3
+      "agent_w": 160.6
     },
     {
       "hour": 12.75,
       "baseline_w": 141.2,
-      "agent_w": 19.5
+      "agent_w": 19.6
     },
     {
       "hour": 13.0,
@@ -284,12 +284,12 @@
     {
       "hour": 13.5,
       "baseline_w": 722.9,
-      "agent_w": 153.0
+      "agent_w": 153.4
     },
     {
       "hour": 13.75,
       "baseline_w": 108.6,
-      "agent_w": 13.4
+      "agent_w": 13.5
     },
     {
       "hour": 14.0,
@@ -594,262 +594,262 @@
     {
       "hour": 29.0,
       "baseline_w": 5829.0,
-      "agent_w": 4455.9
+      "agent_w": 4455.1
     },
     {
       "hour": 29.25,
       "baseline_w": 5021.8,
-      "agent_w": 3662.8
+      "agent_w": 3662.3
     },
     {
       "hour": 29.5,
       "baseline_w": 5453.7,
-      "agent_w": 3942.3
+      "agent_w": 3941.7
     },
     {
       "hour": 29.75,
       "baseline_w": 5319.5,
-      "agent_w": 3916.9
+      "agent_w": 3916.3
     },
     {
       "hour": 30.0,
       "baseline_w": 5047.6,
-      "agent_w": 3444.8
+      "agent_w": 3444.3
     },
     {
       "hour": 30.25,
       "baseline_w": 5039.4,
-      "agent_w": 3498.2
+      "agent_w": 3497.7
     },
     {
       "hour": 30.5,
       "baseline_w": 5032.3,
-      "agent_w": 3546.9
+      "agent_w": 3546.3
     },
     {
       "hour": 30.75,
       "baseline_w": 5034.2,
-      "agent_w": 3601.6
+      "agent_w": 3601.0
     },
     {
       "hour": 31.0,
       "baseline_w": 5484.0,
-      "agent_w": 4272.0
+      "agent_w": 3725.0
     },
     {
       "hour": 31.25,
       "baseline_w": 5508.3,
-      "agent_w": 4306.9
+      "agent_w": 4028.3
     },
     {
       "hour": 31.5,
       "baseline_w": 5534.4,
-      "agent_w": 4347.2
+      "agent_w": 3961.8
     },
     {
       "hour": 31.75,
       "baseline_w": 5560.5,
-      "agent_w": 4394.9
+      "agent_w": 4033.6
     },
     {
       "hour": 32.0,
       "baseline_w": 5596.3,
-      "agent_w": 4457.0
+      "agent_w": 4376.2
     },
     {
       "hour": 32.25,
       "baseline_w": 5628.9,
-      "agent_w": 4513.8
+      "agent_w": 4334.1
     },
     {
       "hour": 32.5,
       "baseline_w": 5681.5,
-      "agent_w": 4583.7
+      "agent_w": 4462.8
     },
     {
       "hour": 32.75,
       "baseline_w": 5737.8,
-      "agent_w": 4654.8
+      "agent_w": 4524.5
     },
     {
       "hour": 33.0,
       "baseline_w": 5541.6,
-      "agent_w": 4575.3
+      "agent_w": 4125.3
     },
     {
       "hour": 33.25,
       "baseline_w": 5623.7,
-      "agent_w": 4612.7
+      "agent_w": 4300.7
     },
     {
       "hour": 33.5,
       "baseline_w": 5623.7,
-      "agent_w": 4646.6
+      "agent_w": 4277.9
     },
     {
       "hour": 33.75,
       "baseline_w": 5661.2,
-      "agent_w": 4681.5
+      "agent_w": 4333.6
     },
     {
       "hour": 34.0,
       "baseline_w": 5947.9,
-      "agent_w": 4888.6
+      "agent_w": 4569.2
     },
     {
       "hour": 34.25,
       "baseline_w": 5975.9,
-      "agent_w": 4952.6
+      "agent_w": 4640.6
     },
     {
       "hour": 34.5,
       "baseline_w": 6025.1,
-      "agent_w": 4995.3
+      "agent_w": 4689.7
     },
     {
       "hour": 34.75,
       "baseline_w": 6039.7,
-      "agent_w": 5027.3
+      "agent_w": 4727.7
     },
     {
       "hour": 35.0,
       "baseline_w": 5645.9,
-      "agent_w": 4693.8
+      "agent_w": 3876.1
     },
     {
       "hour": 35.25,
       "baseline_w": 5693.0,
-      "agent_w": 4675.2
+      "agent_w": 4104.9
     },
     {
       "hour": 35.5,
       "baseline_w": 5666.3,
-      "agent_w": 4682.7
+      "agent_w": 4027.1
     },
     {
       "hour": 35.75,
       "baseline_w": 5698.3,
-      "agent_w": 4703.4
+      "agent_w": 4087.6
     },
     {
       "hour": 36.0,
       "baseline_w": 5909.4,
-      "agent_w": 4896.9
+      "agent_w": 4347.4
     },
     {
       "hour": 36.25,
       "baseline_w": 5725.8,
-      "agent_w": 4758.6
+      "agent_w": 4229.3
     },
     {
       "hour": 36.5,
       "baseline_w": 5624.6,
-      "agent_w": 4638.7
+      "agent_w": 4121.3
     },
     {
       "hour": 36.75,
       "baseline_w": 5517.9,
-      "agent_w": 4525.3
+      "agent_w": 4015.0
     },
     {
       "hour": 37.0,
       "baseline_w": 5144.7,
-      "agent_w": 4289.1
+      "agent_w": 3769.8
     },
     {
       "hour": 37.25,
       "baseline_w": 5153.0,
-      "agent_w": 4231.6
+      "agent_w": 3726.8
     },
     {
       "hour": 37.5,
       "baseline_w": 5070.2,
-      "agent_w": 4180.5
+      "agent_w": 3686.9
     },
     {
       "hour": 37.75,
       "baseline_w": 5036.1,
-      "agent_w": 4131.1
+      "agent_w": 3647.4
     },
     {
       "hour": 38.0,
       "baseline_w": 5321.5,
-      "agent_w": 4313.9
+      "agent_w": 3857.8
     },
     {
       "hour": 38.25,
       "baseline_w": 5278.6,
-      "agent_w": 4310.0
+      "agent_w": 3862.5
     },
     {
       "hour": 38.5,
       "baseline_w": 5270.4,
-      "agent_w": 4291.1
+      "agent_w": 3853.0
     },
     {
       "hour": 38.75,
       "baseline_w": 5231.1,
-      "agent_w": 4265.9
+      "agent_w": 3837.1
     },
     {
       "hour": 39.0,
       "baseline_w": 5187.3,
-      "agent_w": 4231.6
+      "agent_w": 3810.5
     },
     {
       "hour": 39.25,
       "baseline_w": 5143.4,
-      "agent_w": 4195.1
+      "agent_w": 3779.9
     },
     {
       "hour": 39.5,
       "baseline_w": 5111.6,
-      "agent_w": 4169.6
+      "agent_w": 3760.5
     },
     {
       "hour": 39.75,
       "baseline_w": 5083.9,
-      "agent_w": 4147.9
+      "agent_w": 3744.3
     },
     {
       "hour": 40.0,
       "baseline_w": 4458.4,
-      "agent_w": 3348.8
+      "agent_w": 2924.4
     },
     {
       "hour": 40.25,
       "baseline_w": 4343.6,
-      "agent_w": 3304.6
+      "agent_w": 2887.9
     },
     {
       "hour": 40.5,
       "baseline_w": 4300.8,
-      "agent_w": 3254.6
+      "agent_w": 2843.1
     },
     {
       "hour": 40.75,
       "baseline_w": 4228.9,
-      "agent_w": 3206.6
+      "agent_w": 2801.8
     },
     {
       "hour": 41.0,
       "baseline_w": 1713.0,
-      "agent_w": 2978.2
+      "agent_w": 2591.8
     },
     {
       "hour": 41.25,
       "baseline_w": 1713.0,
-      "agent_w": 2922.7
+      "agent_w": 2543.7
     },
     {
       "hour": 41.5,
       "baseline_w": 1713.0,
-      "agent_w": 2875.0
+      "agent_w": 2503.4
     },
     {
       "hour": 41.75,
       "baseline_w": 1713.0,
-      "agent_w": 2830.1
+      "agent_w": 2465.5
     },
     {
       "hour": 42.0,
@@ -859,17 +859,17 @@
     {
       "hour": 42.25,
       "baseline_w": 0.0,
-      "agent_w": 1398.3
+      "agent_w": 1166.0
     },
     {
       "hour": 42.5,
       "baseline_w": 0.0,
-      "agent_w": 1283.8
+      "agent_w": 561.0
     },
     {
       "hour": 42.75,
       "baseline_w": 0.0,
-      "agent_w": 235.8
+      "agent_w": 0.0
     },
     {
       "hour": 43.0,
@@ -1074,262 +1074,262 @@
     {
       "hour": 53.0,
       "baseline_w": 4593.7,
-      "agent_w": 3403.2
+      "agent_w": 3705.8
     },
     {
       "hour": 53.25,
       "baseline_w": 3828.4,
-      "agent_w": 2718.9
+      "agent_w": 2918.9
     },
     {
       "hour": 53.5,
       "baseline_w": 4099.1,
-      "agent_w": 2994.9
+      "agent_w": 3217.9
     },
     {
       "hour": 53.75,
       "baseline_w": 4015.6,
-      "agent_w": 2918.5
+      "agent_w": 3129.7
     },
     {
       "hour": 54.0,
       "baseline_w": 3427.3,
-      "agent_w": 2423.0
+      "agent_w": 2590.4
     },
     {
       "hour": 54.25,
       "baseline_w": 3386.3,
-      "agent_w": 2429.3
+      "agent_w": 2584.6
     },
     {
       "hour": 54.5,
       "baseline_w": 3364.9,
-      "agent_w": 2438.0
+      "agent_w": 2583.1
     },
     {
       "hour": 54.75,
       "baseline_w": 3359.5,
-      "agent_w": 2450.4
+      "agent_w": 2588.1
     },
     {
       "hour": 55.0,
       "baseline_w": 4232.3,
-      "agent_w": 3121.5
+      "agent_w": 2717.1
     },
     {
       "hour": 55.25,
       "baseline_w": 4242.8,
-      "agent_w": 3304.7
+      "agent_w": 3208.1
     },
     {
       "hour": 55.5,
       "baseline_w": 4251.4,
-      "agent_w": 3280.4
+      "agent_w": 3074.4
     },
     {
       "hour": 55.75,
       "baseline_w": 4258.7,
-      "agent_w": 3318.9
+      "agent_w": 3142.0
     },
     {
       "hour": 56.0,
       "baseline_w": 4269.4,
-      "agent_w": 3349.2
+      "agent_w": 3185.2
     },
     {
       "hour": 56.25,
       "baseline_w": 4278.1,
-      "agent_w": 3374.1
+      "agent_w": 3219.6
     },
     {
       "hour": 56.5,
       "baseline_w": 4296.1,
-      "agent_w": 3407.1
+      "agent_w": 3259.1
     },
     {
       "hour": 56.75,
       "baseline_w": 4316.9,
-      "agent_w": 3440.6
+      "agent_w": 3297.3
     },
     {
       "hour": 57.0,
       "baseline_w": 3891.5,
-      "agent_w": 3173.8
+      "agent_w": 3314.0
     },
     {
       "hour": 57.25,
       "baseline_w": 4015.3,
-      "agent_w": 3195.7
+      "agent_w": 3175.0
     },
     {
       "hour": 57.5,
       "baseline_w": 3972.8,
-      "agent_w": 3210.5
+      "agent_w": 3259.1
     },
     {
       "hour": 57.75,
       "baseline_w": 3993.6,
-      "agent_w": 3223.1
+      "agent_w": 3255.4
     },
     {
       "hour": 58.0,
       "baseline_w": 4402.4,
-      "agent_w": 3531.9
+      "agent_w": 3271.2
     },
     {
       "hour": 58.25,
       "baseline_w": 4380.1,
-      "agent_w": 3556.6
+      "agent_w": 3452.0
     },
     {
       "hour": 58.5,
       "baseline_w": 4417.2,
-      "agent_w": 3583.4
+      "agent_w": 3417.3
     },
     {
       "hour": 58.75,
       "baseline_w": 4429.5,
-      "agent_w": 3609.5
+      "agent_w": 3456.4
     },
     {
       "hour": 59.0,
       "baseline_w": 3760.7,
-      "agent_w": 3066.4
+      "agent_w": 2457.9
     },
     {
       "hour": 59.25,
       "baseline_w": 3872.9,
-      "agent_w": 3083.6
+      "agent_w": 2767.3
     },
     {
       "hour": 59.5,
       "baseline_w": 3823.8,
-      "agent_w": 3091.9
+      "agent_w": 2674.2
     },
     {
       "hour": 59.75,
       "baseline_w": 3836.9,
-      "agent_w": 3097.9
+      "agent_w": 2713.7
     },
     {
       "hour": 60.0,
       "baseline_w": 4439.2,
-      "agent_w": 3627.6
+      "agent_w": 3273.5
     },
     {
       "hour": 60.25,
       "baseline_w": 4381.4,
-      "agent_w": 3614.3
+      "agent_w": 3268.9
     },
     {
       "hour": 60.5,
       "baseline_w": 4380.6,
-      "agent_w": 3601.2
+      "agent_w": 3262.2
     },
     {
       "hour": 60.75,
       "baseline_w": 4353.2,
-      "agent_w": 3585.8
+      "agent_w": 3253.2
     },
     {
       "hour": 61.0,
       "baseline_w": 3898.2,
-      "agent_w": 3281.8
+      "agent_w": 2943.4
     },
     {
       "hour": 61.25,
       "baseline_w": 3983.3,
-      "agent_w": 3262.9
+      "agent_w": 2927.9
     },
     {
       "hour": 61.5,
       "baseline_w": 3920.3,
-      "agent_w": 3248.9
+      "agent_w": 2916.0
     },
     {
       "hour": 61.75,
       "baseline_w": 3926.6,
-      "agent_w": 3238.6
+      "agent_w": 2906.2
     },
     {
       "hour": 62.0,
       "baseline_w": 4306.9,
-      "agent_w": 3510.7
+      "agent_w": 3187.4
     },
     {
       "hour": 62.25,
       "baseline_w": 4264.4,
-      "agent_w": 3510.0
+      "agent_w": 3187.3
     },
     {
       "hour": 62.5,
       "baseline_w": 4252.0,
-      "agent_w": 3486.5
+      "agent_w": 3166.7
     },
     {
       "hour": 62.75,
       "baseline_w": 4203.3,
-      "agent_w": 3450.9
+      "agent_w": 3135.3
     },
     {
       "hour": 63.0,
       "baseline_w": 4152.7,
-      "agent_w": 3412.4
+      "agent_w": 3102.8
     },
     {
       "hour": 63.25,
       "baseline_w": 4095.4,
-      "agent_w": 3367.6
+      "agent_w": 3064.9
     },
     {
       "hour": 63.5,
       "baseline_w": 4044.8,
-      "agent_w": 3330.4
+      "agent_w": 3034.4
     },
     {
       "hour": 63.75,
       "baseline_w": 3992.9,
-      "agent_w": 3291.2
+      "agent_w": 3001.7
     },
     {
       "hour": 64.0,
       "baseline_w": 3098.3,
-      "agent_w": 2487.7
+      "agent_w": 2268.0
     },
     {
       "hour": 64.25,
       "baseline_w": 3033.8,
-      "agent_w": 2452.4
+      "agent_w": 2239.2
     },
     {
       "hour": 64.5,
       "baseline_w": 2977.6,
-      "agent_w": 2420.8
+      "agent_w": 2211.5
     },
     {
       "hour": 64.75,
       "baseline_w": 2924.8,
-      "agent_w": 2391.5
+      "agent_w": 2183.4
     },
     {
       "hour": 65.0,
       "baseline_w": 1713.0,
-      "agent_w": 2106.9
+      "agent_w": 1978.0
     },
     {
       "hour": 65.25,
       "baseline_w": 1713.0,
-      "agent_w": 2080.4
+      "agent_w": 1964.8
     },
     {
       "hour": 65.5,
       "baseline_w": 1713.0,
-      "agent_w": 2056.4
+      "agent_w": 1953.3
     },
     {
       "hour": 65.75,
       "baseline_w": 1713.0,
-      "agent_w": 2026.5
+      "agent_w": 1942.4
     },
     {
       "hour": 66.0,
@@ -1339,12 +1339,12 @@
     {
       "hour": 66.25,
       "baseline_w": 0.0,
-      "agent_w": 833.1
+      "agent_w": 740.1
     },
     {
       "hour": 66.5,
       "baseline_w": 0.0,
-      "agent_w": 374.7
+      "agent_w": 296.7
     },
     {
       "hour": 66.75,
@@ -1448,486 +1448,6 @@
     },
     {
       "hour": 71.75,
-      "baseline_w": 0.0,
-      "agent_w": 0.0
-    },
-    {
-      "hour": 72.0,
-      "baseline_w": 0.0,
-      "agent_w": 0.0
-    },
-    {
-      "hour": 72.25,
-      "baseline_w": 0.0,
-      "agent_w": 0.0
-    },
-    {
-      "hour": 72.5,
-      "baseline_w": 0.0,
-      "agent_w": 0.0
-    },
-    {
-      "hour": 72.75,
-      "baseline_w": 0.0,
-      "agent_w": 0.0
-    },
-    {
-      "hour": 73.0,
-      "baseline_w": 0.0,
-      "agent_w": 0.0
-    },
-    {
-      "hour": 73.25,
-      "baseline_w": 0.0,
-      "agent_w": 0.0
-    },
-    {
-      "hour": 73.5,
-      "baseline_w": 0.0,
-      "agent_w": 0.0
-    },
-    {
-      "hour": 73.75,
-      "baseline_w": 0.0,
-      "agent_w": 0.0
-    },
-    {
-      "hour": 74.0,
-      "baseline_w": 0.0,
-      "agent_w": 0.0
-    },
-    {
-      "hour": 74.25,
-      "baseline_w": 0.0,
-      "agent_w": 0.0
-    },
-    {
-      "hour": 74.5,
-      "baseline_w": 0.0,
-      "agent_w": 0.0
-    },
-    {
-      "hour": 74.75,
-      "baseline_w": 0.0,
-      "agent_w": 0.0
-    },
-    {
-      "hour": 75.0,
-      "baseline_w": 0.0,
-      "agent_w": 0.0
-    },
-    {
-      "hour": 75.25,
-      "baseline_w": 0.0,
-      "agent_w": 0.0
-    },
-    {
-      "hour": 75.5,
-      "baseline_w": 0.0,
-      "agent_w": 0.0
-    },
-    {
-      "hour": 75.75,
-      "baseline_w": 0.0,
-      "agent_w": 0.0
-    },
-    {
-      "hour": 76.0,
-      "baseline_w": 0.0,
-      "agent_w": 0.0
-    },
-    {
-      "hour": 76.25,
-      "baseline_w": 0.0,
-      "agent_w": 0.0
-    },
-    {
-      "hour": 76.5,
-      "baseline_w": 0.0,
-      "agent_w": 0.0
-    },
-    {
-      "hour": 76.75,
-      "baseline_w": 0.0,
-      "agent_w": 0.0
-    },
-    {
-      "hour": 77.0,
-      "baseline_w": 3153.1,
-      "agent_w": 2606.5
-    },
-    {
-      "hour": 77.25,
-      "baseline_w": 2668.3,
-      "agent_w": 2097.8
-    },
-    {
-      "hour": 77.5,
-      "baseline_w": 2857.3,
-      "agent_w": 2285.4
-    },
-    {
-      "hour": 77.75,
-      "baseline_w": 2794.2,
-      "agent_w": 2238.2
-    },
-    {
-      "hour": 78.0,
-      "baseline_w": 2288.3,
-      "agent_w": 2015.4
-    },
-    {
-      "hour": 78.25,
-      "baseline_w": 2258.7,
-      "agent_w": 2002.1
-    },
-    {
-      "hour": 78.5,
-      "baseline_w": 2237.6,
-      "agent_w": 1991.9
-    },
-    {
-      "hour": 78.75,
-      "baseline_w": 2214.6,
-      "agent_w": 1983.0
-    },
-    {
-      "hour": 79.0,
-      "baseline_w": 2757.5,
-      "agent_w": 2196.1
-    },
-    {
-      "hour": 79.25,
-      "baseline_w": 2961.0,
-      "agent_w": 2212.0
-    },
-    {
-      "hour": 79.5,
-      "baseline_w": 2949.6,
-      "agent_w": 2219.1
-    },
-    {
-      "hour": 79.75,
-      "baseline_w": 2960.7,
-      "agent_w": 2225.8
-    },
-    {
-      "hour": 80.0,
-      "baseline_w": 3009.6,
-      "agent_w": 2257.8
-    },
-    {
-      "hour": 80.25,
-      "baseline_w": 3049.4,
-      "agent_w": 2301.1
-    },
-    {
-      "hour": 80.5,
-      "baseline_w": 3086.2,
-      "agent_w": 2352.8
-    },
-    {
-      "hour": 80.75,
-      "baseline_w": 3120.3,
-      "agent_w": 2391.1
-    },
-    {
-      "hour": 81.0,
-      "baseline_w": 2741.8,
-      "agent_w": 2172.9
-    },
-    {
-      "hour": 81.25,
-      "baseline_w": 2886.8,
-      "agent_w": 2224.4
-    },
-    {
-      "hour": 81.5,
-      "baseline_w": 2859.2,
-      "agent_w": 2273.2
-    },
-    {
-      "hour": 81.75,
-      "baseline_w": 2904.0,
-      "agent_w": 2319.8
-    },
-    {
-      "hour": 82.0,
-      "baseline_w": 3301.7,
-      "agent_w": 2624.7
-    },
-    {
-      "hour": 82.25,
-      "baseline_w": 3254.8,
-      "agent_w": 2647.6
-    },
-    {
-      "hour": 82.5,
-      "baseline_w": 3280.4,
-      "agent_w": 2661.8
-    },
-    {
-      "hour": 82.75,
-      "baseline_w": 3220.0,
-      "agent_w": 2600.5
-    },
-    {
-      "hour": 83.0,
-      "baseline_w": 2489.3,
-      "agent_w": 2168.1
-    },
-    {
-      "hour": 83.25,
-      "baseline_w": 2605.5,
-      "agent_w": 2166.2
-    },
-    {
-      "hour": 83.5,
-      "baseline_w": 2546.4,
-      "agent_w": 2168.7
-    },
-    {
-      "hour": 83.75,
-      "baseline_w": 2562.2,
-      "agent_w": 2173.2
-    },
-    {
-      "hour": 84.0,
-      "baseline_w": 3322.4,
-      "agent_w": 2588.9
-    },
-    {
-      "hour": 84.25,
-      "baseline_w": 3269.9,
-      "agent_w": 2722.0
-    },
-    {
-      "hour": 84.5,
-      "baseline_w": 3288.5,
-      "agent_w": 2684.3
-    },
-    {
-      "hour": 84.75,
-      "baseline_w": 3284.5,
-      "agent_w": 2688.3
-    },
-    {
-      "hour": 85.0,
-      "baseline_w": 2868.6,
-      "agent_w": 2416.4
-    },
-    {
-      "hour": 85.25,
-      "baseline_w": 2993.0,
-      "agent_w": 2426.2
-    },
-    {
-      "hour": 85.5,
-      "baseline_w": 2940.7,
-      "agent_w": 2436.4
-    },
-    {
-      "hour": 85.75,
-      "baseline_w": 2961.4,
-      "agent_w": 2447.4
-    },
-    {
-      "hour": 86.0,
-      "baseline_w": 3347.9,
-      "agent_w": 2738.9
-    },
-    {
-      "hour": 86.25,
-      "baseline_w": 3301.2,
-      "agent_w": 2749.7
-    },
-    {
-      "hour": 86.5,
-      "baseline_w": 3321.3,
-      "agent_w": 2754.9
-    },
-    {
-      "hour": 86.75,
-      "baseline_w": 3318.5,
-      "agent_w": 2758.4
-    },
-    {
-      "hour": 87.0,
-      "baseline_w": 3315.5,
-      "agent_w": 2758.1
-    },
-    {
-      "hour": 87.25,
-      "baseline_w": 3313.3,
-      "agent_w": 2757.0
-    },
-    {
-      "hour": 87.5,
-      "baseline_w": 3317.8,
-      "agent_w": 2762.4
-    },
-    {
-      "hour": 87.75,
-      "baseline_w": 3325.7,
-      "agent_w": 2770.6
-    },
-    {
-      "hour": 88.0,
-      "baseline_w": 2505.3,
-      "agent_w": 2110.0
-    },
-    {
-      "hour": 88.25,
-      "baseline_w": 2490.5,
-      "agent_w": 2104.0
-    },
-    {
-      "hour": 88.5,
-      "baseline_w": 2457.7,
-      "agent_w": 2081.5
-    },
-    {
-      "hour": 88.75,
-      "baseline_w": 2424.2,
-      "agent_w": 2057.9
-    },
-    {
-      "hour": 89.0,
-      "baseline_w": 1713.0,
-      "agent_w": 1928.6
-    },
-    {
-      "hour": 89.25,
-      "baseline_w": 1713.0,
-      "agent_w": 1924.3
-    },
-    {
-      "hour": 89.5,
-      "baseline_w": 1713.0,
-      "agent_w": 1921.3
-    },
-    {
-      "hour": 89.75,
-      "baseline_w": 1713.0,
-      "agent_w": 1918.9
-    },
-    {
-      "hour": 90.0,
-      "baseline_w": 0.0,
-      "agent_w": 0.0
-    },
-    {
-      "hour": 90.25,
-      "baseline_w": 0.0,
-      "agent_w": 704.6
-    },
-    {
-      "hour": 90.5,
-      "baseline_w": 0.0,
-      "agent_w": 263.0
-    },
-    {
-      "hour": 90.75,
-      "baseline_w": 0.0,
-      "agent_w": 0.0
-    },
-    {
-      "hour": 91.0,
-      "baseline_w": 0.0,
-      "agent_w": 0.0
-    },
-    {
-      "hour": 91.25,
-      "baseline_w": 0.0,
-      "agent_w": 0.0
-    },
-    {
-      "hour": 91.5,
-      "baseline_w": 0.0,
-      "agent_w": 0.0
-    },
-    {
-      "hour": 91.75,
-      "baseline_w": 0.0,
-      "agent_w": 0.0
-    },
-    {
-      "hour": 92.0,
-      "baseline_w": 0.0,
-      "agent_w": 0.0
-    },
-    {
-      "hour": 92.25,
-      "baseline_w": 0.0,
-      "agent_w": 0.0
-    },
-    {
-      "hour": 92.5,
-      "baseline_w": 0.0,
-      "agent_w": 0.0
-    },
-    {
-      "hour": 92.75,
-      "baseline_w": 0.0,
-      "agent_w": 0.0
-    },
-    {
-      "hour": 93.0,
-      "baseline_w": 0.0,
-      "agent_w": 0.0
-    },
-    {
-      "hour": 93.25,
-      "baseline_w": 0.0,
-      "agent_w": 0.0
-    },
-    {
-      "hour": 93.5,
-      "baseline_w": 0.0,
-      "agent_w": 0.0
-    },
-    {
-      "hour": 93.75,
-      "baseline_w": 0.0,
-      "agent_w": 0.0
-    },
-    {
-      "hour": 94.0,
-      "baseline_w": 0.0,
-      "agent_w": 0.0
-    },
-    {
-      "hour": 94.25,
-      "baseline_w": 0.0,
-      "agent_w": 0.0
-    },
-    {
-      "hour": 94.5,
-      "baseline_w": 0.0,
-      "agent_w": 0.0
-    },
-    {
-      "hour": 94.75,
-      "baseline_w": 0.0,
-      "agent_w": 0.0
-    },
-    {
-      "hour": 95.0,
-      "baseline_w": 0.0,
-      "agent_w": 0.0
-    },
-    {
-      "hour": 95.25,
-      "baseline_w": 0.0,
-      "agent_w": 0.0
-    },
-    {
-      "hour": 95.5,
-      "baseline_w": 0.0,
-      "agent_w": 0.0
-    },
-    {
-      "hour": 95.75,
       "baseline_w": 0.0,
       "agent_w": 0.0
     }
@@ -2116,17 +1636,17 @@
     {
       "hour": 9.0,
       "baseline_pmv": 0.692,
-      "agent_pmv": 0.718
+      "agent_pmv": 0.717
     },
     {
       "hour": 9.25,
       "baseline_pmv": 0.735,
-      "agent_pmv": 0.753
+      "agent_pmv": 0.752
     },
     {
       "hour": 9.5,
       "baseline_pmv": 0.727,
-      "agent_pmv": 0.752
+      "agent_pmv": 0.751
     },
     {
       "hour": 9.75,
@@ -2141,17 +1661,17 @@
     {
       "hour": 10.25,
       "baseline_pmv": 0.792,
-      "agent_pmv": 0.846
+      "agent_pmv": 0.845
     },
     {
       "hour": 10.5,
       "baseline_pmv": 0.805,
-      "agent_pmv": 0.835
+      "agent_pmv": 0.834
     },
     {
       "hour": 10.75,
       "baseline_pmv": 0.843,
-      "agent_pmv": 0.85
+      "agent_pmv": 0.849
     },
     {
       "hour": 11.0,
@@ -2171,7 +1691,7 @@
     {
       "hour": 11.75,
       "baseline_pmv": 0.873,
-      "agent_pmv": 0.922
+      "agent_pmv": 0.921
     },
     {
       "hour": 12.0,
@@ -2186,37 +1706,37 @@
     {
       "hour": 12.5,
       "baseline_pmv": 0.897,
-      "agent_pmv": 0.952
+      "agent_pmv": 0.951
     },
     {
       "hour": 12.75,
       "baseline_pmv": 0.899,
-      "agent_pmv": 0.958
+      "agent_pmv": 0.957
     },
     {
       "hour": 13.0,
       "baseline_pmv": 0.941,
-      "agent_pmv": 0.979
+      "agent_pmv": 0.978
     },
     {
       "hour": 13.25,
       "baseline_pmv": 0.98,
-      "agent_pmv": 1.001
+      "agent_pmv": 1.0
     },
     {
       "hour": 13.5,
       "baseline_pmv": 0.932,
-      "agent_pmv": 0.99
+      "agent_pmv": 0.989
     },
     {
       "hour": 13.75,
       "baseline_pmv": 0.927,
-      "agent_pmv": 0.991
+      "agent_pmv": 0.99
     },
     {
       "hour": 14.0,
       "baseline_pmv": 0.958,
-      "agent_pmv": 0.998
+      "agent_pmv": 0.997
     },
     {
       "hour": 14.25,
@@ -2226,17 +1746,17 @@
     {
       "hour": 14.5,
       "baseline_pmv": 0.916,
-      "agent_pmv": 0.993
+      "agent_pmv": 0.992
     },
     {
       "hour": 14.75,
       "baseline_pmv": 0.908,
-      "agent_pmv": 0.989
+      "agent_pmv": 0.988
     },
     {
       "hour": 15.0,
       "baseline_pmv": 0.935,
-      "agent_pmv": 0.982
+      "agent_pmv": 0.981
     },
     {
       "hour": 15.25,
@@ -2251,12 +1771,12 @@
     {
       "hour": 15.75,
       "baseline_pmv": 0.879,
-      "agent_pmv": 0.955
+      "agent_pmv": 0.954
     },
     {
       "hour": 16.0,
       "baseline_pmv": 0.901,
-      "agent_pmv": 0.947
+      "agent_pmv": 0.946
     },
     {
       "hour": 16.25,
@@ -2266,7 +1786,7 @@
     {
       "hour": 16.5,
       "baseline_pmv": 0.86,
-      "agent_pmv": 0.927
+      "agent_pmv": 0.926
     },
     {
       "hour": 16.75,
@@ -2281,7 +1801,7 @@
     {
       "hour": 17.25,
       "baseline_pmv": 0.837,
-      "agent_pmv": 0.863
+      "agent_pmv": 0.862
     },
     {
       "hour": 17.5,
@@ -2296,7 +1816,7 @@
     {
       "hour": 18.0,
       "baseline_pmv": 0.746,
-      "agent_pmv": 0.782
+      "agent_pmv": 0.781
     },
     {
       "hour": 18.25,
@@ -2341,22 +1861,22 @@
     {
       "hour": 20.25,
       "baseline_pmv": 0.664,
-      "agent_pmv": 0.689
+      "agent_pmv": 0.688
     },
     {
       "hour": 20.5,
       "baseline_pmv": 0.651,
-      "agent_pmv": 0.675
+      "agent_pmv": 0.674
     },
     {
       "hour": 20.75,
       "baseline_pmv": 0.637,
-      "agent_pmv": 0.661
+      "agent_pmv": 0.66
     },
     {
       "hour": 21.0,
       "baseline_pmv": 0.624,
-      "agent_pmv": 0.647
+      "agent_pmv": 0.646
     },
     {
       "hour": 21.25,
@@ -2386,7 +1906,7 @@
     {
       "hour": 22.5,
       "baseline_pmv": 0.552,
-      "agent_pmv": 0.573
+      "agent_pmv": 0.572
     },
     {
       "hour": 22.75,
@@ -2466,7 +1986,7 @@
     {
       "hour": 26.5,
       "baseline_pmv": 0.505,
-      "agent_pmv": 0.525
+      "agent_pmv": 0.524
     },
     {
       "hour": 26.75,
@@ -2481,7 +2001,7 @@
     {
       "hour": 27.25,
       "baseline_pmv": 0.497,
-      "agent_pmv": 0.517
+      "agent_pmv": 0.516
     },
     {
       "hour": 27.5,
@@ -2491,7 +2011,7 @@
     {
       "hour": 27.75,
       "baseline_pmv": 0.492,
-      "agent_pmv": 0.512
+      "agent_pmv": 0.511
     },
     {
       "hour": 28.0,
@@ -2556,1302 +2076,822 @@
     {
       "hour": 31.0,
       "baseline_pmv": -0.305,
-      "agent_pmv": 0.131
+      "agent_pmv": 0.19
     },
     {
       "hour": 31.25,
       "baseline_pmv": -0.295,
-      "agent_pmv": 0.141
+      "agent_pmv": 0.218
     },
     {
       "hour": 31.5,
       "baseline_pmv": -0.291,
-      "agent_pmv": 0.15
+      "agent_pmv": 0.234
     },
     {
       "hour": 31.75,
       "baseline_pmv": -0.288,
-      "agent_pmv": 0.159
+      "agent_pmv": 0.246
     },
     {
       "hour": 32.0,
       "baseline_pmv": -0.284,
-      "agent_pmv": 0.166
+      "agent_pmv": 0.228
     },
     {
       "hour": 32.25,
       "baseline_pmv": -0.28,
-      "agent_pmv": 0.174
+      "agent_pmv": 0.228
     },
     {
       "hour": 32.5,
       "baseline_pmv": -0.277,
-      "agent_pmv": 0.181
+      "agent_pmv": 0.234
     },
     {
       "hour": 32.75,
       "baseline_pmv": -0.274,
-      "agent_pmv": 0.187
+      "agent_pmv": 0.24
     },
     {
       "hour": 33.0,
       "baseline_pmv": -0.254,
-      "agent_pmv": 0.191
+      "agent_pmv": 0.274
     },
     {
       "hour": 33.25,
       "baseline_pmv": -0.248,
-      "agent_pmv": 0.194
+      "agent_pmv": 0.287
     },
     {
       "hour": 33.5,
       "baseline_pmv": -0.245,
-      "agent_pmv": 0.198
+      "agent_pmv": 0.294
     },
     {
       "hour": 33.75,
       "baseline_pmv": -0.242,
-      "agent_pmv": 0.201
+      "agent_pmv": 0.299
     },
     {
       "hour": 34.0,
       "baseline_pmv": -0.255,
-      "agent_pmv": 0.206
+      "agent_pmv": 0.306
     },
     {
       "hour": 34.25,
       "baseline_pmv": -0.258,
-      "agent_pmv": 0.21
+      "agent_pmv": 0.312
     },
     {
       "hour": 34.5,
       "baseline_pmv": -0.261,
-      "agent_pmv": 0.211
+      "agent_pmv": 0.314
     },
     {
       "hour": 34.75,
       "baseline_pmv": -0.264,
-      "agent_pmv": 0.21
+      "agent_pmv": 0.314
     },
     {
       "hour": 35.0,
       "baseline_pmv": -0.256,
-      "agent_pmv": 0.205
+      "agent_pmv": 0.357
     },
     {
       "hour": 35.25,
       "baseline_pmv": -0.261,
-      "agent_pmv": 0.2
+      "agent_pmv": 0.365
     },
     {
       "hour": 35.5,
       "baseline_pmv": -0.263,
-      "agent_pmv": 0.198
+      "agent_pmv": 0.369
     },
     {
       "hour": 35.75,
       "baseline_pmv": -0.264,
-      "agent_pmv": 0.198
+      "agent_pmv": 0.373
     },
     {
       "hour": 36.0,
       "baseline_pmv": -0.278,
-      "agent_pmv": 0.201
+      "agent_pmv": 0.378
     },
     {
       "hour": 36.25,
       "baseline_pmv": -0.283,
-      "agent_pmv": 0.202
+      "agent_pmv": 0.382
     },
     {
       "hour": 36.5,
       "baseline_pmv": -0.291,
-      "agent_pmv": 0.2
+      "agent_pmv": 0.383
     },
     {
       "hour": 36.75,
       "baseline_pmv": -0.301,
-      "agent_pmv": 0.195
+      "agent_pmv": 0.38
     },
     {
       "hour": 37.0,
       "baseline_pmv": -0.292,
-      "agent_pmv": 0.19
+      "agent_pmv": 0.377
     },
     {
       "hour": 37.25,
       "baseline_pmv": -0.298,
-      "agent_pmv": 0.184
+      "agent_pmv": 0.372
     },
     {
       "hour": 37.5,
       "baseline_pmv": -0.305,
-      "agent_pmv": 0.18
+      "agent_pmv": 0.37
     },
     {
       "hour": 37.75,
       "baseline_pmv": -0.312,
-      "agent_pmv": 0.176
+      "agent_pmv": 0.367
     },
     {
       "hour": 38.0,
       "baseline_pmv": -0.333,
-      "agent_pmv": 0.176
+      "agent_pmv": 0.368
     },
     {
       "hour": 38.25,
       "baseline_pmv": -0.342,
-      "agent_pmv": 0.175
+      "agent_pmv": 0.368
     },
     {
       "hour": 38.5,
       "baseline_pmv": -0.351,
-      "agent_pmv": 0.172
+      "agent_pmv": 0.366
     },
     {
       "hour": 38.75,
       "baseline_pmv": -0.36,
-      "agent_pmv": 0.168
+      "agent_pmv": 0.362
     },
     {
       "hour": 39.0,
       "baseline_pmv": -0.369,
-      "agent_pmv": 0.162
+      "agent_pmv": 0.358
     },
     {
       "hour": 39.25,
       "baseline_pmv": -0.378,
-      "agent_pmv": 0.157
+      "agent_pmv": 0.353
     },
     {
       "hour": 39.5,
       "baseline_pmv": -0.384,
-      "agent_pmv": 0.154
+      "agent_pmv": 0.35
     },
     {
       "hour": 39.75,
       "baseline_pmv": -0.39,
-      "agent_pmv": 0.151
+      "agent_pmv": 0.348
     },
     {
       "hour": 40.0,
       "baseline_pmv": -0.41,
-      "agent_pmv": 0.142
+      "agent_pmv": 0.339
     },
     {
       "hour": 40.25,
       "baseline_pmv": -0.42,
-      "agent_pmv": 0.135
+      "agent_pmv": 0.333
     },
     {
       "hour": 40.5,
       "baseline_pmv": -0.43,
-      "agent_pmv": 0.127
+      "agent_pmv": 0.325
     },
     {
       "hour": 40.75,
       "baseline_pmv": -0.438,
-      "agent_pmv": 0.12
+      "agent_pmv": 0.318
     },
     {
       "hour": 41.0,
       "baseline_pmv": -0.26,
-      "agent_pmv": 0.111
+      "agent_pmv": 0.309
     },
     {
       "hour": 41.25,
       "baseline_pmv": -0.108,
-      "agent_pmv": 0.103
+      "agent_pmv": 0.301
     },
     {
       "hour": 41.5,
       "baseline_pmv": -0.034,
-      "agent_pmv": 0.096
+      "agent_pmv": 0.294
     },
     {
       "hour": 41.75,
       "baseline_pmv": -0.005,
-      "agent_pmv": 0.089
+      "agent_pmv": 0.287
     },
     {
       "hour": 42.0,
       "baseline_pmv": 0.009,
-      "agent_pmv": 0.192
+      "agent_pmv": 0.357
     },
     {
       "hour": 42.25,
       "baseline_pmv": 0.019,
-      "agent_pmv": 0.165
+      "agent_pmv": 0.323
     },
     {
       "hour": 42.5,
       "baseline_pmv": 0.027,
-      "agent_pmv": 0.107
+      "agent_pmv": 0.315
     },
     {
       "hour": 42.75,
       "baseline_pmv": 0.033,
-      "agent_pmv": 0.147
+      "agent_pmv": 0.364
     },
     {
       "hour": 43.0,
       "baseline_pmv": 0.033,
-      "agent_pmv": 0.231
+      "agent_pmv": 0.406
     },
     {
       "hour": 43.25,
       "baseline_pmv": 0.032,
-      "agent_pmv": 0.273
+      "agent_pmv": 0.412
     },
     {
       "hour": 43.5,
       "baseline_pmv": 0.03,
-      "agent_pmv": 0.278
+      "agent_pmv": 0.403
     },
     {
       "hour": 43.75,
       "baseline_pmv": 0.028,
-      "agent_pmv": 0.272
+      "agent_pmv": 0.394
     },
     {
       "hour": 44.0,
       "baseline_pmv": 0.027,
-      "agent_pmv": 0.27
+      "agent_pmv": 0.392
     },
     {
       "hour": 44.25,
       "baseline_pmv": 0.025,
-      "agent_pmv": 0.271
+      "agent_pmv": 0.39
     },
     {
       "hour": 44.5,
       "baseline_pmv": 0.023,
-      "agent_pmv": 0.271
+      "agent_pmv": 0.387
     },
     {
       "hour": 44.75,
       "baseline_pmv": 0.021,
-      "agent_pmv": 0.269
+      "agent_pmv": 0.383
     },
     {
       "hour": 45.0,
       "baseline_pmv": 0.012,
-      "agent_pmv": 0.261
+      "agent_pmv": 0.373
     },
     {
       "hour": 45.25,
       "baseline_pmv": 0.004,
-      "agent_pmv": 0.254
+      "agent_pmv": 0.363
     },
     {
       "hour": 45.5,
       "baseline_pmv": -0.003,
-      "agent_pmv": 0.247
+      "agent_pmv": 0.355
     },
     {
       "hour": 45.75,
       "baseline_pmv": -0.008,
-      "agent_pmv": 0.242
+      "agent_pmv": 0.349
     },
     {
       "hour": 46.0,
       "baseline_pmv": -0.017,
-      "agent_pmv": 0.233
+      "agent_pmv": 0.339
     },
     {
       "hour": 46.25,
       "baseline_pmv": -0.029,
-      "agent_pmv": 0.222
+      "agent_pmv": 0.326
     },
     {
       "hour": 46.5,
       "baseline_pmv": -0.036,
-      "agent_pmv": 0.214
+      "agent_pmv": 0.318
     },
     {
       "hour": 46.75,
       "baseline_pmv": -0.048,
-      "agent_pmv": 0.202
+      "agent_pmv": 0.304
     },
     {
       "hour": 47.0,
       "baseline_pmv": -0.021,
-      "agent_pmv": 0.229
+      "agent_pmv": 0.33
     },
     {
       "hour": 47.25,
       "baseline_pmv": 0.001,
-      "agent_pmv": 0.251
+      "agent_pmv": 0.352
     },
     {
       "hour": 47.5,
       "baseline_pmv": 0.005,
-      "agent_pmv": 0.255
+      "agent_pmv": 0.356
     },
     {
       "hour": 47.75,
       "baseline_pmv": -0.0,
-      "agent_pmv": 0.249
+      "agent_pmv": 0.349
     },
     {
       "hour": 48.0,
       "baseline_pmv": -0.004,
-      "agent_pmv": 0.245
+      "agent_pmv": 0.345
     },
     {
       "hour": 48.25,
       "baseline_pmv": -0.003,
-      "agent_pmv": 0.245
+      "agent_pmv": 0.344
     },
     {
       "hour": 48.5,
       "baseline_pmv": -0.002,
-      "agent_pmv": 0.246
+      "agent_pmv": 0.345
     },
     {
       "hour": 48.75,
       "baseline_pmv": -0.001,
-      "agent_pmv": 0.247
+      "agent_pmv": 0.345
     },
     {
       "hour": 49.0,
       "baseline_pmv": -0.005,
-      "agent_pmv": 0.242
+      "agent_pmv": 0.34
     },
     {
       "hour": 49.25,
       "baseline_pmv": -0.012,
-      "agent_pmv": 0.235
+      "agent_pmv": 0.332
     },
     {
       "hour": 49.5,
       "baseline_pmv": -0.019,
-      "agent_pmv": 0.227
+      "agent_pmv": 0.324
     },
     {
       "hour": 49.75,
       "baseline_pmv": -0.027,
-      "agent_pmv": 0.218
+      "agent_pmv": 0.315
     },
     {
       "hour": 50.0,
       "baseline_pmv": -0.034,
-      "agent_pmv": 0.211
+      "agent_pmv": 0.306
     },
     {
       "hour": 50.25,
       "baseline_pmv": -0.039,
-      "agent_pmv": 0.204
+      "agent_pmv": 0.299
     },
     {
       "hour": 50.5,
       "baseline_pmv": -0.045,
-      "agent_pmv": 0.197
+      "agent_pmv": 0.292
     },
     {
       "hour": 50.75,
       "baseline_pmv": -0.052,
-      "agent_pmv": 0.19
+      "agent_pmv": 0.285
     },
     {
       "hour": 51.0,
       "baseline_pmv": -0.057,
-      "agent_pmv": 0.184
+      "agent_pmv": 0.279
     },
     {
       "hour": 51.25,
       "baseline_pmv": -0.061,
-      "agent_pmv": 0.18
+      "agent_pmv": 0.274
     },
     {
       "hour": 51.5,
       "baseline_pmv": -0.065,
-      "agent_pmv": 0.176
+      "agent_pmv": 0.269
     },
     {
       "hour": 51.75,
       "baseline_pmv": -0.068,
-      "agent_pmv": 0.171
+      "agent_pmv": 0.265
     },
     {
       "hour": 52.0,
       "baseline_pmv": -0.072,
-      "agent_pmv": 0.167
+      "agent_pmv": 0.261
     },
     {
       "hour": 52.25,
       "baseline_pmv": -0.076,
-      "agent_pmv": 0.163
+      "agent_pmv": 0.256
     },
     {
       "hour": 52.5,
       "baseline_pmv": -0.079,
-      "agent_pmv": 0.158
+      "agent_pmv": 0.251
     },
     {
       "hour": 52.75,
       "baseline_pmv": -0.088,
-      "agent_pmv": 0.148
+      "agent_pmv": 0.24
     },
     {
       "hour": 53.0,
       "baseline_pmv": -0.329,
-      "agent_pmv": 0.046
+      "agent_pmv": 0.105
     },
     {
       "hour": 53.25,
       "baseline_pmv": -0.44,
-      "agent_pmv": 0.02
+      "agent_pmv": 0.063
     },
     {
       "hour": 53.5,
       "baseline_pmv": -0.477,
-      "agent_pmv": 0.01
+      "agent_pmv": 0.049
     },
     {
       "hour": 53.75,
       "baseline_pmv": -0.496,
-      "agent_pmv": 0.005
+      "agent_pmv": 0.041
     },
     {
       "hour": 54.0,
       "baseline_pmv": -0.505,
-      "agent_pmv": -0.013
+      "agent_pmv": 0.024
     },
     {
       "hour": 54.25,
       "baseline_pmv": -0.512,
-      "agent_pmv": -0.026
+      "agent_pmv": 0.013
     },
     {
       "hour": 54.5,
       "baseline_pmv": -0.517,
-      "agent_pmv": -0.027
+      "agent_pmv": 0.01
     },
     {
       "hour": 54.75,
       "baseline_pmv": -0.52,
-      "agent_pmv": -0.024
+      "agent_pmv": 0.011
     },
     {
       "hour": 55.0,
       "baseline_pmv": -0.516,
-      "agent_pmv": 0.006
+      "agent_pmv": 0.093
     },
     {
       "hour": 55.25,
       "baseline_pmv": -0.514,
-      "agent_pmv": 0.017
+      "agent_pmv": 0.12
     },
     {
       "hour": 55.5,
       "baseline_pmv": -0.513,
-      "agent_pmv": 0.024
+      "agent_pmv": 0.132
     },
     {
       "hour": 55.75,
       "baseline_pmv": -0.512,
-      "agent_pmv": 0.029
+      "agent_pmv": 0.14
     },
     {
       "hour": 56.0,
       "baseline_pmv": -0.512,
-      "agent_pmv": 0.032
+      "agent_pmv": 0.145
     },
     {
       "hour": 56.25,
       "baseline_pmv": -0.512,
-      "agent_pmv": 0.035
+      "agent_pmv": 0.15
     },
     {
       "hour": 56.5,
       "baseline_pmv": -0.509,
-      "agent_pmv": 0.04
+      "agent_pmv": 0.156
     },
     {
       "hour": 56.75,
       "baseline_pmv": -0.507,
-      "agent_pmv": 0.046
+      "agent_pmv": 0.162
     },
     {
       "hour": 57.0,
       "baseline_pmv": -0.485,
-      "agent_pmv": 0.049
+      "agent_pmv": 0.137
     },
     {
       "hour": 57.25,
       "baseline_pmv": -0.48,
-      "agent_pmv": 0.053
+      "agent_pmv": 0.133
     },
     {
       "hour": 57.5,
       "baseline_pmv": -0.479,
-      "agent_pmv": 0.055
+      "agent_pmv": 0.132
     },
     {
       "hour": 57.75,
       "baseline_pmv": -0.478,
-      "agent_pmv": 0.057
+      "agent_pmv": 0.133
     },
     {
       "hour": 58.0,
       "baseline_pmv": -0.491,
-      "agent_pmv": 0.061
+      "agent_pmv": 0.165
     },
     {
       "hour": 58.25,
       "baseline_pmv": -0.494,
-      "agent_pmv": 0.064
+      "agent_pmv": 0.177
     },
     {
       "hour": 58.5,
       "baseline_pmv": -0.494,
-      "agent_pmv": 0.068
+      "agent_pmv": 0.183
     },
     {
       "hour": 58.75,
       "baseline_pmv": -0.493,
-      "agent_pmv": 0.071
+      "agent_pmv": 0.187
     },
     {
       "hour": 59.0,
       "baseline_pmv": -0.476,
-      "agent_pmv": 0.069
+      "agent_pmv": 0.233
     },
     {
       "hour": 59.25,
       "baseline_pmv": -0.474,
-      "agent_pmv": 0.069
+      "agent_pmv": 0.245
     },
     {
       "hour": 59.5,
       "baseline_pmv": -0.476,
-      "agent_pmv": 0.066
+      "agent_pmv": 0.247
     },
     {
       "hour": 59.75,
       "baseline_pmv": -0.478,
-      "agent_pmv": 0.064
+      "agent_pmv": 0.248
     },
     {
       "hour": 60.0,
       "baseline_pmv": -0.493,
-      "agent_pmv": 0.065
+      "agent_pmv": 0.252
     },
     {
       "hour": 60.25,
       "baseline_pmv": -0.499,
-      "agent_pmv": 0.065
+      "agent_pmv": 0.254
     },
     {
       "hour": 60.5,
       "baseline_pmv": -0.501,
-      "agent_pmv": 0.066
+      "agent_pmv": 0.256
     },
     {
       "hour": 60.75,
       "baseline_pmv": -0.503,
-      "agent_pmv": 0.065
+      "agent_pmv": 0.257
     },
     {
       "hour": 61.0,
       "baseline_pmv": -0.486,
-      "agent_pmv": 0.064
+      "agent_pmv": 0.257
     },
     {
       "hour": 61.25,
       "baseline_pmv": -0.485,
-      "agent_pmv": 0.063
+      "agent_pmv": 0.257
     },
     {
       "hour": 61.5,
       "baseline_pmv": -0.484,
-      "agent_pmv": 0.064
+      "agent_pmv": 0.26
     },
     {
       "hour": 61.75,
       "baseline_pmv": -0.482,
-      "agent_pmv": 0.067
+      "agent_pmv": 0.264
     },
     {
       "hour": 62.0,
       "baseline_pmv": -0.494,
-      "agent_pmv": 0.072
+      "agent_pmv": 0.269
     },
     {
       "hour": 62.25,
       "baseline_pmv": -0.495,
-      "agent_pmv": 0.077
+      "agent_pmv": 0.275
     },
     {
       "hour": 62.5,
       "baseline_pmv": -0.499,
-      "agent_pmv": 0.076
+      "agent_pmv": 0.275
     },
     {
       "hour": 62.75,
       "baseline_pmv": -0.504,
-      "agent_pmv": 0.073
+      "agent_pmv": 0.273
     },
     {
       "hour": 63.0,
       "baseline_pmv": -0.509,
-      "agent_pmv": 0.069
+      "agent_pmv": 0.27
     },
     {
       "hour": 63.25,
       "baseline_pmv": -0.515,
-      "agent_pmv": 0.064
+      "agent_pmv": 0.265
     },
     {
       "hour": 63.5,
       "baseline_pmv": -0.52,
-      "agent_pmv": 0.06
+      "agent_pmv": 0.262
     },
     {
       "hour": 63.75,
       "baseline_pmv": -0.526,
-      "agent_pmv": 0.055
+      "agent_pmv": 0.257
     },
     {
       "hour": 64.0,
       "baseline_pmv": -0.536,
-      "agent_pmv": 0.034
+      "agent_pmv": 0.228
     },
     {
       "hour": 64.25,
       "baseline_pmv": -0.544,
-      "agent_pmv": 0.015
+      "agent_pmv": 0.203
     },
     {
       "hour": 64.5,
       "baseline_pmv": -0.55,
-      "agent_pmv": 0.003
+      "agent_pmv": 0.188
     },
     {
       "hour": 64.75,
       "baseline_pmv": -0.555,
-      "agent_pmv": -0.006
+      "agent_pmv": 0.179
     },
     {
       "hour": 65.0,
       "baseline_pmv": -0.484,
-      "agent_pmv": -0.01
+      "agent_pmv": 0.166
     },
     {
       "hour": 65.25,
       "baseline_pmv": -0.422,
-      "agent_pmv": -0.016
+      "agent_pmv": 0.149
     },
     {
       "hour": 65.5,
       "baseline_pmv": -0.395,
-      "agent_pmv": -0.025
+      "agent_pmv": 0.131
     },
     {
       "hour": 65.75,
       "baseline_pmv": -0.398,
-      "agent_pmv": -0.043
+      "agent_pmv": 0.105
     },
     {
       "hour": 66.0,
       "baseline_pmv": -0.376,
-      "agent_pmv": -0.001
+      "agent_pmv": 0.138
     },
     {
       "hour": 66.25,
       "baseline_pmv": -0.356,
-      "agent_pmv": -0.018
+      "agent_pmv": 0.121
     },
     {
       "hour": 66.5,
       "baseline_pmv": -0.345,
-      "agent_pmv": -0.021
+      "agent_pmv": 0.118
     },
     {
       "hour": 66.75,
       "baseline_pmv": -0.342,
-      "agent_pmv": 0.007
+      "agent_pmv": 0.141
     },
     {
       "hour": 67.0,
       "baseline_pmv": -0.346,
-      "agent_pmv": 0.03
+      "agent_pmv": 0.157
     },
     {
       "hour": 67.25,
       "baseline_pmv": -0.36,
-      "agent_pmv": 0.019
+      "agent_pmv": 0.143
     },
     {
       "hour": 67.5,
       "baseline_pmv": -0.371,
-      "agent_pmv": 0.002
+      "agent_pmv": 0.125
     },
     {
       "hour": 67.75,
       "baseline_pmv": -0.379,
-      "agent_pmv": -0.01
+      "agent_pmv": 0.113
     },
     {
       "hour": 68.0,
       "baseline_pmv": -0.383,
-      "agent_pmv": -0.014
+      "agent_pmv": 0.107
     },
     {
       "hour": 68.25,
       "baseline_pmv": -0.385,
-      "agent_pmv": -0.016
+      "agent_pmv": 0.104
     },
     {
       "hour": 68.5,
       "baseline_pmv": -0.378,
-      "agent_pmv": -0.008
+      "agent_pmv": 0.111
     },
     {
       "hour": 68.75,
       "baseline_pmv": -0.374,
-      "agent_pmv": -0.006
+      "agent_pmv": 0.113
     },
     {
       "hour": 69.0,
       "baseline_pmv": -0.382,
-      "agent_pmv": -0.014
+      "agent_pmv": 0.103
     },
     {
       "hour": 69.25,
       "baseline_pmv": -0.396,
-      "agent_pmv": -0.028
+      "agent_pmv": 0.089
     },
     {
       "hour": 69.5,
       "baseline_pmv": -0.408,
-      "agent_pmv": -0.042
+      "agent_pmv": 0.075
     },
     {
       "hour": 69.75,
       "baseline_pmv": -0.419,
-      "agent_pmv": -0.053
+      "agent_pmv": 0.062
     },
     {
       "hour": 70.0,
       "baseline_pmv": -0.431,
-      "agent_pmv": -0.066
+      "agent_pmv": 0.049
     },
     {
       "hour": 70.25,
       "baseline_pmv": -0.451,
-      "agent_pmv": -0.087
+      "agent_pmv": 0.028
     },
     {
       "hour": 70.5,
       "baseline_pmv": -0.464,
-      "agent_pmv": -0.101
+      "agent_pmv": 0.013
     },
     {
       "hour": 70.75,
       "baseline_pmv": -0.472,
-      "agent_pmv": -0.109
+      "agent_pmv": 0.005
     },
     {
       "hour": 71.0,
       "baseline_pmv": -0.451,
-      "agent_pmv": -0.09
+      "agent_pmv": 0.023
     },
     {
       "hour": 71.25,
       "baseline_pmv": -0.433,
-      "agent_pmv": -0.075
+      "agent_pmv": 0.038
     },
     {
       "hour": 71.5,
       "baseline_pmv": -0.424,
-      "agent_pmv": -0.066
+      "agent_pmv": 0.047
     },
     {
       "hour": 71.75,
       "baseline_pmv": -0.427,
-      "agent_pmv": -0.069
-    },
-    {
-      "hour": 72.0,
-      "baseline_pmv": -0.433,
-      "agent_pmv": -0.075
-    },
-    {
-      "hour": 72.25,
-      "baseline_pmv": -0.437,
-      "agent_pmv": -0.08
-    },
-    {
-      "hour": 72.5,
-      "baseline_pmv": -0.441,
-      "agent_pmv": -0.086
-    },
-    {
-      "hour": 72.75,
-      "baseline_pmv": -0.445,
-      "agent_pmv": -0.091
-    },
-    {
-      "hour": 73.0,
-      "baseline_pmv": -0.452,
-      "agent_pmv": -0.099
-    },
-    {
-      "hour": 73.25,
-      "baseline_pmv": -0.462,
-      "agent_pmv": -0.111
-    },
-    {
-      "hour": 73.5,
-      "baseline_pmv": -0.474,
-      "agent_pmv": -0.124
-    },
-    {
-      "hour": 73.75,
-      "baseline_pmv": -0.486,
-      "agent_pmv": -0.138
-    },
-    {
-      "hour": 74.0,
-      "baseline_pmv": -0.496,
-      "agent_pmv": -0.149
-    },
-    {
-      "hour": 74.25,
-      "baseline_pmv": -0.503,
-      "agent_pmv": -0.157
-    },
-    {
-      "hour": 74.5,
-      "baseline_pmv": -0.509,
-      "agent_pmv": -0.164
-    },
-    {
-      "hour": 74.75,
-      "baseline_pmv": -0.515,
-      "agent_pmv": -0.171
-    },
-    {
-      "hour": 75.0,
-      "baseline_pmv": -0.522,
-      "agent_pmv": -0.178
-    },
-    {
-      "hour": 75.25,
-      "baseline_pmv": -0.53,
-      "agent_pmv": -0.188
-    },
-    {
-      "hour": 75.5,
-      "baseline_pmv": -0.539,
-      "agent_pmv": -0.197
-    },
-    {
-      "hour": 75.75,
-      "baseline_pmv": -0.547,
-      "agent_pmv": -0.206
-    },
-    {
-      "hour": 76.0,
-      "baseline_pmv": -0.554,
-      "agent_pmv": -0.214
-    },
-    {
-      "hour": 76.25,
-      "baseline_pmv": -0.559,
-      "agent_pmv": -0.22
-    },
-    {
-      "hour": 76.5,
-      "baseline_pmv": -0.564,
-      "agent_pmv": -0.226
-    },
-    {
-      "hour": 76.75,
-      "baseline_pmv": -0.563,
-      "agent_pmv": -0.226
-    },
-    {
-      "hour": 77.0,
-      "baseline_pmv": -0.628,
-      "agent_pmv": -0.238
-    },
-    {
-      "hour": 77.25,
-      "baseline_pmv": -0.646,
-      "agent_pmv": -0.21
-    },
-    {
-      "hour": 77.5,
-      "baseline_pmv": -0.655,
-      "agent_pmv": -0.197
-    },
-    {
-      "hour": 77.75,
-      "baseline_pmv": -0.66,
-      "agent_pmv": -0.191
-    },
-    {
-      "hour": 78.0,
-      "baseline_pmv": -0.696,
-      "agent_pmv": -0.258
-    },
-    {
-      "hour": 78.25,
-      "baseline_pmv": -0.727,
-      "agent_pmv": -0.319
-    },
-    {
-      "hour": 78.5,
-      "baseline_pmv": -0.738,
-      "agent_pmv": -0.342
-    },
-    {
-      "hour": 78.75,
-      "baseline_pmv": -0.747,
-      "agent_pmv": -0.356
-    },
-    {
-      "hour": 79.0,
-      "baseline_pmv": -0.695,
-      "agent_pmv": -0.265
-    },
-    {
-      "hour": 79.25,
-      "baseline_pmv": -0.669,
-      "agent_pmv": -0.191
-    },
-    {
-      "hour": 79.5,
-      "baseline_pmv": -0.659,
-      "agent_pmv": -0.154
-    },
-    {
-      "hour": 79.75,
-      "baseline_pmv": -0.653,
-      "agent_pmv": -0.136
-    },
-    {
-      "hour": 80.0,
-      "baseline_pmv": -0.648,
-      "agent_pmv": -0.12
-    },
-    {
-      "hour": 80.25,
-      "baseline_pmv": -0.643,
-      "agent_pmv": -0.105
-    },
-    {
-      "hour": 80.5,
-      "baseline_pmv": -0.639,
-      "agent_pmv": -0.093
-    },
-    {
-      "hour": 80.75,
-      "baseline_pmv": -0.635,
-      "agent_pmv": -0.082
-    },
-    {
-      "hour": 81.0,
-      "baseline_pmv": -0.612,
-      "agent_pmv": -0.075
-    },
-    {
-      "hour": 81.25,
-      "baseline_pmv": -0.608,
-      "agent_pmv": -0.07
-    },
-    {
-      "hour": 81.5,
-      "baseline_pmv": -0.605,
-      "agent_pmv": -0.065
-    },
-    {
-      "hour": 81.75,
-      "baseline_pmv": -0.601,
-      "agent_pmv": -0.061
-    },
-    {
-      "hour": 82.0,
-      "baseline_pmv": -0.613,
-      "agent_pmv": -0.057
-    },
-    {
-      "hour": 82.25,
-      "baseline_pmv": -0.614,
-      "agent_pmv": -0.052
-    },
-    {
-      "hour": 82.5,
-      "baseline_pmv": -0.614,
-      "agent_pmv": -0.049
-    },
-    {
-      "hour": 82.75,
-      "baseline_pmv": -0.622,
-      "agent_pmv": -0.056
-    },
-    {
-      "hour": 83.0,
-      "baseline_pmv": -0.6,
-      "agent_pmv": -0.067
-    },
-    {
-      "hour": 83.25,
-      "baseline_pmv": -0.603,
-      "agent_pmv": -0.087
-    },
-    {
-      "hour": 83.5,
-      "baseline_pmv": -0.605,
-      "agent_pmv": -0.096
-    },
-    {
-      "hour": 83.75,
-      "baseline_pmv": -0.605,
-      "agent_pmv": -0.099
-    },
-    {
-      "hour": 84.0,
-      "baseline_pmv": -0.617,
-      "agent_pmv": -0.073
-    },
-    {
-      "hour": 84.25,
-      "baseline_pmv": -0.62,
-      "agent_pmv": -0.061
-    },
-    {
-      "hour": 84.5,
-      "baseline_pmv": -0.621,
-      "agent_pmv": -0.057
-    },
-    {
-      "hour": 84.75,
-      "baseline_pmv": -0.622,
-      "agent_pmv": -0.055
-    },
-    {
-      "hour": 85.0,
-      "baseline_pmv": -0.602,
-      "agent_pmv": -0.054
-    },
-    {
-      "hour": 85.25,
-      "baseline_pmv": -0.601,
-      "agent_pmv": -0.053
-    },
-    {
-      "hour": 85.5,
-      "baseline_pmv": -0.6,
-      "agent_pmv": -0.052
-    },
-    {
-      "hour": 85.75,
-      "baseline_pmv": -0.599,
-      "agent_pmv": -0.05
-    },
-    {
-      "hour": 86.0,
-      "baseline_pmv": -0.611,
-      "agent_pmv": -0.047
-    },
-    {
-      "hour": 86.25,
-      "baseline_pmv": -0.614,
-      "agent_pmv": -0.044
-    },
-    {
-      "hour": 86.5,
-      "baseline_pmv": -0.615,
-      "agent_pmv": -0.043
-    },
-    {
-      "hour": 86.75,
-      "baseline_pmv": -0.614,
-      "agent_pmv": -0.041
-    },
-    {
-      "hour": 87.0,
-      "baseline_pmv": -0.614,
-      "agent_pmv": -0.04
-    },
-    {
-      "hour": 87.25,
-      "baseline_pmv": -0.614,
-      "agent_pmv": -0.039
-    },
-    {
-      "hour": 87.5,
-      "baseline_pmv": -0.612,
-      "agent_pmv": -0.036
-    },
-    {
-      "hour": 87.75,
-      "baseline_pmv": -0.61,
-      "agent_pmv": -0.033
-    },
-    {
-      "hour": 88.0,
-      "baseline_pmv": -0.624,
-      "agent_pmv": -0.062
-    },
-    {
-      "hour": 88.25,
-      "baseline_pmv": -0.634,
-      "agent_pmv": -0.088
-    },
-    {
-      "hour": 88.5,
-      "baseline_pmv": -0.644,
-      "agent_pmv": -0.107
-    },
-    {
-      "hour": 88.75,
-      "baseline_pmv": -0.653,
-      "agent_pmv": -0.12
-    },
-    {
-      "hour": 89.0,
-      "baseline_pmv": -0.623,
-      "agent_pmv": -0.14
-    },
-    {
-      "hour": 89.25,
-      "baseline_pmv": -0.594,
-      "agent_pmv": -0.162
-    },
-    {
-      "hour": 89.5,
-      "baseline_pmv": -0.58,
-      "agent_pmv": -0.177
-    },
-    {
-      "hour": 89.75,
-      "baseline_pmv": -0.575,
-      "agent_pmv": -0.187
-    },
-    {
-      "hour": 90.0,
-      "baseline_pmv": -0.551,
-      "agent_pmv": -0.149
-    },
-    {
-      "hour": 90.25,
-      "baseline_pmv": -0.531,
-      "agent_pmv": -0.16
-    },
-    {
-      "hour": 90.5,
-      "baseline_pmv": -0.528,
-      "agent_pmv": -0.166
-    },
-    {
-      "hour": 90.75,
-      "baseline_pmv": -0.535,
-      "agent_pmv": -0.151
-    },
-    {
-      "hour": 91.0,
-      "baseline_pmv": -0.545,
-      "agent_pmv": -0.141
-    },
-    {
-      "hour": 91.25,
-      "baseline_pmv": -0.553,
-      "agent_pmv": -0.147
-    },
-    {
-      "hour": 91.5,
-      "baseline_pmv": -0.56,
-      "agent_pmv": -0.159
-    },
-    {
-      "hour": 91.75,
-      "baseline_pmv": -0.567,
-      "agent_pmv": -0.168
-    },
-    {
-      "hour": 92.0,
-      "baseline_pmv": -0.573,
-      "agent_pmv": -0.174
-    },
-    {
-      "hour": 92.25,
-      "baseline_pmv": -0.577,
-      "agent_pmv": -0.178
-    },
-    {
-      "hour": 92.5,
-      "baseline_pmv": -0.581,
-      "agent_pmv": -0.182
-    },
-    {
-      "hour": 92.75,
-      "baseline_pmv": -0.585,
-      "agent_pmv": -0.187
-    },
-    {
-      "hour": 93.0,
-      "baseline_pmv": -0.595,
-      "agent_pmv": -0.197
-    },
-    {
-      "hour": 93.25,
-      "baseline_pmv": -0.604,
-      "agent_pmv": -0.208
-    },
-    {
-      "hour": 93.5,
-      "baseline_pmv": -0.612,
-      "agent_pmv": -0.216
-    },
-    {
-      "hour": 93.75,
-      "baseline_pmv": -0.619,
-      "agent_pmv": -0.223
-    },
-    {
-      "hour": 94.0,
-      "baseline_pmv": -0.631,
-      "agent_pmv": -0.236
-    },
-    {
-      "hour": 94.25,
-      "baseline_pmv": -0.647,
-      "agent_pmv": -0.253
-    },
-    {
-      "hour": 94.5,
-      "baseline_pmv": -0.66,
-      "agent_pmv": -0.266
-    },
-    {
-      "hour": 94.75,
-      "baseline_pmv": -0.669,
-      "agent_pmv": -0.276
-    },
-    {
-      "hour": 95.0,
-      "baseline_pmv": -0.646,
-      "agent_pmv": -0.254
-    },
-    {
-      "hour": 95.25,
-      "baseline_pmv": -0.625,
-      "agent_pmv": -0.233
-    },
-    {
-      "hour": 95.5,
-      "baseline_pmv": -0.62,
-      "agent_pmv": -0.229
-    },
-    {
-      "hour": 95.75,
-      "baseline_pmv": -0.625,
-      "agent_pmv": -0.234
+      "agent_pmv": 0.043
     }
   ],
   "decision_log": [
@@ -3878,6 +2918,149 @@
       "agent_pmv": 0.507
     },
     {
+      "hour": 31.0,
+      "day": 2,
+      "hour_of_day": 7,
+      "zone": "ALL_ZONES",
+      "heating_c": 15.0,
+      "cooling_c": 26.2,
+      "reason": "Morning occupied mode: worst PMV is between +0.25 and +0.35",
+      "baseline_pmv": 0.0,
+      "agent_pmv": 0.12
+    },
+    {
+      "hour": 32.0,
+      "day": 2,
+      "hour_of_day": 8,
+      "zone": "ALL_ZONES",
+      "heating_c": 15.0,
+      "cooling_c": 26.0,
+      "reason": "Morning occupied period (occupied, worst PMV = 0.454): set cooling setpoint to 26\u00b0C for balanced savings and comfort.",
+      "baseline_pmv": 0.0,
+      "agent_pmv": 0.246
+    },
+    {
+      "hour": 33.0,
+      "day": 2,
+      "hour_of_day": 9,
+      "zone": "ALL_ZONES",
+      "heating_c": 15.0,
+      "cooling_c": 26.2,
+      "reason": "Morning occupancy with comfortable mean PMV at worst 0.44 within cooling band; set to 26.8\u00b0C for best balance.",
+      "baseline_pmv": 0.0,
+      "agent_pmv": 0.24
+    },
+    {
+      "hour": 34.0,
+      "day": 2,
+      "hour_of_day": 10,
+      "zone": "ALL_ZONES",
+      "heating_c": 15.0,
+      "cooling_c": 26.2,
+      "reason": "PEAK COASTING: worst_pmv > +0.45",
+      "baseline_pmv": 0.0,
+      "agent_pmv": 0.299
+    },
+    {
+      "hour": 35.0,
+      "day": 2,
+      "hour_of_day": 11,
+      "zone": "ALL_ZONES",
+      "heating_c": 15.0,
+      "cooling_c": 26.5,
+      "reason": "Maintains PV at +0.412 with balanced coasting strategy for peak-coasting period",
+      "baseline_pmv": 0.0,
+      "agent_pmv": 0.314
+    },
+    {
+      "hour": 36.0,
+      "day": 2,
+      "hour_of_day": 12,
+      "zone": "ALL_ZONES",
+      "heating_c": 15.0,
+      "cooling_c": 26.5,
+      "reason": "Setting cooling setpoint due to MIDDAY DRIFT state of PMV (mean: +0.37)",
+      "baseline_pmv": 0.0,
+      "agent_pmv": 0.373
+    },
+    {
+      "hour": 37.0,
+      "day": 2,
+      "hour_of_day": 13,
+      "zone": "ALL_ZONES",
+      "heating_c": 15.0,
+      "cooling_c": 26.5,
+      "reason": "Preparing for unoccupied night and declining afternoon temperatures.",
+      "baseline_pmv": 0.0,
+      "agent_pmv": 0.38
+    },
+    {
+      "hour": 38.0,
+      "day": 2,
+      "hour_of_day": 14,
+      "zone": "ALL_ZONES",
+      "heating_c": 15.0,
+      "cooling_c": 26.5,
+      "reason": "Peak-coasting recommendation for worst PMV at 0.453 within max savings, balanced comfort and power-saving window.",
+      "baseline_pmv": 0.0,
+      "agent_pmv": 0.367
+    },
+    {
+      "hour": 39.0,
+      "day": 2,
+      "hour_of_day": 15,
+      "zone": "ALL_ZONES",
+      "heating_c": 15.0,
+      "cooling_c": 26.5,
+      "reason": "Optimized cooling setpoint of 27.2\u00b0C to minimize chiller usage while maintaining thermal comfort due to high means but low overall PMV.",
+      "baseline_pmv": 0.0,
+      "agent_pmv": 0.362
+    },
+    {
+      "hour": 40.0,
+      "day": 2,
+      "hour_of_day": 16,
+      "zone": "ALL_ZONES",
+      "heating_c": 15.0,
+      "cooling_c": 26.5,
+      "reason": "Comfort at MIDDAY DRIFT with mean PMV of 0.35 and cooling setpoint for efficient energy use.",
+      "baseline_pmv": 0.0,
+      "agent_pmv": 0.348
+    },
+    {
+      "hour": 41.0,
+      "day": 2,
+      "hour_of_day": 17,
+      "zone": "ALL_ZONES",
+      "heating_c": 15.0,
+      "cooling_c": 26.5,
+      "reason": "Cooling set to 27.8\u00b0C for peak coasting period as worst PMV is 0.401",
+      "baseline_pmv": 0.0,
+      "agent_pmv": 0.318
+    },
+    {
+      "hour": 42.0,
+      "day": 2,
+      "hour_of_day": 18,
+      "zone": "ALL_ZONES",
+      "heating_c": 15.0,
+      "cooling_c": 26.5,
+      "reason": "Adjust to comfort guard setpoint due to peak PMV",
+      "baseline_pmv": 0.0,
+      "agent_pmv": 0.287
+    },
+    {
+      "hour": 42.25,
+      "day": 2,
+      "hour_of_day": 18,
+      "zone": "ALL_ZONES",
+      "heating_c": 15.0,
+      "cooling_c": 26.5,
+      "reason": "PEAK COASTING: worst_pmv > +0.45",
+      "baseline_pmv": 0.0,
+      "agent_pmv": 0.357
+    },
+    {
       "hour": 43.0,
       "day": 2,
       "hour_of_day": 19,
@@ -3886,7 +3069,7 @@
       "cooling_c": 30.0,
       "reason": "Night setup / Unoccupied setback applied deterministically.",
       "baseline_pmv": 0.0,
-      "agent_pmv": 0.147
+      "agent_pmv": 0.364
     },
     {
       "hour": 53.0,
@@ -3897,7 +3080,139 @@
       "cooling_c": 25.8,
       "reason": "Night setup / Unoccupied setback applied deterministically.",
       "baseline_pmv": 0.0,
-      "agent_pmv": 0.148
+      "agent_pmv": 0.24
+    },
+    {
+      "hour": 55.0,
+      "day": 3,
+      "hour_of_day": 7,
+      "zone": "ALL_ZONES",
+      "heating_c": 15.0,
+      "cooling_c": 26.2,
+      "reason": "Comfortable indoor conditions but slight shift to ensure minimal chiller load during peak use hours",
+      "baseline_pmv": 0.0,
+      "agent_pmv": 0.011
+    },
+    {
+      "hour": 56.0,
+      "day": 3,
+      "hour_of_day": 8,
+      "zone": "ALL_ZONES",
+      "heating_c": 15.0,
+      "cooling_c": 26.2,
+      "reason": "Morning occupied period with reduced cooling set to maximize savings and maintain comfortable PMV of 0.14.",
+      "baseline_pmv": 0.0,
+      "agent_pmv": 0.14
+    },
+    {
+      "hour": 57.0,
+      "day": 3,
+      "hour_of_day": 9,
+      "zone": "ALL_ZONES",
+      "heating_c": 15.0,
+      "cooling_c": 26.0,
+      "reason": "Optimized energy savings based on morning occupied worst PMV = 0.288 within allowed band of [25.8\u00b0C to 26.5\u00b0C].",
+      "baseline_pmv": 0.0,
+      "agent_pmv": 0.162
+    },
+    {
+      "hour": 58.0,
+      "day": 3,
+      "hour_of_day": 10,
+      "zone": "ALL_ZONES",
+      "heating_c": 15.0,
+      "cooling_c": 26.2,
+      "reason": "Targeting mid-day comfortable air temperature (Worst PMV: 0.249) with balanced savings and comfort allowance.",
+      "baseline_pmv": 0.0,
+      "agent_pmv": 0.133
+    },
+    {
+      "hour": 59.0,
+      "day": 3,
+      "hour_of_day": 11,
+      "zone": "ALL_ZONES",
+      "heating_c": 15.0,
+      "cooling_c": 26.5,
+      "reason": "Worst PMV = 0.296 is within a comfortable range for Midday Drift (11:00-14:00). Reducing cooling setpoint to 27.2\u00b0C to further reduce chilled water demand.",
+      "baseline_pmv": 0.0,
+      "agent_pmv": 0.187
+    },
+    {
+      "hour": 60.0,
+      "day": 3,
+      "hour_of_day": 12,
+      "zone": "ALL_ZONES",
+      "heating_c": 15.0,
+      "cooling_c": 26.5,
+      "reason": "Adjusted cooling setpoints to 27.2\u00b0C due to moderate mean PMV (+0.25) within the morning occupied range (26.5\u00b0C to 27.2\u00b0C), aiming for balance between energy savings and comfort.",
+      "baseline_pmv": 0.0,
+      "agent_pmv": 0.248
+    },
+    {
+      "hour": 61.0,
+      "day": 3,
+      "hour_of_day": 13,
+      "zone": "ALL_ZONES",
+      "heating_c": 15.0,
+      "cooling_c": 26.5,
+      "reason": "MIDDAY DRIFT with worst PMV > +0.25, balanced coasting.",
+      "baseline_pmv": 0.0,
+      "agent_pmv": 0.257
+    },
+    {
+      "hour": 62.0,
+      "day": 3,
+      "hour_of_day": 14,
+      "zone": "ALL_ZONES",
+      "heating_c": 15.0,
+      "cooling_c": 26.5,
+      "reason": "Worst PMV \uff5e+0.35 within mid-range of peak coasting",
+      "baseline_pmv": 0.0,
+      "agent_pmv": 0.264
+    },
+    {
+      "hour": 63.0,
+      "day": 3,
+      "hour_of_day": 15,
+      "zone": "ALL_ZONES",
+      "heating_c": 15.0,
+      "cooling_c": 26.5,
+      "reason": "Minimized HVAC energy and peak-grid demand while maintaining ASHRAE-55 thermal comfort (PMV strictly within [-0.5, +0.45]).",
+      "baseline_pmv": 0.0,
+      "agent_pmv": 0.273
+    },
+    {
+      "hour": 64.0,
+      "day": 3,
+      "hour_of_day": 16,
+      "zone": "ALL_ZONES",
+      "heating_c": 15.0,
+      "cooling_c": 26.5,
+      "reason": "Peak Coasting setpoint adjusted for high worst PMV (outside safe range)",
+      "baseline_pmv": 0.0,
+      "agent_pmv": 0.257
+    },
+    {
+      "hour": 65.0,
+      "day": 3,
+      "hour_of_day": 17,
+      "zone": "ALL_ZONES",
+      "heating_c": 15.0,
+      "cooling_c": 26.5,
+      "reason": "Peak-coasting HVAC setpoint adjustment for optimal energy consumption and comfort in occupied condition.",
+      "baseline_pmv": 0.0,
+      "agent_pmv": 0.179
+    },
+    {
+      "hour": 66.0,
+      "day": 3,
+      "hour_of_day": 18,
+      "zone": "ALL_ZONES",
+      "heating_c": 15.0,
+      "cooling_c": 26.5,
+      "reason": "Peak-coasting at ~0.35, setting to maximize PEAK demand-response savings.",
+      "baseline_pmv": 0.0,
+      "agent_pmv": 0.105
     },
     {
       "hour": 67.0,
@@ -3908,271 +3223,7 @@
       "cooling_c": 30.0,
       "reason": "Night setup / Unoccupied setback applied deterministically.",
       "baseline_pmv": 0.0,
-      "agent_pmv": 0.007
-    },
-    {
-      "hour": 77.0,
-      "day": 4,
-      "hour_of_day": 5,
-      "zone": "ALL_ZONES",
-      "heating_c": 15.0,
-      "cooling_c": 25.8,
-      "reason": "Night setup / Unoccupied setback applied deterministically.",
-      "baseline_pmv": 0.0,
-      "agent_pmv": -0.226
-    },
-    {
-      "hour": 80.0,
-      "day": 4,
-      "hour_of_day": 8,
-      "zone": "ALL_ZONES",
-      "heating_c": 15.0,
-      "cooling_c": 25.8,
-      "reason": "Periodic telemetry snapshot",
-      "baseline_pmv": 0.0,
-      "agent_pmv": -0.136
-    },
-    {
-      "hour": 80.25,
-      "day": 4,
-      "hour_of_day": 8,
-      "zone": "ALL_ZONES",
-      "heating_c": 15.0,
-      "cooling_c": 25.8,
-      "reason": "Night setup / Unoccupied setback applied deterministically.",
-      "baseline_pmv": 0.0,
-      "agent_pmv": -0.12
-    },
-    {
-      "hour": 81.0,
-      "day": 4,
-      "hour_of_day": 9,
-      "zone": "ALL_ZONES",
-      "heating_c": 15.0,
-      "cooling_c": 25.8,
-      "reason": "Periodic telemetry snapshot",
-      "baseline_pmv": 0.0,
-      "agent_pmv": -0.082
-    },
-    {
-      "hour": 81.25,
-      "day": 4,
-      "hour_of_day": 9,
-      "zone": "ALL_ZONES",
-      "heating_c": 15.0,
-      "cooling_c": 25.8,
-      "reason": "Night setup / Unoccupied setback applied deterministically.",
-      "baseline_pmv": 0.0,
-      "agent_pmv": -0.075
-    },
-    {
-      "hour": 82.0,
-      "day": 4,
-      "hour_of_day": 10,
-      "zone": "ALL_ZONES",
-      "heating_c": 15.0,
-      "cooling_c": 25.8,
-      "reason": "Periodic telemetry snapshot",
-      "baseline_pmv": 0.0,
-      "agent_pmv": -0.061
-    },
-    {
-      "hour": 82.25,
-      "day": 4,
-      "hour_of_day": 10,
-      "zone": "ALL_ZONES",
-      "heating_c": 15.0,
-      "cooling_c": 25.8,
-      "reason": "Night setup / Unoccupied setback applied deterministically.",
-      "baseline_pmv": 0.0,
-      "agent_pmv": -0.057
-    },
-    {
-      "hour": 83.0,
-      "day": 4,
-      "hour_of_day": 11,
-      "zone": "ALL_ZONES",
-      "heating_c": 15.0,
-      "cooling_c": 25.8,
-      "reason": "Periodic telemetry snapshot",
-      "baseline_pmv": 0.0,
-      "agent_pmv": -0.056
-    },
-    {
-      "hour": 83.25,
-      "day": 4,
-      "hour_of_day": 11,
-      "zone": "ALL_ZONES",
-      "heating_c": 15.0,
-      "cooling_c": 25.8,
-      "reason": "Night setup / Unoccupied setback applied deterministically.",
-      "baseline_pmv": 0.0,
-      "agent_pmv": -0.067
-    },
-    {
-      "hour": 84.0,
-      "day": 4,
-      "hour_of_day": 12,
-      "zone": "ALL_ZONES",
-      "heating_c": 15.0,
-      "cooling_c": 25.8,
-      "reason": "Periodic telemetry snapshot",
-      "baseline_pmv": 0.0,
-      "agent_pmv": -0.099
-    },
-    {
-      "hour": 84.25,
-      "day": 4,
-      "hour_of_day": 12,
-      "zone": "ALL_ZONES",
-      "heating_c": 15.0,
-      "cooling_c": 25.8,
-      "reason": "Night setup / Unoccupied setback applied deterministically.",
-      "baseline_pmv": 0.0,
-      "agent_pmv": -0.073
-    },
-    {
-      "hour": 85.0,
-      "day": 4,
-      "hour_of_day": 13,
-      "zone": "ALL_ZONES",
-      "heating_c": 15.0,
-      "cooling_c": 25.8,
-      "reason": "Periodic telemetry snapshot",
-      "baseline_pmv": 0.0,
-      "agent_pmv": -0.055
-    },
-    {
-      "hour": 85.25,
-      "day": 4,
-      "hour_of_day": 13,
-      "zone": "ALL_ZONES",
-      "heating_c": 15.0,
-      "cooling_c": 25.8,
-      "reason": "Night setup / Unoccupied setback applied deterministically.",
-      "baseline_pmv": 0.0,
-      "agent_pmv": -0.054
-    },
-    {
-      "hour": 86.0,
-      "day": 4,
-      "hour_of_day": 14,
-      "zone": "ALL_ZONES",
-      "heating_c": 15.0,
-      "cooling_c": 25.8,
-      "reason": "Periodic telemetry snapshot",
-      "baseline_pmv": 0.0,
-      "agent_pmv": -0.05
-    },
-    {
-      "hour": 86.25,
-      "day": 4,
-      "hour_of_day": 14,
-      "zone": "ALL_ZONES",
-      "heating_c": 15.0,
-      "cooling_c": 25.8,
-      "reason": "Night setup / Unoccupied setback applied deterministically.",
-      "baseline_pmv": 0.0,
-      "agent_pmv": -0.047
-    },
-    {
-      "hour": 87.0,
-      "day": 4,
-      "hour_of_day": 15,
-      "zone": "ALL_ZONES",
-      "heating_c": 15.0,
-      "cooling_c": 25.8,
-      "reason": "Periodic telemetry snapshot",
-      "baseline_pmv": 0.0,
-      "agent_pmv": -0.041
-    },
-    {
-      "hour": 87.25,
-      "day": 4,
-      "hour_of_day": 15,
-      "zone": "ALL_ZONES",
-      "heating_c": 15.0,
-      "cooling_c": 25.8,
-      "reason": "Night setup / Unoccupied setback applied deterministically.",
-      "baseline_pmv": 0.0,
-      "agent_pmv": -0.04
-    },
-    {
-      "hour": 88.0,
-      "day": 4,
-      "hour_of_day": 16,
-      "zone": "ALL_ZONES",
-      "heating_c": 15.0,
-      "cooling_c": 25.8,
-      "reason": "Periodic telemetry snapshot",
-      "baseline_pmv": 0.0,
-      "agent_pmv": -0.033
-    },
-    {
-      "hour": 88.25,
-      "day": 4,
-      "hour_of_day": 16,
-      "zone": "ALL_ZONES",
-      "heating_c": 15.0,
-      "cooling_c": 25.8,
-      "reason": "Night setup / Unoccupied setback applied deterministically.",
-      "baseline_pmv": 0.0,
-      "agent_pmv": -0.062
-    },
-    {
-      "hour": 89.0,
-      "day": 4,
-      "hour_of_day": 17,
-      "zone": "ALL_ZONES",
-      "heating_c": 15.0,
-      "cooling_c": 25.8,
-      "reason": "Periodic telemetry snapshot",
-      "baseline_pmv": 0.0,
-      "agent_pmv": -0.12
-    },
-    {
-      "hour": 89.25,
-      "day": 4,
-      "hour_of_day": 17,
-      "zone": "ALL_ZONES",
-      "heating_c": 15.0,
-      "cooling_c": 25.8,
-      "reason": "Night setup / Unoccupied setback applied deterministically.",
-      "baseline_pmv": 0.0,
-      "agent_pmv": -0.14
-    },
-    {
-      "hour": 90.0,
-      "day": 4,
-      "hour_of_day": 18,
-      "zone": "ALL_ZONES",
-      "heating_c": 15.0,
-      "cooling_c": 25.8,
-      "reason": "Periodic telemetry snapshot",
-      "baseline_pmv": 0.0,
-      "agent_pmv": -0.187
-    },
-    {
-      "hour": 90.25,
-      "day": 4,
-      "hour_of_day": 18,
-      "zone": "ALL_ZONES",
-      "heating_c": 15.0,
-      "cooling_c": 25.8,
-      "reason": "Night setup / Unoccupied setback applied deterministically.",
-      "baseline_pmv": 0.0,
-      "agent_pmv": -0.149
-    },
-    {
-      "hour": 91.0,
-      "day": 4,
-      "hour_of_day": 19,
-      "zone": "ALL_ZONES",
-      "heating_c": 15.0,
-      "cooling_c": 30.0,
-      "reason": "Night setup / Unoccupied setback applied deterministically.",
-      "baseline_pmv": 0.0,
-      "agent_pmv": -0.151
+      "agent_pmv": 0.141
     }
   ]
 }
