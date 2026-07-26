@@ -3,6 +3,8 @@
 import logging
 import threading
 
+# Module-level import: orchestrator has no circular dependency on thread
+from agent.orchestrator import LLMOrchestrator
 from bridge.state_bridge import StateBridge
 from sim.sensors import SimulationState
 
@@ -12,8 +14,8 @@ logger = logging.getLogger(__name__)
 class AgentThread(threading.Thread):
     """Background worker thread waiting on StateBridge events.
 
-    Decouples simulation step processing from agent reasoning. In Phase 3,
-    this thread wakes up when triggered and logs "would call LLM now".
+    Decouples simulation step processing from agent reasoning by invoking
+    the LLMOrchestrator when triggered by the PreFilter.
     """
 
     def __init__(self, bridge: StateBridge, name: str = "AgentThread") -> None:
@@ -25,10 +27,6 @@ class AgentThread(threading.Thread):
 
     def run(self) -> None:
         logger.info("AgentThread started and waiting for state bridge triggers.")
-
-        # Instantiate orchestrator here so the thread owns the client
-        from agent.orchestrator import LLMOrchestrator
-
         orchestrator = LLMOrchestrator(bridge=self.bridge)
 
         while not self._stop_event.is_set():
@@ -48,9 +46,14 @@ class AgentThread(threading.Thread):
 
         logger.info("AgentThread stopped.")
 
-    def stop(self, timeout: float | None = 2.0) -> None:
-        """Signal the agent thread to terminate and wait for exit."""
+    def stop(self, timeout: float | None = 20.0) -> None:
+        """Signal the agent thread to terminate and wait for exit.
+
+        The default timeout (20.0s) accommodates an in-flight LLM call (15.0s timeout).
+        """
         self._stop_event.set()
         # Ensure trigger_event doesn't keep thread waiting during stop
         self.bridge.trigger_event.set()
         self.join(timeout=timeout)
+        if self.is_alive():
+            logger.warning("AgentThread did not terminate within timeout %.1fs", timeout)
