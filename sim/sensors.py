@@ -52,6 +52,12 @@ class SensorManager:
         # Per-zone sensor handles: zone_name -> Dict[var_name, handle_int]
         self._zone_handles: dict[str, dict[str, int]] = {}
 
+    def reset(self) -> None:
+        """Clear run-period tracking state for a fresh simulation run."""
+        self._start_day_of_year = None
+        self._last_time_hours = 0.0
+        self._cumulative_hvac_kwh = 0.0
+
     def initialize_handles(self, state: Any, zone_names: list[str]) -> None:
         """Fetch and cache variable handles from EnergyPlus runtime exchange API."""
         logger.info("Initializing EnergyPlus sensor handles for zones: %s", zone_names)
@@ -127,8 +133,9 @@ class SensorManager:
         hvac_power = 0.0
         if self._hvac_meter_handle != -1:
             joules = self.api.exchange.get_meter_value(state, self._hvac_meter_handle)
-            # 15 minute timestep = 900 seconds
-            hvac_power = joules / 900.0
+            # Derive timestep from EnergyPlus zone_time_step (reports in hours)
+            ts_hours = self.api.exchange.zone_time_step(state)
+            hvac_power = joules / (ts_hours * 3600.0) if ts_hours > 0 else joules / 900.0
         elif self._hvac_power_handle != -1:
             hvac_power = self.api.exchange.get_variable_value(state, self._hvac_power_handle)
         else:

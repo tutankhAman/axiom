@@ -64,16 +64,7 @@ class PreFilter:
                 setback_command={"heat": 15.0, "cool": 30.0},
             )
 
-        # Enforce minimum cooldown between any triggers
-        if self.last_trigger_time is not None and (
-            state.sim_time_hours - self.last_trigger_time
-        ) < (self.min_cooldown_hours - 1e-5):
-            return PreFilterDecision(
-                should_trigger=False,
-                reason=f"Cooldown active ({self.min_cooldown_hours}h)",
-            )
-
-        # Rule 1: Comfort constraint violation in any zone
+        # Rule 1: Comfort constraint violation in any zone (always fires, even during cooldown)
         for zone_name, zone_state in state.zones.items():
             if zone_state.pmv < self.pmv_min or zone_state.pmv > self.pmv_max:
                 reason = (
@@ -83,6 +74,15 @@ class PreFilter:
                 self.last_trigger_time = state.sim_time_hours
                 logger.info("[Time %.2fh] PreFilter trigger: %s", state.sim_time_hours, reason)
                 return PreFilterDecision(should_trigger=True, reason=reason)
+
+        # Enforce minimum cooldown between non-violating triggers
+        if self.last_trigger_time is not None and (
+            state.sim_time_hours - self.last_trigger_time
+        ) < (self.min_cooldown_hours - 1e-5):
+            return PreFilterDecision(
+                should_trigger=False,
+                reason=f"Cooldown active ({self.min_cooldown_hours}h)",
+            )
 
         # Rule 2: Fixed periodic control interval check
         if self.last_trigger_time is None or (state.sim_time_hours - self.last_trigger_time) >= (

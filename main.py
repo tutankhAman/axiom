@@ -342,14 +342,25 @@ def run_phase5(
         save_history_to_csv(driver.history, csv_path)
 
         agent_kwh = sum(s.hvac_power_w * 0.25 for s in driver.history) / 1000.0
-        baseline_kwh = agent_kwh * 1.22
+
+        baseline_kwh: float | None = None
         if baseline_history:
-            baseline_kwh = (
-                sum(s.hvac_power_w * 0.25 for s in baseline_history[: len(driver.history)]) / 1000.0
-            )
+            # Align by sim_time_hours instead of length slice
+            b_by_time = {round(b.sim_time_hours, 2): b for b in baseline_history}
+            baseline_kwh = 0.0
+            matched = 0
+            for s in driver.history:
+                b = b_by_time.get(round(s.sim_time_hours, 2))
+                if b:
+                    baseline_kwh += b.hvac_power_w * 0.25 / 1000.0
+                    matched += 1
+            if matched == 0:
+                baseline_kwh = None
 
         savings_pct = (
-            ((baseline_kwh - agent_kwh) / baseline_kwh * 100.0) if baseline_kwh > 0 else 18.0
+            ((baseline_kwh - agent_kwh) / baseline_kwh * 100.0)
+            if baseline_kwh is not None and baseline_kwh > 0
+            else None
         )
 
         occ_pmvs = []
@@ -359,7 +370,7 @@ def run_phase5(
                 occ_pmvs.append(sum(z_pmvs) / len(z_pmvs))
 
         comp_count = sum(1 for p in occ_pmvs if -0.5 <= p <= 0.5)
-        comfort_pct = (comp_count / len(occ_pmvs) * 100.0) if occ_pmvs else 89.0
+        comfort_pct = (comp_count / len(occ_pmvs) * 100.0) if occ_pmvs else None
 
         print_summary_card(
             total_hours=driver.history[-1].sim_time_hours if driver.history else days * 24.0,

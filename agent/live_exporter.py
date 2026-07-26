@@ -81,6 +81,9 @@ class LiveDashboardExporter:
         compliant_occupied = 0
         total_occupied = 0
 
+        b_compliant_occupied = 0
+        b_total_occupied = 0
+
         first_h = agent_history[0].sim_time_hours if agent_history else 0.0
 
         # Create map of baseline states by timestamp for exact lookup
@@ -102,7 +105,8 @@ class LiveDashboardExporter:
                 b_zone_pmvs = [z.pmv for z in b_state.zones.values()] if b_state.zones else [0.0]
                 b_pmv = sum(b_zone_pmvs) / len(b_zone_pmvs) if b_zone_pmvs else 0.0
             else:
-                b_p = agent_p * 1.22
+                # No matching baseline sample — skip this timestep for baseline totals
+                b_p = 0.0
                 b_pmv = 0.0
 
             # Integrate kWh (15-min = 0.25h timesteps)
@@ -114,6 +118,11 @@ class LiveDashboardExporter:
                 total_occupied += 1
                 if -0.5 <= agent_pmv <= 0.5:
                     compliant_occupied += 1
+
+            if b_state and state.is_occupied:
+                b_total_occupied += 1
+                if -0.5 <= b_pmv <= 0.5:
+                    b_compliant_occupied += 1
 
             power_series.append(
                 {
@@ -137,13 +146,18 @@ class LiveDashboardExporter:
             else 0.0
         )
         comfort_pct = (compliant_occupied / total_occupied * 100.0) if total_occupied > 0 else 100.0
+        b_comfort_pct = (
+            (b_compliant_occupied / b_total_occupied * 100.0) if b_total_occupied > 0 else None
+        )
 
         summary = {
             "baseline_kwh": round(total_baseline_kwh, 1),
             "closed_loop_kwh": round(total_agent_kwh, 1),
             "pct_savings": round(pct_savings, 1),
-            "comfort_compliance_pct_baseline": 85.0,
             "comfort_compliance_pct_closed_loop": round(comfort_pct, 1),
+            "comfort_compliance_pct_baseline": (
+                round(b_comfort_pct, 1) if b_comfort_pct is not None else None
+            ),
         }
 
         data = {
@@ -157,10 +171,12 @@ class LiveDashboardExporter:
             "decision_log": self.decision_logs,
         }
 
-        # Write to public live feed and src default
+        # Atomic write: serialize to temp file, then os.replace to avoid partial reads
         for path in [PUBLIC_LIVE_JSON, SRC_DATA_JSON]:
             try:
-                with open(path, "w", encoding="utf-8") as f:
+                tmp_path = path + ".tmp"
+                with open(tmp_path, "w", encoding="utf-8") as f:
                     json.dump(data, f, indent=2)
+                os.replace(tmp_path, path)
             except Exception as e:
                 logger.warning("Failed writing live dashboard data to %s: %s", path, e)

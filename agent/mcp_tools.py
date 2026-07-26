@@ -41,7 +41,9 @@ def get_building_context(context: MCPContext) -> dict[str, Any]:
     epw_path = os.path.join(os.path.dirname(os.path.dirname(__file__)), "models", "weather.epw")
     try:
         reader = EPWReader(epw_path)
-        forecast_12h = reader.get_forecast(state.sim_time_hours, 12)
+        # EPW file starts Jan 1; sim RunPeriod starts July 21 (day 202 of year)
+        epw_offset_hours = 24 * 201  # July 21 00:00 = hour 4824 in EPW
+        forecast_12h = reader.get_forecast(state.sim_time_hours, 12, offset_hours=epw_offset_hours)
     except Exception:
         forecast_12h = [state.outdoor_temp] * 12
 

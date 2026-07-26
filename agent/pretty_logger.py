@@ -80,10 +80,10 @@ def print_timestep_card(
 def print_summary_card(
     total_hours: float,
     total_triggers: int,
-    baseline_kwh: float,
+    baseline_kwh: float | None,
     agent_kwh: float,
-    savings_pct: float,
-    comfort_pct: float,
+    savings_pct: float | None,
+    comfort_pct: float | None,
     csv_path: str,
 ) -> None:
     """Print clean summary performance card."""
@@ -91,14 +91,17 @@ def print_summary_card(
     b_mid = f"{GREEN}{BOLD}╠═══════════════════════════════════════════════════════════════╣{RESET}"
     b_bot = f"{GREEN}{BOLD}╚═══════════════════════════════════════════════════════════════╝{RESET}"
     dur_str = f"Duration   : {BOLD}{total_hours:.1f} Hours ({total_hours / 24:.1f} Days){RESET}"
+    bl_kwh = f"{baseline_kwh:.1f} kWh" if baseline_kwh is not None else "N/A"
+    sv_pct = f"{savings_pct:+.1f}%" if savings_pct is not None else "N/A"
+    cm_pct = f"{comfort_pct:.1f}% ASHRAE-55" if comfort_pct is not None else "N/A"
     print(f"\n{b_top}")
     print(f"{GREEN}{BOLD}║                 EXPERIMENT RUN COMPLETED                      ║{RESET}")
     print(f"{b_mid}")
-    print(f"{GREEN}║ {dur_str}{GREEN:<29}║{RESET}")
-    print(f"{GREEN}║ LLM Calls  : {BOLD}{total_triggers} Triggers{RESET}{GREEN:<38}║{RESET}")
-    print(f"{GREEN}║ Baseline   : {BOLD}{baseline_kwh:.1f} kWh{RESET}{GREEN:<38}║{RESET}")
-    print(f"{GREEN}║ Axiom AI   : {BOLD}{agent_kwh:.1f} kWh{RESET}{GREEN:<38}║{RESET}")
-    print(f"{GREEN}║ Savings    : {BOLD}{GREEN}{savings_pct:+.1f}%{RESET}{GREEN:<40}║{RESET}")
-    print(f"{GREEN}║ Comfort    : {BOLD}{comfort_pct:.1f}% ASHRAE-55{RESET}{GREEN:<28}║{RESET}")
+    print(f"{GREEN}║ {dur_str}{GREEN:<28}║{RESET}")
+    print(f"{GREEN}║ LLM Calls  : {BOLD}{total_triggers} Triggers{RESET}{GREEN:<37}║{RESET}")
+    print(f"{GREEN}║ Baseline   : {BOLD}{bl_kwh}{RESET}{GREEN:<33}║{RESET}")
+    print(f"{GREEN}║ Axiom AI   : {BOLD}{agent_kwh:.1f} kWh{RESET}{GREEN:<37}║{RESET}")
+    print(f"{GREEN}║ Savings    : {BOLD}{GREEN}{sv_pct}{RESET}{GREEN:<38}║{RESET}")
+    print(f"{GREEN}║ Comfort    : {BOLD}{cm_pct}{RESET}{GREEN:<34}║{RESET}")
     print(f"{GREEN}║ Export CSV : {BOLD}{csv_path:<38}{RESET}{GREEN}║{RESET}")
     print(f"{b_bot}\n")

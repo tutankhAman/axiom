@@ -24,12 +24,11 @@ class EPWReader:
         except Exception as e:
             logger.error(f"Failed to load EPW file {self.epw_path}: {e}")
 
-    def get_forecast(self, current_hour: float, hours: int) -> list[float]:
+    def get_forecast(self, current_hour: float, hours: int, offset_hours: int = 0) -> list[float]:
         if not self._temperatures:
             return []
 
-        # Round current hour to nearest int
-        idx = int(round(current_hour))
+        idx = int(round(current_hour + offset_hours))
         forecast = []
         for i in range(1, hours + 1):
             if idx + i < len(self._temperatures):
