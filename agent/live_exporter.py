@@ -109,8 +109,8 @@ class LiveDashboardExporter:
             total_agent_kwh += (agent_p * 0.25) / 1000.0
             total_baseline_kwh += (b_p * 0.25) / 1000.0
 
-            # Occupied comfort (07:00 to 19:00)
-            if 7 <= (state.sim_time_hours % 24) < 19:
+            # Occupied comfort (evaluated ONLY during occupied hours, excluding weekends)
+            if state.is_occupied:
                 total_occupied += 1
                 if -0.5 <= agent_pmv <= 0.5:
                     compliant_occupied += 1

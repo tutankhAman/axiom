@@ -49,19 +49,19 @@ class PreFilter:
         # Deterministic night setback / optimum start: bypass LLM for all unoccupied hours.
         if not state.is_occupied:
             hour = int(state.sim_time_hours % 24)
-            if 5 <= hour < 7:
+            # Only run optimum start pre-conditioning on workdays (sim_time_hours >= 24)
+            if state.sim_time_hours >= 24 and 5 <= hour < 7:
                 # OPTIMUM START (05:00-07:00): Pre-condition building to 25.8°C before occupancy.
-                # Avoids overcooling (24.5°C was driving chiller at 5.7kW) while keeping PMV ~+0.10.
                 return PreFilterDecision(
                     should_trigger=False,
                     reason="Optimum start: pre-conditioning to 25.8°C (05:00-07:00)",
                     setback_command={"heat": 15.0, "cool": 25.8},
                 )
-            # Night setback: relax setpoint to 28.5°C to prevent excessive building warmup
+            # Unoccupied setback: cool to 30.0°C so building mass floats without HVAC spikes
             return PreFilterDecision(
                 should_trigger=False,
-                reason="Unoccupied hour: deterministic night setback active (cool=28.5°C)",
-                setback_command={"heat": 15.0, "cool": 28.5},
+                reason="Unoccupied hour: deterministic setback active (cool=30.0°C)",
+                setback_command={"heat": 15.0, "cool": 30.0},
             )
 
         # Enforce minimum cooldown between any triggers
