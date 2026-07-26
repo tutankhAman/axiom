@@ -33,10 +33,11 @@ class ActuatorManager:
 
     def init_handles(self, state: Any, schedule_names: list[str]) -> None:
         """Fetch and cache actuator handles for specified schedule names."""
-        if self.initialized:
+        missing_schedules = [name for name in schedule_names if name not in self.handles]
+        if not missing_schedules:
             return
 
-        for name in schedule_names:
+        for name in missing_schedules:
             handle = -1
             for comp_type in self.SUPPORTED_COMPONENT_TYPES:
                 handle = self.api.exchange.get_actuator_handle(
