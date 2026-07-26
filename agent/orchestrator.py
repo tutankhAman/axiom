@@ -2,6 +2,7 @@
 
 import json
 import logging
+import os
 from typing import Any
 
 import openai
@@ -25,11 +26,13 @@ class LLMOrchestrator:
 
     def __init__(self, bridge: StateBridge, model: str = "qwen2.5:3b-instruct") -> None:
         self.bridge = bridge
-        self.model = model
-        # Ollama provides an OpenAI-compatible API on port 11434
+        base_url = os.getenv("OLLAMA_BASE_URL", "http://localhost:11434/v1")
+        api_key = os.getenv("OLLAMA_API_KEY", "ollama")
+        self.model = os.getenv("LLM_MODEL", model)
+
         self.client = openai.OpenAI(
-            base_url="http://localhost:11434/v1",
-            api_key="ollama",  # API key is ignored by Ollama, but required by OpenAI client
+            base_url=base_url,
+            api_key=api_key,
         )
         self.context = MCPContext(bridge)
 
@@ -39,8 +42,8 @@ class LLMOrchestrator:
 
         try:
             kwargs = json.loads(tool_call.function.arguments)
-        except json.JSONDecodeError as e:
-            logger.error("Failed to parse tool arguments for %s: %s", func_name, e)
+        except json.JSONDecodeError:
+            logger.exception("Failed to parse tool arguments for %s", func_name)
             return "Error: Invalid JSON arguments."
 
         logger.debug("Executing tool: %s with args %s", func_name, kwargs)
@@ -57,10 +60,11 @@ class LLMOrchestrator:
             elif func_name == "set_zone_setpoint":
                 return set_zone_setpoint(self.context, **kwargs)
             else:
+                logger.error("Tool '%s' not found.", func_name)
                 return f"Error: Tool '{func_name}' not found."
-        except Exception as e:
-            logger.error("Error executing tool %s: %s", func_name, e)
-            return f"Error executing tool: {e}"
+        except Exception:
+            logger.exception("Error executing tool %s", func_name)
+            return "Error executing tool."
 
     def evaluate_and_act(self) -> None:
         """Fetch state, build batched prompt, call LLM, and execute tool calls."""
@@ -92,24 +96,43 @@ class LLMOrchestrator:
             "Evaluate comfort and energy, and use set_zone_setpoint to adjust if necessary."
         )
 
+        messages: list[dict[str, Any]] = [
+            {"role": "system", "content": system_prompt},
+            {"role": "user", "content": user_prompt},
+        ]
+
         try:
             response = self.client.chat.completions.create(
                 model=self.model,
-                messages=[
-                    {"role": "system", "content": system_prompt},
-                    {"role": "user", "content": user_prompt},
-                ],
+                messages=messages,  # ty: ignore[invalid-argument-type]
                 tools=TOOLS_SCHEMA,  # type: ignore
                 timeout=15.0,  # Strict timeout to prevent hanging the loop
             )
 
             message = response.choices[0].message
             if message.tool_calls:
+                messages.append(message)  # type: ignore[arg-type]
                 for tool_call in message.tool_calls:
-                    self._execute_tool(tool_call)
+                    result = self._execute_tool(tool_call)
+                    messages.append(
+                        {
+                            "role": "tool",
+                            "tool_call_id": tool_call.id,
+                            "content": result,
+                        }
+                    )
+                try:
+                    self.client.chat.completions.create(
+                        model=self.model,
+                        messages=messages,  # ty: ignore[invalid-argument-type]
+                        tools=TOOLS_SCHEMA,  # type: ignore
+                        timeout=15.0,
+                    )
+                except Exception:
+                    logger.exception("Follow-up LLM completion failed after tool execution.")
             else:
                 logger.debug("LLM responded with no tool calls. Holding current setpoints.")
 
-        except Exception as e:
+        except Exception:
             # FALLBACK PATH: Log error and suppress. Zero-Order Hold continues.
-            logger.error("LLM evaluation failed: %s. Falling back to Zero-Order Hold.", e)
+            logger.exception("LLM evaluation failed. Falling back to Zero-Order Hold.")
